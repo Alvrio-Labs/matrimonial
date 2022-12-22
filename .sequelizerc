@@ -9,8 +9,9 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = {
     'config': path.resolve('config', 'config.json'),
   };
-}else{
+} else {
   module.exports = {
     'config': path.resolve('config', 'config.json'),
   };
 }
+
