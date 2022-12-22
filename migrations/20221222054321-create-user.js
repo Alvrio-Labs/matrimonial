@@ -1,6 +1,9 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+const userGender = ['Male' , 'Female' , 'other'];
+
 module.exports = {
+  
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
       id: {
@@ -25,7 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       gender: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM(userGender)
       },
       dateOfBirth: {
         type: Sequelize.DATE
