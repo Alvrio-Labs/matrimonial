@@ -39,8 +39,8 @@ exports.forgetPassword = async (req, res) => {
     where: { email: req.body.email }
   });
   if (user) {
-    const resetToken = await jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
-      expiresIn: '10min'
+    const resetToken = jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
+      expiresIn: '30min'
     });
     const mailOptions = {
       from: process.env.EMAIL,
@@ -55,30 +55,11 @@ exports.forgetPassword = async (req, res) => {
         console.log(err);
       }
       else {
-        console.log('Mail sended', result.response);
+        console.log('email sent', result.response);
       }
     });
     const currentUser = await user.update({ reset_token: resetToken });
     console.log(currentUser);
-    if (!currentUser) {
-      return res.status(404).send({
-        message: 'No user of this id '
-      });
-    }
-    else {
-      TRANSPORTER.sendMail(mailOptions, function (err, result) {
-        if (err) {
-          res.status(404).send({
-            message: 'Email not sent, Try again later'
-          });
-        }
-        else {
-          res.status(200).send({
-            message: 'Email sent'
-          });
-        }
-      });
-    }
   }
   else {
     return res.status(404).send({
@@ -101,7 +82,7 @@ exports.resetPassword = async (req, res) => {
           return res.status(400).json({ error: 'User with this token does not exist' });
         } else {
           user.update({ password: newPassword, reset_token: '' }).then(next => {
-            res.status(200).send({message: 'Password update'});
+            res.status(200).send({ message: 'Password update' });
           });
         }
       });
