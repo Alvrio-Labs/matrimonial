@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
       }
     }
     else {
-      return res.status(404).send({ message: 'User not found'});
+      return res.status(404).send({ message: 'User not found' });
     }
   } catch (error) {
     console.log(error);
@@ -39,8 +39,8 @@ exports.forgetPassword = async (req, res) => {
     where: { email: req.body.email }
   });
   if (user) {
-    const resetToken =  jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
-      expiresIn: '15min'
+    const resetToken = await jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
+      expiresIn: '10min'
     });
     const mailOptions = {
       from: process.env.EMAIL,
@@ -59,6 +59,7 @@ exports.forgetPassword = async (req, res) => {
       }
     });
     const currentUser = await user.update({ reset_token: resetToken });
+    //, (err , success) => {
     console.log(currentUser);
     if (!currentUser) {
       return res.status(404).send({
@@ -81,6 +82,32 @@ exports.forgetPassword = async (req, res) => {
     }
   }
   else {
+    return res.status(404).send({
+      message: 'No user of this id '
+    });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { newPassword, resetToken, reset_token } = req.body;
+  if (resetToken) {
+    jwt.verify(resetToken, process.env.RESET_PASSWORD_KEY, (err, next) => {
+      if (err) {
+        return res.status(401).json({
+          message: 'Incorrect or expired'
+        });
+      }
+      const user = USER.findOne({ where: { reset_token } }, (err, user)).then(user => {
+        if (err) {
+          return res.status(400).json({ error: 'User with this token does not exist' });
+        } else {
+          user.update({ password: newPassword, reset_token: '' }).then(user => {
+            res.status(200).send({ message: 'Password update' });
+          });
+        }
+      });
+    });
+  } else {
     return res.status(404).send({
       message: 'No user of this id '
     });
