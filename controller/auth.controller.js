@@ -101,7 +101,7 @@ exports.resetPassword = async (req, res) => {
         if (err) {
           return res.status(400).json({ error: 'User with this token does not exist' });
         } else {
-          user.update({ password: newPassword, reset_token: '' }).then(user => {
+          user.update({ password: newPassword, reset_token: '' }).then(next => {
             res.status(200).send({ message: 'Password update' });
           });
         }
