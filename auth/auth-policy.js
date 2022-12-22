@@ -1,5 +1,6 @@
 const JWT = require('jsonwebtoken');
-const __ = require('dotenv');
+// eslint-disable-next-line no-unused-vars
+const dotenv = require('dotenv');
 const VERIFYTOKEN = async (req, res, next) => {
   if (!req.headers['authorization']) {
     return res.status(401).send('Token missing');

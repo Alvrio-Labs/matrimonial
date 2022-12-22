@@ -2,7 +2,7 @@ const db = require('../models');
 const USER = db.User;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const TRANSPORTER = require('../utility/nodemailer');
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -30,5 +30,59 @@ exports.login = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.forgetPassword = async (req, res) => {
+  const { email } = req.body;
+  const user = await USER.findOne({
+    where: { email: req.body.email }
+  });
+  if (user) {
+    const resetToken =  jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
+      expiresIn: '15min'
+    });
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'To Change Password',
+      html: `
+        <h1>Clink on link to reset password</h1>
+        <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`
+    };
+    TRANSPORTER.sendMail(mailOptions, function (err, result) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        console.log('Mail sended', result.response);
+      }
+    });
+    const currentUser = await user.update({ reset_token: resetToken });
+    console.log(currentUser);
+    if (!currentUser) {
+      return res.status(404).send({
+        message: 'No user of this id '
+      });
+    }
+    else {
+      TRANSPORTER.sendMail(mailOptions, function (err, result) {
+        if (err) {
+          res.status(404).send({
+            message: 'Not sended , Try again later '
+          });
+        }
+        else {
+          res.status(200).send({
+            message: 'Email sended'
+          });
+        }
+      });
+    }
+  }
+  else {
+    return res.status(404).send({
+      message: 'No user of this id '
+    });
   }
 };
