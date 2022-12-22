@@ -12,7 +12,7 @@ const userCreateSchema = Joi.object({
 });
 
 // validation with schema to create a user
-const userCreateValidation = async (req, res, next) => {
+exports.createUserValidation = async (req, res, next) => {
   const value = userCreateSchema.validate(req.body);
   if (value.error) {
     res.json({
@@ -30,7 +30,7 @@ const userGetSchema = Joi.object({
 });
 
 // validation with schema to get a user data
-const userGetValidation = async (req, res, next) => {
+exports.getUserValidation = async (req, res, next) => {
   const value = userGetSchema.validate(req.body);
   if (value.error) {
     res.json({
@@ -48,7 +48,7 @@ const userDeleteSchema = Joi.object({
 });
 
 // validation with schema to get a user data
-const userDeleteValidation = async (req, res, next) => {
+exports.deleteUserValidation = async (req, res, next) => {
   const value = userDeleteSchema.validate(req.body);
   if (value.error) {
     res.json({
@@ -72,7 +72,7 @@ const userUpdateSchema = Joi.object({
 });
 
 // validation with schema to create a user
-const userUpdateValidation = async (req, res, next) => {
+exports.updateUserValidation = async (req, res, next) => {
   const value = userUpdateSchema.validate(req.body);
   if (value.error) {
     res.json({
@@ -82,8 +82,4 @@ const userUpdateValidation = async (req, res, next) => {
   } else {
     next();
   }
-};
-
-module.exports = {
-  userCreateValidation, userGetValidation, userDeleteValidation, userUpdateValidation
 };
