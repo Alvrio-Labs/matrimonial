@@ -50,10 +50,14 @@ exports.resetPassword = async (req, res) => {
       }
       const user = USER.findOne({ where: { reset_token } }, (err, user)).then(user => {
         if (err) {
-          return res.status(400).json({ error: 'User with this token does not exist' });
+          return res.status(400).json({ 
+            error: 'User with this token does not exist'
+          });
         } else {
           user.update({ password: newPassword, reset_token: '' }).then(next => {
-            res.status(200).send({ message: 'Password update' });
+            res.status(200).send({
+              message: 'Password update'
+            });
           });
         }
       });
@@ -87,7 +91,9 @@ exports.login = async (req, res) => {
       }
     }
     else {
-      return res.status(404).send({ message: 'User not found' });
+      return res.status(404).send({
+        message: 'User not found'
+      });
     }
   } catch (error) {
     console.log(error);
