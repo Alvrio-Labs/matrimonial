@@ -15,8 +15,7 @@ const userCreateSchema = Joi.object({
 exports.createUserValidation = async (req, res, next) => {
   const value = userCreateSchema.validate(req.body);
   if (value.error) {
-    res.json({
-      success: 0,
+    res.status(400).json({
       message: value.error.details[0].message
     });
   } else {
@@ -33,8 +32,7 @@ const userGetSchema = Joi.object({
 exports.getUserValidation = async (req, res, next) => {
   const value = userGetSchema.validate(req.body);
   if (value.error) {
-    res.json({
-      success: 0,
+    res.status(400).json({
       message: value.error.details[0].message
     });
   } else {
@@ -51,8 +49,7 @@ const userDeleteSchema = Joi.object({
 exports.deleteUserValidation = async (req, res, next) => {
   const value = userDeleteSchema.validate(req.body);
   if (value.error) {
-    res.json({
-      success: 0,
+    res.status(400).json({
       message: value.error.details[0].message
     });
   } else {
@@ -75,8 +72,7 @@ const userUpdateSchema = Joi.object({
 exports.updateUserValidation = async (req, res, next) => {
   const value = userUpdateSchema.validate(req.body);
   if (value.error) {
-    res.json({
-      success: 0,
+    res.status(400).json({
       message: value.error.details[0].message
     });
   } else {
