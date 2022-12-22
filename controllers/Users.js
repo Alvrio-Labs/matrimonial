@@ -5,13 +5,13 @@ const bcrypt = require('bcrypt');
 exports.create = async (req, res) => {
   const hashpassword = await bcrypt.hash(req.body.password, 10);
   const newUser = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
     email: req.body.email,
     phone: req.body.phone,
     password: hashpassword,
     gender: req.body.gender,
-    dateOfBirth: req.body.dateOfBirth
+    date_of_birth: req.body.date_of_birth
   };
   try {
     const saveperson = await USER.create(newUser);
@@ -20,6 +20,7 @@ exports.create = async (req, res) => {
     console.log(err);
   }
 };
+
 exports.findAll = (req, res) => {
   USER.findAll()
     .then(User => {

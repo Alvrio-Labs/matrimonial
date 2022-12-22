@@ -6,17 +6,16 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
     }
   }
   User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    first_name: DataTypes.STRING,
+    last_name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     phone: DataTypes.INTEGER,
     gender: DataTypes.ENUM(gender),
-    dateOfBirth: DataTypes.DATE
+    date_of_birth: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'User',

@@ -10,10 +10,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      first_name: {
         type: Sequelize.STRING
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING
       },
       email: {
@@ -28,7 +28,7 @@ module.exports = {
       gender: {
         type: Sequelize.ENUM(gender)
       },
-      dateOfBirth: {
+      date_of_birth: {
         type: Sequelize.DATE
       },
       createdAt: {
