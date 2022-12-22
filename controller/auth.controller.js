@@ -3,35 +3,6 @@ const USER = db.User;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const TRANSPORTER = require('../utility/nodemailer');
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await USER.findOne({
-      where: { email: req.body.email }
-    });
-    if (user) {
-      const isValidPassword = bcrypt.compare(password, user.password);
-      if (user.email == email && isValidPassword) {
-        const jwtToken = jwt.sign({ isValidPassword: user }, process.env.SECRET_KEY, {
-          expiresIn: process.env.EXPIRY_IN
-        });
-        return res.json({
-          success: 1,
-          message: 'Successful',
-          token: jwtToken
-        });
-      }
-      else {
-        res.send('Invalid username or password');
-      }
-    }
-    else {
-      return res.status(404).send({ message: 'User not found' });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 exports.forgetPassword = async (req, res) => {
   const { email } = req.body;
@@ -40,7 +11,7 @@ exports.forgetPassword = async (req, res) => {
   });
   if (user) {
     const resetToken = jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
-      expiresIn: '30min'
+      expiresIn: process.env.EXPIRY_IN
     });
     const mailOptions = {
       from: process.env.EMAIL,
@@ -91,5 +62,34 @@ exports.resetPassword = async (req, res) => {
     return res.status(404).send({
       message: 'User with this id does not exist'
     });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await USER.findOne({
+      where: { email: req.body.email }
+    });
+    if (user) {
+      const isValidPassword = bcrypt.compare(password, user.password);
+      if (user.email == email && isValidPassword) {
+        const jwtToken = jwt.sign({'email' : user.email}, process.env.SECRET_KEY, {
+          expiresIn: process.env.EXPIRY_IN
+        });
+        return res.status(200).json({
+          message: 'Successful',
+          token: jwtToken
+        });
+      }
+      else {
+        res.send('Invalid username or password');
+      }
+    }
+    else {
+      return res.status(404).send({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
