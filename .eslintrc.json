@@ -11,14 +11,13 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "no-console": "warn",
         "no-undef": "error",
         "semi": "error",
         "semi-spacing": "error",
         "no-unused-vars": [
             "error",
             {
-                "argsIgnorePattern": "req|res|next|__|models|process.env."
+                "argsIgnorePattern": "req|res|next|__|Sequelize|models|process.env."
             }
         ],
         "indent": [
