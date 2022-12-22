@@ -1,7 +1,7 @@
 const JWT = require('jsonwebtoken');
-// eslint-disable-next-line no-unused-vars
-const dotenv = require('dotenv');
-const VERIFYTOKEN = async (req, res, next) => {
+const __ = require('dotenv');
+
+const VERIFY_TOKEN = async (req, res, next) => {
   if (!req.headers['authorization']) {
     return res.status(401).send('Token missing');
   }
@@ -10,8 +10,7 @@ const VERIFYTOKEN = async (req, res, next) => {
   const token = bearerToken[1];
   JWT.verify(token, process.env.SECRET_KEY, (err, payload) => {
     if (err) {
-      res.json({
-        success: 0,
+      res.status(403).json({
         message: 'Invalid token'
       });
     }
@@ -22,5 +21,5 @@ const VERIFYTOKEN = async (req, res, next) => {
 };
 
 module.exports = {
-  VERIFYTOKEN
+  VERIFY_TOKEN
 };

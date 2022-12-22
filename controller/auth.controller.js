@@ -13,7 +13,7 @@ exports.login = async (req, res) => {
       const isValidPassword = bcrypt.compare(password, user.password);
       if (user.email == email && isValidPassword) {
         const jwtToken = jwt.sign({ isValidPassword: user }, process.env.SECRET_KEY, {
-          expiresIn: '10m'
+          expiresIn: process.env.EXPIRY_IN
         });
         return res.json({
           success: 1,
@@ -59,7 +59,6 @@ exports.forgetPassword = async (req, res) => {
       }
     });
     const currentUser = await user.update({ reset_token: resetToken });
-    //, (err , success) => {
     console.log(currentUser);
     if (!currentUser) {
       return res.status(404).send({
@@ -70,12 +69,12 @@ exports.forgetPassword = async (req, res) => {
       TRANSPORTER.sendMail(mailOptions, function (err, result) {
         if (err) {
           res.status(404).send({
-            message: 'Not sended , Try again later '
+            message: 'Email not sent, Try again later'
           });
         }
         else {
           res.status(200).send({
-            message: 'Email sended'
+            message: 'Email sent'
           });
         }
       });
@@ -83,7 +82,7 @@ exports.forgetPassword = async (req, res) => {
   }
   else {
     return res.status(404).send({
-      message: 'No user of this id '
+      message: 'No user of this id'
     });
   }
 };
@@ -102,14 +101,14 @@ exports.resetPassword = async (req, res) => {
           return res.status(400).json({ error: 'User with this token does not exist' });
         } else {
           user.update({ password: newPassword, reset_token: '' }).then(next => {
-            res.status(200).send({ message: 'Password update' });
+            res.status(200).send({message: 'Password update'});
           });
         }
       });
     });
   } else {
     return res.status(404).send({
-      message: 'No user of this id '
+      message: 'User with this id does not exist'
     });
   }
 };
