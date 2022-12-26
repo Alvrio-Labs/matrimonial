@@ -6,3 +6,10 @@ user :
     errorMessage: Invalid mobile number
   gender:
     type: ["Male", "Female", "Others"]
+    errorMessage: Select a gender
+  firstName:
+    max: 50
+    min: 2
+  lastName:
+    max: 50
+    min: 2  
