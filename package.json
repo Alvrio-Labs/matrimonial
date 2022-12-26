@@ -9,14 +9,15 @@
     "start:test": "node index.js dotenv -e .env.test",
     "db:create:development": "npx sequelize-cli db:create --env development",
     "db:create:production": "npx sequelize-cli db:create --env production",
-    "db:create:test": "npx sequelize-cli db:create --env production",
+    "db:create:test": "npx sequelize-cli db:create --env test",
     "lint": "eslint .",
-    "db:migrate:development": "set NODE_ENV=development && npx sequelize-cli db:migrate --env development",
-    "db:migrate:production": "set NODE_ENV=production&& npx sequelize-cli db:migrate --env production",
-    "db:migrate:test:": "set NODE_ENV=test && npx sequelize-cli db:migrate --env test",
-    "db:seed:development": "set NODE_ENV=development&& npx sequelize-cli db:seed:all --env development",
+    "db:migrate:development": "npx sequelize-cli db:migrate --env development",
+    "db:migrate:production": "npx sequelize-cli db:migrate --env production",
+    "db:migrate:test:": "npx sequelize-cli db:migrate --env test",
+    "db:seed:development": "npx sequelize-cli db:seed:all --env development",
     "db:seed:production": "npx sequelize-cli db:seed:all --env production",
-    "db:seed:test": "npx sequelize-cli db:seed:all --env test"
+    "db:seed:test": "npx sequelize-cli db:seed:all --env test",
+    "start": "cross-env NODE_ENV=development node index.js "
   },
   "repository": {
     "type": "git",
@@ -31,14 +32,17 @@
   "homepage": "https://github.com/Alvrio-Labs/matrimonial#readme",
   "dependencies": {
     "config": "^3.3.8",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.8.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "postgres": "^3.3.2",
     "sequelize": "^6.28.0",
-    "sequelize-cli": "^6.5.2"
+    "sequelize-cli": "^6.5.2",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "eslint": "^8.30.0"
