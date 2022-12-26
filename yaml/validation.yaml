@@ -1,0 +1,3 @@
+userValidation :
+  passwordMessage : password must contain number,upper char , lower char , special char
+  mobile : Invalid mobile number
