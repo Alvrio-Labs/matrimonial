@@ -9,7 +9,7 @@ const userCreateSchema = Joi.object({
   last_name: Joi.string().required().max(50).min(2),
   email: Joi.string().min(3).required().email(),
   phone: Joi.number().integer().min(1000000000).max(9999999999).message(data.user.mobile.errorMessage).required(),
-  gender: Joi.string().valid(data.userValidation.gender).required(),
+  gender: Joi.string().valid(...data.user.gender.type).required(),
   date_of_birth: Joi.string().required(),
   password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required()
 });
@@ -29,7 +29,7 @@ const userGetSchema = Joi.object({
   id: Joi.string()
 });
 // validation with schema to get a user data
-exports.getUserValidation = async (req, res, next) => {
+const getUserValidation = async (req, res, next) => {
   const value = userGetSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -43,7 +43,7 @@ const userDeleteSchema = Joi.object({
   id: Joi.string()
 });
 // validation with schema to get a user data
-exports.deleteUserValidation = async (req, res, next) => {
+const deleteUserValidation = async (req, res, next) => {
   const value = userDeleteSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -59,12 +59,12 @@ const userUpdateSchema = Joi.object({
   last_name: Joi.string().required().max(50).min(2),
   email: Joi.string().min(3).required().email(),
   phone: Joi.number().integer().min(1000000000).max(9999999999).message(data.user.mobile.errorMessage).required(),
-  gender: Joi.string().valid(data.userValidation.gender).required(),
+  gender: Joi.string().valid(...data.user.gender.type).required(),
   date_of_birth: Joi.string().required(),
   password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required()
 });
 // validation with schema to create a user
-exports.updateUserValidation = async (req, res, next) => {
+const updateUserValidation = async (req, res, next) => {
   const value = userUpdateSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -75,7 +75,6 @@ exports.updateUserValidation = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
-  userCreateValidation,
+  userCreateValidation, getUserValidation, deleteUserValidation, updateUserValidation
 };
