@@ -4,7 +4,7 @@ const YAML = require('js-yaml');
 const validation = fs.readFileSync('../yaml/validation.yaml');
 const data = YAML.load(validation);
 // schema to create a user
-const userCreateSchema = Joi.object({
+const createSchema = Joi.object({
   first_name: Joi.string().required().max(50).min(2),
   last_name: Joi.string().required().max(50).min(2),
   email: Joi.string().min(3).required().email(),
@@ -14,8 +14,8 @@ const userCreateSchema = Joi.object({
   password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required()
 });
 // validation with schema to create a user
-const userCreateValidation = async (req, res, next) => {
-  const value = await userCreateSchema.validate(req.body);
+const createValidation = async (req, res, next) => {
+  const value = await createSchema.validate(req.body);
   if (value.error) {
     res.json({
       success: 0,
@@ -25,12 +25,12 @@ const userCreateValidation = async (req, res, next) => {
     next();
   }
 };
-const userGetSchema = Joi.object({
+const getSchema = Joi.object({
   id: Joi.string()
 });
 // validation with schema to get a user data
-const getUserValidation = async (req, res, next) => {
-  const value = userGetSchema.validate(req.body);
+const getValidation = async (req, res, next) => {
+  const value = getSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
       message: value.error.details[0].message
@@ -39,12 +39,12 @@ const getUserValidation = async (req, res, next) => {
     next();
   }
 };
-const userDeleteSchema = Joi.object({
+const deleteSchema = Joi.object({
   id: Joi.string()
 });
 // validation with schema to get a user data
-const deleteUserValidation = async (req, res, next) => {
-  const value = userDeleteSchema.validate(req.body);
+const deleteValidation = async (req, res, next) => {
+  const value = deleteSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
       message: value.error.details[0].message
@@ -54,7 +54,7 @@ const deleteUserValidation = async (req, res, next) => {
   }
 };
 // schema to create a user
-const userUpdateSchema = Joi.object({
+const updateSchema = Joi.object({
   first_name: Joi.string().required().max(50).min(2),
   last_name: Joi.string().required().max(50).min(2),
   email: Joi.string().min(3).required().email(),
@@ -64,8 +64,8 @@ const userUpdateSchema = Joi.object({
   password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required()
 });
 // validation with schema to create a user
-const updateUserValidation = async (req, res, next) => {
-  const value = userUpdateSchema.validate(req.body);
+const updateValidation = async (req, res, next) => {
+  const value = updateSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
       message: value.error.details[0].message
@@ -76,5 +76,5 @@ const updateUserValidation = async (req, res, next) => {
 };
 
 module.exports = {
-  userCreateValidation, getUserValidation, deleteUserValidation, updateUserValidation
+  createValidation, getValidation, deleteValidation, updateValidation
 };
