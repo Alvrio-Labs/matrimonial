@@ -8,10 +8,10 @@ const createSchema = Joi.object({
   first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
   last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
   email: Joi.string().min(3).required().email(),
-  phone: Joi.number().integer().min(1000000000).max(9999999999).message(data.user.mobile.errorMessage).required(),
+  phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max).message(data.user.mobile.errorMessage).required(),
   gender: Joi.string().valid(...data.user.gender.type).message(data.user.gender.errorMessage).required(),
   date_of_birth: Joi.string().required(),
-  password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required()
+  password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(data.user.password.min).message(data.user.password.errorMessage).required()
 });
 // validation with schema to create a user
 const createValidation = async (req, res, next) => {
@@ -55,13 +55,13 @@ const deleteValidation = async (req, res, next) => {
 };
 // schema to create a user
 const updateSchema = Joi.object({
-  first_name: Joi.string().required().max(50).min(2),
-  last_name: Joi.string().required().max(50).min(2),
+  first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
+  last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
   email: Joi.string().min(3).required().email(),
-  phone: Joi.number().integer().min(1000000000).max(9999999999).message(data.user.mobile.errorMessage).required(),
+  phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max).message(data.user.mobile.errorMessage).required(),
   gender: Joi.string().valid(...data.user.gender.type).required(),
   date_of_birth: Joi.string().required(),
-  password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required()
+  password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(data.user.password.min).message(data.user.password.errorMessage).required()
 });
 // validation with schema to create a user
 const updateValidation = async (req, res, next) => {

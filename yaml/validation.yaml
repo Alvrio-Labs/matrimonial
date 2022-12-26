@@ -2,8 +2,11 @@ user :
   password: 
     errorMessage: password must contain number,upper char , lower char , special char
     regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+    min: 8
   mobile:
     errorMessage: Invalid mobile number
+    min: 1000000000
+    max: 9999999999
   gender:
     type: ["Male", "Female", "Others"]
     errorMessage: Select a gender
@@ -12,4 +15,5 @@ user :
     min: 2
   lastName:
     max: 50
-    min: 2  
+    min: 2 
+  
