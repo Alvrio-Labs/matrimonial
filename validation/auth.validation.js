@@ -1,4 +1,8 @@
 const Joi = require('joi');
+const fs = require('fs');
+const YAML = require('js-yaml');
+const validation = fs.readFileSync('../yaml/validation.yaml');
+const data = YAML.load(validation);
 
 //  schema to login
 const userLoginSchema = Joi.object({
@@ -37,7 +41,7 @@ exports.userForgotPasswordValidation = async (req, res, next) => {
 
 //  schema to reset password
 const userResetPasswordSchema = Joi.object({
-  newPassword: Joi.string().pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)).min(8).message('password must contain number,upper char , lower char , special char').required(),
+  newPassword: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required(),
   reset_token: Joi.required()
 });
 

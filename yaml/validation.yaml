@@ -1,3 +1,6 @@
-userValidation :
-  passwordMessage : password must contain number,upper char , lower char , special char
-  mobile : Invalid mobile number
+user :
+  password: 
+    errorMessage: password must contain number,upper char , lower char , special char
+    regex: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/"
+  mobile:
+    errorMessage: Invalid mobile number
