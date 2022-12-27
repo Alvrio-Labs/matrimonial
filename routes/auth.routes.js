@@ -1,6 +1,6 @@
 module.exports = app => {
   const auth = require('../controllers/auth.controller');
-  const { AuthValidation } = require('../validation/auth.validation');
+  const { AuthValidation } = require('../validations/auth.validation');
   const router = require('express').Router();
   
   router.post('/login', AuthValidation.loginValidation, auth.login);
