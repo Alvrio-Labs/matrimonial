@@ -1,6 +1,6 @@
 const JWT = require('jsonwebtoken');
 
-const VERIFY_TOKEN = async (req, res) => {
+const verifyToken = async (req, res) => {
   if (!req.headers.authorization) {
     return res.status(401).send('Token missing');
   }
@@ -20,5 +20,5 @@ const VERIFY_TOKEN = async (req, res) => {
 };
 
 module.exports = {
-  VERIFY_TOKEN,
+  verifyToken,
 };

@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const db = require('../models');
 const User = db.User;
 const TRANSPORTER = require('../utility/nodemailer');
-// const sendEmail = require('../utility/nodemailer');
 
 exports.forgetPassword = async (req, res) => {
   const { email } = req.body;
@@ -75,7 +74,6 @@ exports.resetPassword = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const result = await User.findOne({ where: { email } });
     if (result != null) {
       const isMatch = await bcrypt.compare(password, result.password);
@@ -97,5 +95,8 @@ exports.login = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
+    return res.status(500).send({
+      message: error
+    });
   }
 };
