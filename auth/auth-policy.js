@@ -10,7 +10,7 @@ const VERIFY_TOKEN = async (req, res, next) => {
   JWT.verify(token, process.env.SECRET_KEY, (err, next) => {
     if (err) {
       res.status(403).json({
-        message: 'Invalid token'
+        message: 'Invalid token',
       });
     }
     else {

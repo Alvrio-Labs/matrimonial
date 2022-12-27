@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const UserAuth = require('../controllers/auth.controller');
   const {   userResetPasswordValidation, userForgotPasswordValidation, userLoginValidation
   } = require('../validations/auth.validation');
