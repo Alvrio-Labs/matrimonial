@@ -1,16 +1,15 @@
 const JWT = require('jsonwebtoken');
-const _ = require('dotenv');
-const VERIFYTOKEN = async (req, res, next) => {
+
+const VERIFY_TOKEN = async (req, res, next) => {
   if (!req.headers['authorization']) {
     return res.status(401).send('Token missing');
   }
-  var authHeader = req.headers['authorization'];
-  var bearerToken = authHeader.split(' ');
+  const authHeader = req.headers['authorization'];
+  const bearerToken = authHeader.split(' ');
   const token = bearerToken[1];
-  JWT.verify(token, process.env.SECRET_KEY, (err, payload) => {
+  JWT.verify(token, process.env.SECRET_KEY, (err, next) => {
     if (err) {
-      res.json({
-        success: 0,
+      res.status(403).json({
         message: 'Invalid token'
       });
     }
@@ -21,5 +20,5 @@ const VERIFYTOKEN = async (req, res, next) => {
 };
 
 module.exports = {
-  VERIFYTOKEN
+  VERIFY_TOKEN
 };

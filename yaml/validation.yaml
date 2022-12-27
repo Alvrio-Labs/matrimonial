@@ -1,0 +1,19 @@
+user :
+  password: 
+    errorMessage: password must contain number,upper char , lower char , special char
+    regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+  mobile:
+    errorMessage: Invalid mobile number
+  gender:
+    type: ["Male", "Female", "Others"]
+
+status:
+ get:
+   errorMessage: Not found some error occurred while retrieving task.
+ delete:
+   errorMessage: Cannot delete user with id=
+   deleteSuccuessfully: No Content user was deleted successfully!
+ update:
+   updatedsuccessfully: Accepted user was updated successfully
+   issueMessage: Cannot update user with id=
+   errorMessage: Not Found Error updating User with id=

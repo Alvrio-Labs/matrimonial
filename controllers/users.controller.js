@@ -1,11 +1,15 @@
 const db = require('../models');
 const USER = db.User;
 const bcrypt = require('bcrypt');
+const fs = require('fs');
+const YAML = require('js-yaml');
+const validation = fs.readFileSync('yaml/validation.yaml');
+const data = YAML.load(validation);
 
 exports.create = async (req, res) => {
   const hashpassword = await bcrypt.hash(req.body.password, 10);
   const newUser = {
-    first_name: req.body.first_name,
+    first_name: req.body. first_name,
     last_name: req.body.last_name,
     email: req.body.email,
     phone: req.body.phone,
@@ -20,7 +24,6 @@ exports.create = async (req, res) => {
     console.log(err);
   }
 };
-
 exports.findAll = (req, res) => {
   USER.findAll()
     .then(User => {
@@ -28,7 +31,7 @@ exports.findAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send(
-        { message: err.message || 'Some error occurred while retrieving task.' }
+        { message: err.message || data.status.get.errorMessage }
       );
     });
 };
@@ -41,11 +44,11 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.status(200).send({
-          message: 'User was deleted successfully!'
+          message: data.status.delete.deleteSuccuessfully
         });
       } else {
         res.status(404).send({
-          message: `Cannot delete user with id=${id}`
+          message: data.status.delete.errorMessage + id
         });
       }
     });
@@ -59,17 +62,17 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: 'Tutorial was updated successfully.'
+          message: data.status.update.updatedsuccessfully
         });
       } else {
         res.send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+          message:data.status.update.issueMessage + id
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error updating Tutorial with id=' + id
+        message: data.status.update.errorMessage + id
       });
     });
 };
