@@ -5,15 +5,27 @@
         "es2021": true,
         "node": true
     },
-    "extends": "eslint:recommended",
-    "overrides": [],
+    "extends": "airbnb-base",
+    "overrides": [
+    ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "rules": {
+        "max-len": ["error", { "code": 150 }],
+        "comma-dangle": "off",
+        "no-else-return":"off",
+        "import/newline-after-import": "off",
+        "quote-props": "off",
+        "global-require": "off",
+        "import/no-dynamic-require": "off",
+        "prefer-destructuring": "off",
+        "newline-per-chained-call": "off",
         "no-undef": "error",
+        "arrow-body-style": "off",
         "semi": "error",
         "semi-spacing": "error",
+        "consistent-return": "warn",
         "no-unused-vars": [
             "error",
             {

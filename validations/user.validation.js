@@ -19,28 +19,28 @@ const createValidation = async (req, res, next) => {
   if (value.error) {
     res.json({
       success: 0,
-      message: value.error.details[0].message
+      message: value.error.details[0].message,
     });
   } else {
     next();
   }
 };
 const getSchema = Joi.object({
-  id: Joi.string()
+  id: Joi.string(),
 });
 // validation with schema to get a user data
 const getValidation = async (req, res, next) => {
   const value = getSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
-      message: value.error.details[0].message
+      message: value.error.details[0].message,
     });
   } else {
     next();
   }
 };
 const deleteSchema = Joi.object({
-  id: Joi.string()
+  id: Joi.string(),
 });
 // validation with schema to get a user data
 const deleteValidation = async (req, res, next) => {
@@ -68,7 +68,7 @@ const updateValidation = async (req, res, next) => {
   const value = updateSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
-      message: value.error.details[0].message
+      message: value.error.details[0].message,
     });
   } else {
     next();
@@ -76,5 +76,5 @@ const updateValidation = async (req, res, next) => {
 };
 
 module.exports = {
-  createValidation, getValidation, deleteValidation, updateValidation
+  createValidation, getValidation, deleteValidation, updateValidation,
 };
