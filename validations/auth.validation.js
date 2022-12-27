@@ -1,20 +1,20 @@
 const Joi = require('joi');
 const fs = require('fs');
 const YAML = require('js-yaml');
-const validation = fs.readFileSync('../yaml/validation.yaml');
+const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 
 //  schema to login
-const loginSchema = Joi.object({
+const userLoginSchema = Joi.object({
   email: Joi.required(),
   password: Joi.required()
 });
 
 // validation with schema to login
-exports.loginValidation = async (req, res, next) => {
-  const value =  loginSchema.validate(req.body);
+const userLoginValidation = async (req, res, next) => {
+  const value = await userLoginSchema.validate(req.body);
   if (value.error) {
-    res.status(400).json({      
+    res.status(400).json({
       message: value.error.details[0].message
     });
   } else {
@@ -23,15 +23,15 @@ exports.loginValidation = async (req, res, next) => {
 };
 
 //  schema to forget Password
-const forgertPassword = Joi.object({
+const userForgertPassword = Joi.object({
   email: Joi.required()
 });
 
 // validation to forget password
-exports.forgotPasswordValidation = async (req, res, next) => {
-  const value =  forgertPassword.validate(req.body);
+const userForgotPasswordValidation = async (req, res, next) => {
+  const value = await userForgertPassword.validate(req.body);
   if (value.error) {
-    res.status(400).json({     
+    res.status(400).json({
       message: value.error.details[0].message
     });
   } else {
@@ -40,14 +40,14 @@ exports.forgotPasswordValidation = async (req, res, next) => {
 };
 
 //  schema to reset password
-const resetPasswordSchema = Joi.object({
-  newPassword: Joi.string().pattern(new RegExp(data.user.password.regex)).min(data.user.password.min).message(data.user.password.errorMessage).required(),
+const userResetPasswordSchema = Joi.object({
+  newPassword: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage).required(),
   reset_token: Joi.required()
 });
 
 // validation to reset password
-exports.resetPasswordValidation = async (req, res, next) => {
-  const value = resetPasswordSchema.validate(req.body);
+const userResetPasswordValidation = async (req, res, next) => {
+  const value = userResetPasswordSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
       message: value.error.details[0].message
@@ -55,4 +55,8 @@ exports.resetPasswordValidation = async (req, res, next) => {
   } else {
     next();
   }
+};
+
+module.exports = {
+  userResetPasswordValidation, userForgotPasswordValidation, userLoginValidation
 };
