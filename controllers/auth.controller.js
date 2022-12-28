@@ -73,31 +73,24 @@ exports.resetPassword = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const result = await User.findOne({ where: { email } });
-    if (result != null) {
-      const isMatch = await bcrypt.compare(password, result.password);
-      if (result.email === email && isMatch) {
-        const jwtToken = jwt.sign({ isMatch: result }, process.env.SECRET_KEY, {
-          expiresIn: process.env.EXPIRY_IN
-        });
-        return res.json({
-          message: 'Successful',
-          token: jwtToken
-        });
-      } else {
-        res.status(401).send('<h1>email or password not vaild</h1>');
-      }
-    } else {
-      return res.status(404).send({
-        message: 'User not found'
+  const { email, password } = req.body;
+  const result = await User.findOne({ where: { email } });
+  if (result != null) {
+    const isMatch = await bcrypt.compare(password, result.password);
+    if (result.email === email && isMatch) {
+      const jwtToken = jwt.sign({ isMatch: result }, process.env.SECRET_KEY, {
+        expiresIn: process.env.EXPIRY_IN
       });
+      return res.json({
+        message: 'Successful',
+        token: jwtToken
+      });
+    } else {
+      res.status(401).send('email or password not vaild');
     }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      message: error
+  } else {
+    return res.status(404).send({
+      message: 'User not found'
     });
   }
   return null;
