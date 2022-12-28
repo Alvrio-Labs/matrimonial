@@ -29,7 +29,7 @@
         "no-unused-vars": [
             "error",
             {
-                "argsIgnorePattern": "req|res|next|dotenv|_|Sequelize|models|process.env."
+                "argsIgnorePattern": "err|req|res|next|dotenv|_|Sequelize|models|process.env."
             }
         ],
         "indent": [
