@@ -5,12 +5,13 @@ const verifyToken = async (req, res) => {
     return res.status(401).send('Token missing');
   }
   const authHeader = req.headers.authorization.split(' ')[1];
-  JWT.verify(authHeader, process.env.SECRET_KEY, (err, next) => {
+  JWT.verify(authHeader, process.env.SECRET_KEY, (err, decoded, next) => {
     if (err) {
       res.status(403).json({
         message: 'Invalid token',
       });
     } else {
+      req.userId = decoded.id;
       next();
     }
   });
