@@ -69,6 +69,7 @@ exports.resetPassword = async (req, res) => {
       message: 'User with this id does not exist'
     });
   }
+  return null;
 };
 
 exports.login = async (req, res) => {
@@ -99,4 +100,5 @@ exports.login = async (req, res) => {
       message: error
     });
   }
+  return null;
 };
