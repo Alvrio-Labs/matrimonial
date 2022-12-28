@@ -1,8 +1,8 @@
-'use strict';
-const gender = ['male','female','other'];
+const gender = ['male', 'female', 'other'];
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     phone: DataTypes.INTEGER,
     gender: DataTypes.ENUM(gender),
-    date_of_birth: DataTypes.DATE
+    date_of_birth: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'User',

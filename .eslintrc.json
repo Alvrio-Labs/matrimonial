@@ -6,35 +6,42 @@
         "node": true
     },
     "extends": "airbnb-base",
-    "overrides": [
-    ],
+    "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "rules": {
-        "max-len": ["error", { "code": 150 }],
-        "comma-dangle": "off",
-        "no-else-return":"off",
-        "import/newline-after-import": "off",
-        "quote-props": "off",
-        "global-require": "off",
-        "import/no-dynamic-require": "off",
-        "prefer-destructuring": "off",
-        "newline-per-chained-call": "off",
+        "no-console": "warn",
+        //* Avoid Bugs
         "no-undef": "error",
-        "arrow-body-style": "off",
         "semi": "error",
         "semi-spacing": "error",
-        "consistent-return": "warn",
-        "no-unused-vars": [
+        //* Best Practices
+        "eqeqeq": "warn",
+        "no-invalid-this": "error",
+        "no-return-assign": "error",
+        "no-unused-expressions": [
             "error",
             {
-                "argsIgnorePattern": "err|req|res|next|dotenv|_|Sequelize|models|process.env."
+                "allowTernary": true
             }
         ],
+        "no-useless-concat": "error",
+        "no-useless-return": "error",
+        "no-constant-condition": "warn",
+        "no-unused-vars": [
+            "warn",
+            {
+                "argsIgnorePattern": "req|res|next|__"
+            }
+        ],
+        //* Enhance Readability
         "indent": [
             "error",
-            2
+            2,
+            {
+                "SwitchCase": 1
+            }
         ],
         "no-mixed-spaces-and-tabs": "warn",
         "space-before-blocks": "error",
@@ -44,6 +51,19 @@
         "quotes": [
             "error",
             "single"
+        ],
+        //
+        "max-len": [
+            "error",
+            {
+                "code": 200
+            }
+        ],
+        "max-lines": [
+            "error",
+            {
+                "max": 500
+            }
         ],
         "keyword-spacing": "error",
         "multiline-ternary": [
@@ -57,6 +77,14 @@
             {
                 "max": 2,
                 "maxEOF": 1
+            }
+        ],
+        "no-whitespace-before-property": "error",
+        "nonblock-statement-body-position": "error",
+        "object-property-newline": [
+            "error",
+            {
+                "allowAllPropertiesOnSameLine": true
             }
         ],
         //* ES6

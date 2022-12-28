@@ -2,6 +2,7 @@ const YAML = require('js-yaml');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const db = require('../models');
+
 const USER = db.User;
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
@@ -15,7 +16,7 @@ exports.create = async (req, res) => {
     phone: req.body.phone,
     password: hashpassword,
     gender: req.body.gender,
-    date_of_birth: req.body.date_of_birth
+    date_of_birth: req.body.date_of_birth,
   };
   try {
     const saveperson = await USER.create(newUser);
@@ -31,48 +32,48 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send(
-        { message: err.message || data.status.get.errorMessage }
+        { message: err.message || data.status.get.errorMessage },
       );
     });
 };
 
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   USER.destroy({
-    where: { id: id }
+    where: { id: id },
   })
     .then((num) => {
       if (num === 1) {
         res.status(200).send({
-          message: data.status.delete.deleteSuccuessfully
+          message: data.status.delete.deleteSuccuessfully,
         });
       } else {
         res.status(404).send({
-          message: data.status.delete.errorMessage + id
+          message: data.status.delete.errorMessage + id,
         });
       }
     });
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params.id;
   USER.update(req.body, {
-    where: { id: id }
+    where: { id: id },
   })
     .then((num) => {
       if (num === 1) {
         res.send({
-          message: data.status.update.updatedsuccessfully
+          message: data.status.update.updatedsuccessfully,
         });
       } else {
         res.send({
-          message: data.status.update.issueMessage + id
+          message: data.status.update.issueMessage + id,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: data.status.update.errorMessage + id
+        message: data.status.update.errorMessage + id,
       });
     });
 };
