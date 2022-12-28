@@ -16,7 +16,10 @@
     "test:db:migrate:": "npx sequelize-cli db:migrate --env test",
     "development:db:seed": "npx sequelize-cli db:seed:all --env development",
     "production:db:seed": "npx sequelize-cli db:seed:all --env production",
-    "test:db:seed": "npx sequelize-cli db:seed:all --env test"
+    "test:db:seed": "npx sequelize-cli db:seed:all --env test",
+    "development:db:delete": "npx sequelize-cli db:drop --env development ",
+    "production:db:delete": "npx sequelize-cli db:drop --env production ",
+    "test:db:delete": "npx sequelize-cli db:drop --env test "
   },
   "repository": {
     "type": "git",
