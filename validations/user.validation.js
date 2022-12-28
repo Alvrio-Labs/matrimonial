@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const fs = require('fs');
 const YAML = require('js-yaml');
-const validation = fs.readFileSync('../yaml/validation.yaml');
+const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 // schema to create a user
 const userCreateSchema = Joi.object({

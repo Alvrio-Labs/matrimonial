@@ -6,3 +6,14 @@ user :
     errorMessage: Invalid mobile number
   gender:
     type: ["Male", "Female", "Others"]
+
+status:
+ get:
+   errorMessage: Not found some error occurred while retrieving task.
+ delete:
+   errorMessage: Cannot delete user with id=
+   deleteSuccuessfully: No Content user was deleted successfully!
+ update:
+   updatedsuccessfully: Accepted user was updated successfully
+   issueMessage: Cannot update user with id=
+   errorMessage: Not Found Error updating User with id=

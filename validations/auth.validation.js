@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const fs = require('fs');
 const YAML = require('js-yaml');
-const validation = fs.readFileSync('../yaml/validation.yaml');
+const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 
 //  schema to login
@@ -11,7 +11,7 @@ const userLoginSchema = Joi.object({
 });
 
 // validation with schema to login
-exports.userLoginValidation = async (req, res, next) => {
+const userLoginValidation = async (req, res, next) => {
   const value = await userLoginSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({      
@@ -28,7 +28,7 @@ const userForgertPassword = Joi.object({
 });
 
 // validation to forget password
-exports.userForgotPasswordValidation = async (req, res, next) => {
+const userForgotPasswordValidation = async (req, res, next) => {
   const value = await userForgertPassword.validate(req.body);
   if (value.error) {
     res.status(400).json({     
@@ -46,7 +46,7 @@ const userResetPasswordSchema = Joi.object({
 });
 
 // validation to reset password
-exports.userResetPasswordValidation = async (req, res, next) => {
+const userResetPasswordValidation = async (req, res, next) => {
   const value = userResetPasswordSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -55,4 +55,9 @@ exports.userResetPasswordValidation = async (req, res, next) => {
   } else {
     next();
   }
+};
+
+
+module.exports = {
+  userResetPasswordValidation, userForgotPasswordValidation, userLoginValidation
 };
