@@ -62,7 +62,8 @@ exports.forgetPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   const { newPassword, resetToken } = req.body;
   if (resetToken) {
-    jwt.verify(resetToken, process.env.RESET_PASSWORD_KEY).then((err, token) => {
+    const fpSalt = crypto.randomBytes(64).toString('base64');
+    jwt.verify(resetToken, fpSalt).then((err, token) => {
       if (err) {
         return res.status(401).json({
           message: 'Incorrect or expired',
