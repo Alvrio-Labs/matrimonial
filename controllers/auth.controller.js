@@ -1,7 +1,12 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const YAML = require('js-yaml');
+const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
+
+const validation = fs.readFileSync('yaml/validation.yaml');
+const data = YAML.load(validation);
 
 const { User } = db;
 const { TRANSPORTER } = require('../utility/nodemailer');
@@ -27,33 +32,33 @@ exports.forgetPassword = async (req, res) => {
     console.log('Token is ' + resetToken);
     TRANSPORTER.sendMail(mailOptions, (err, result) => {
       if (err) {
-        console.log(err);
+        res.status(404).send(err);
       } else {
-        console.log('Mail sended', result.response);
+        res.status(200).send(data.auth.forgotPassword.successMessage, result.response);
       }
     });
     const currentUser = await user.update({ reset_token: resetToken });
     console.log(currentUser);
     if (!currentUser) {
       res.status(404).send({
-        message: 'No user of this id ',
+        message: data.auth.forgotPassword.invalid,
       });
     } else {
       TRANSPORTER.sendMail(mailOptions, (err, result) => {
         if (err) {
           res.status(404).send({
-            message: 'Not sended , Try again later',
+            message: data.auth.forgotPassword.serverError,
           });
         } else {
           res.status(200).send({
-            message: 'Email sended',
+            message: data.auth.forgotPassword.successMessage,
           });
         }
       });
     }
   } else {
     return res.status(404).send({
-      message: 'No user of this id',
+      message: data.auth.forgotPassword.errorMessage,
     });
   }
   return null;
@@ -66,19 +71,19 @@ exports.resetPassword = async (req, res) => {
     jwt.verify(resetToken, fpSalt).then((err, token) => {
       if (err) {
         return res.status(401).json({
-          message: 'Incorrect or expired',
+          message: data.resetPassword.errorMessage,
         });
       }
 
       User.findOne({ where: { reset_token: token } }).then((error, user) => {
         if (error) {
           return res.status(400).json({
-            error: 'User with this token does not exist',
+            error: data.resetPassword.invalid,
           });
         }
         if (user) {
           user.update({ password: newPassword, reset_token: '' }).then(() => res.status(200).send({
-            message: 'Password update',
+            message: data.resetPassword.successMessage,
           }));
         }
         return null;
@@ -87,7 +92,7 @@ exports.resetPassword = async (req, res) => {
     });
   } else {
     return res.status(404).send({
-      message: 'User with this id does not exist',
+      message: data.resetPassword.notFound,
     });
   }
   return null;
@@ -103,15 +108,15 @@ exports.login = async (req, res) => {
         expiresIn: process.env.EXPIRY_IN,
       });
       res.json({
-        message: 'Successful',
+        message: data.login.successMessage,
         token: jwtToken,
       });
     } else {
-      return res.status(401).send('email or password not vaild');
+      return res.status(401).send(data.load.invalid);
     }
   } else {
     return res.status(404).send({
-      message: 'User not found',
+      message: data.load.errorMessage,
     });
   }
   return null;
