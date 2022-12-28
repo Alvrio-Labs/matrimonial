@@ -18,7 +18,7 @@ const createSchema = Joi.object({
     .required(),
 });
 // validation with schema to create a user
-const createValidation = async (req, res, next) => {
+const create = async (req, res, next) => {
   const value = await createSchema.validate(req.body);
   if (value.error) {
     res.json({
@@ -33,7 +33,7 @@ const getSchema = Joi.object({
   id: Joi.string(),
 });
 // validation with schema to get a user data
-const getValidation = async (req, res, next) => {
+const get = async (req, res, next) => {
   const value = getSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -71,7 +71,7 @@ const updateSchema = Joi.object({
     .required(),
 });
 // validation with schema to create a user
-const updateValidation = async (req, res, next) => {
+const update = async (req, res, next) => {
   const value = updateSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -83,5 +83,5 @@ const updateValidation = async (req, res, next) => {
 };
 
 module.exports = {
-  createValidation, getValidation, deleteValidation, updateValidation,
+  create, get, update, deleteValidation,
 };
