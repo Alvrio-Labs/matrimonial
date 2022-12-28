@@ -64,6 +64,7 @@ exports.resetPassword = async (req, res) => {
             message: 'Password update',
           }));
         }
+        return null;
       });
       return null;
     });
