@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-require('./routes/user')(app);
+require('./routes/user.routes')(app);
 require('./routes/auth.routes')(app);
 // set port, listen for requests
 app.listen(PORT, () => {
