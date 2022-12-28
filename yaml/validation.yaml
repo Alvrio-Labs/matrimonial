@@ -26,3 +26,7 @@ status:
    updatedsuccessfully: Accepted user was updated successfully
    issueMessage: Cannot update user with id=
    errorMessage: Not Found Error updating User with id=
+auth:
+  forgotPassword:
+    errorMessage: No user of this id
+    successMessage: email send 
