@@ -79,7 +79,7 @@ exports.login = async (req, res) => {
       const isMatch = await bcrypt.compare(password, result.password);
       if (result.email === email && isMatch) {
         const jwtToken = jwt.sign({ isMatch: result }, process.env.SECRET_KEY, {
-          expiresIn: '100h'
+          expiresIn: process.env.EXPIRY_IN
         });
         return res.json({
           message: 'Successful',
