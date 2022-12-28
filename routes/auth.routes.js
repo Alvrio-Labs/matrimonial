@@ -1,12 +1,10 @@
-module.exports = app => {
-  const UserAuth = require('../controllers/auth.controller');
-  const {   userResetPasswordValidation, userForgotPasswordValidation, userLoginValidation
-  } = require('../validations/auth.validation');
+module.exports = (app) => {
+  const auth = require('../controllers/auth.controller');
+  const { resetPasswordValidation, forgotPasswordValidation, loginValidation, } = require('../validations/auth.validation');
   const router = require('express').Router();
-  
-  router.post('/login', userLoginValidation, UserAuth.login);
-  router.post('/forget-password', userForgotPasswordValidation, UserAuth.forgetPassword);
-  router.post('/resetpassword', userResetPasswordValidation, UserAuth.resetPassword);
+  router.post('/login', loginValidation, auth.login);
+  router.post('/forget-password', forgotPasswordValidation, auth.forgetPassword);
+  router.post('/reset-password', resetPasswordValidation, auth.resetPassword);
 
-  app.use('/api' , router);
+  app.use('/api', router);
 };

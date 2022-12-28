@@ -4,20 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:production": "node index.js dotenv -e .env.production",
-    "start:development": "node index.js dotenv -e .env.development",
-    "start:test": "node index.js dotenv -e .env.test",
-    "db:create:development": "npx sequelize-cli db:create --env development",
-    "db:create:production": "npx sequelize-cli db:create --env production",
-    "db:create:test": "npx sequelize-cli db:create --env test",
+    "production:start": "nodemon server.js dotenv -e .env.production",
+    "development:start": "nodemon server.js dotenv -e .env.development",
+    "test:start": "nodemon server.js dotenv -e .env.test",
+    "development:db:create": "npx sequelize-cli db:create --env development",
+    "production:db:create": "npx sequelize-cli db:create --env production",
+    "test:db:create": "npx sequelize-cli db:create --env test",
     "lint": "eslint .",
-    "db:migrate:development": "npx sequelize-cli db:migrate --env development",
-    "db:migrate:production": "npx sequelize-cli db:migrate --env production",
-    "db:migrate:test:": "npx sequelize-cli db:migrate --env test",
-    "db:seed:development": "npx sequelize-cli db:seed:all --env development",
-    "db:seed:production": "npx sequelize-cli db:seed:all --env production",
-    "db:seed:test": "npx sequelize-cli db:seed:all --env test",
-    "start": "cross-env NODE_ENV=development node index.js "
+    "development:db:migrate": "npx sequelize-cli db:migrate --env development",
+    "production:db:migrate": "npx sequelize-cli db:migrate --env production",
+    "test:db:migrate:": "npx sequelize-cli db:migrate --env test",
+    "development:db:seed": "npx sequelize-cli db:seed:all --env development",
+    "production:db:seed": "npx sequelize-cli db:seed:all --env production",
+    "test:db:seed": "npx sequelize-cli db:seed:all --env test"
   },
   "repository": {
     "type": "git",
@@ -37,6 +36,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "joi": "^17.7.0",
+    "js-yaml": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.8.0",
     "pg": "^8.8.0",
@@ -47,6 +47,9 @@
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
-    "eslint": "^8.30.0"
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.20"
   }
 }

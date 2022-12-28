@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.SERVER_PORT || 3011;
 dotenv.config({
-  path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`)
+  path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`),
 });
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
