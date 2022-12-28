@@ -99,3 +99,12 @@ exports.login = async (req, res) => {
   }
   return null;
 };
+
+
+// const { forgetPassword, login, resetPassword } = require('../utility/mailer');
+
+// exports.forgetPassword = async (req, res) => {
+//   const forgotPasswordService = await forgetPassword(req.body);
+//   return res.json(forgotPasswordService);
+// };
+
