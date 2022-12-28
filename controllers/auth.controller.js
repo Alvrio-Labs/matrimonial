@@ -6,43 +6,6 @@ require('dotenv').config();
 const { User } = db;
 const { TRANSPORTER } = require('../utility/nodemailer');
 
-// exports.forgetPassword = async (req, res) => {
-//   const { email } = req.body;
-//   const user = await User.findOne({
-//     where: { email: req.body.email },
-//   });
-
-//   if (user) {
-//     const resetToken = jwt.sign(
-//       { id: req.body.id },
-//       process.env.RESET_PASSWORD_KEY,
-//       {
-//         expiresIn: process.env.EXPIRY_IN,
-//       },
-//     );
-//     const mailOptions = {
-//       from: process.env.EMAIL,
-//       to: email,
-//       subject: 'To Change Password',
-//       html: `
-//         <h1>Clink on link to reset password</h1>
-//         <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
-//     };
-//     sendmail(mailOptions, (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         console.log('email sent', result.response);
-//       }
-//     });
-//     user.update({ reset_token: resetToken });
-//   } else {
-//     return res.status(404).send({
-//       message: 'No user of this id',
-//     });
-//   }
-//   return '';
-// };
 exports.forgetPassword = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({
@@ -50,7 +13,7 @@ exports.forgetPassword = async (req, res) => {
   });
 
   if (user) {
-    const resetToken = await jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
+    const resetToken = jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
       expiresIn: '30min',
     });
     const mailOptions = {
