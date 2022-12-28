@@ -14,15 +14,15 @@ exports.forgetPassword = async (req, res) => {
 
   if (user) {
     const resetToken = jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
-      expiresIn: '30min',
+      expiresIn: process.env.EXPIRY_IN,
     });
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
       subject: 'To Change Password',
       html: `
-              <h1>Clink on link to reset password</h1>
-              <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
+        <h1>Clink on link to reset password</h1>
+        <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
     };
     console.log('Token is ' + resetToken);
     TRANSPORTER.sendMail(mailOptions, (err, result) => {

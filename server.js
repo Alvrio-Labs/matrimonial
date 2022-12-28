@@ -1,3 +1,7 @@
+require('dotenv').config();
+require('dotenv').config({ path: './.env.development' });
+require('dotenv').config({ path: './.env.test' });
+require('dotenv').config({ path: './.env.production' });
 const dotenv = require('dotenv');
 const path = require('path');
 const express = require('express');
