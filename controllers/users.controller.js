@@ -20,6 +20,7 @@ exports.create = async (req, res) => {
   };
   try {
     const saveperson = await USER.create(newUser);
+    res.send(saveperson);
     console.log(saveperson);
   } catch (err) {
     console.log(err);

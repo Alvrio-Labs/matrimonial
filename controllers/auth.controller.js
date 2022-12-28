@@ -1,10 +1,48 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require('../models');
+require('dotenv').config();
 
-const { User } = db.User;
-const { sendmail } = require('../utility/nodemailer');
+const { User } = db;
+const { TRANSPORTER } = require('../utility/nodemailer');
 
+// exports.forgetPassword = async (req, res) => {
+//   const { email } = req.body;
+//   const user = await User.findOne({
+//     where: { email: req.body.email },
+//   });
+
+//   if (user) {
+//     const resetToken = jwt.sign(
+//       { id: req.body.id },
+//       process.env.RESET_PASSWORD_KEY,
+//       {
+//         expiresIn: process.env.EXPIRY_IN,
+//       },
+//     );
+//     const mailOptions = {
+//       from: process.env.EMAIL,
+//       to: email,
+//       subject: 'To Change Password',
+//       html: `
+//         <h1>Clink on link to reset password</h1>
+//         <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
+//     };
+//     sendmail(mailOptions, (err, result) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log('email sent', result.response);
+//       }
+//     });
+//     user.update({ reset_token: resetToken });
+//   } else {
+//     return res.status(404).send({
+//       message: 'No user of this id',
+//     });
+//   }
+//   return '';
+// };
 exports.forgetPassword = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({
@@ -12,35 +50,50 @@ exports.forgetPassword = async (req, res) => {
   });
 
   if (user) {
-    const resetToken = jwt.sign(
-      { id: req.body.id },
-      process.env.RESET_PASSWORD_KEY,
-      {
-        expiresIn: process.env.EXPIRY_IN,
-      },
-    );
+    const resetToken = await jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
+      expiresIn: '30min',
+    });
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
       subject: 'To Change Password',
       html: `
-        <h1>Clink on link to reset password</h1>
-        <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
+              <h1>Clink on link to reset password</h1>
+              <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
     };
-    sendmail(mailOptions, (err, result) => {
+    console.log('Token is ' + resetToken);
+    TRANSPORTER.sendMail(mailOptions, (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        console.log('email sent', result.response);
+        console.log('Mail sended', result.response);
       }
     });
-    user.update({ reset_token: resetToken });
+    const currentUser = await user.update({ reset_token: resetToken });
+    console.log(currentUser);
+    if (!currentUser) {
+      res.status(404).send({
+        message: 'No user of this id ',
+      });
+    } else {
+      TRANSPORTER.sendMail(mailOptions, (err, result) => {
+        if (err) {
+          res.status(404).send({
+            message: 'Not sended , Try again later',
+          });
+        } else {
+          res.status(200).send({
+            message: 'Email sended',
+          });
+        }
+      });
+    }
   } else {
     return res.status(404).send({
       message: 'No user of this id',
     });
   }
-  return '';
+  return null;
 };
 
 exports.resetPassword = async (req, res) => {
