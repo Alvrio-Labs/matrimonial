@@ -4,7 +4,7 @@ const User = require('../controllers/users.controller');
 
 module.exports = (app) => {
   router.post('/', User.create);
-  router.get('/', User.findAll);
+  router.get('/:id', User.findOne);
   router.put('/:id', User.update);
   router.delete('/:id', User.delete);
   app.use('/api/users', router);
