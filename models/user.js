@@ -1,26 +1,95 @@
-const gender = ['male', 'female', 'other'];
-const {
-  Model,
-} = require('sequelize');
+// 'use strict';
+// const {
+//   Model
+// } = require('sequelize');
+// module.exports = (sequelize, DataTypes) => {
+//   class user extends Model {
+//     /**
+//      * Helper method for defining associations.
+//      * This method is not a part of Sequelize lifecycle.
+//      * The `models/index` file will call this method automatically.
+//      */
+//     static associate(models) {
+//       // define association here
+//     }
+//   }
+//   user.init({
+//     firstName: DataTypes.STRING,
+//     lastName: DataTypes.STRING,
+//     email: DataTypes.STRING,
+//     password: DataTypes.STRING
+//   }, {
+//     sequelize,
+//     modelName: 'user',
+//   });
+//   return user;
+// };
 
-module.exports = (sequelize, DataTypes) => {
+const userGender = ['Male', 'Female', 'Others'];
+const bcrypt = require('bcrypt');
+const { Sequelize, DataTypes, Model } = require('sequelize');
+
+module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
+      // define association here
     }
   }
+
   User.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    phone: DataTypes.INTEGER,
-    gender: DataTypes.ENUM(gender),
-    date_of_birth: DataTypes.DATE,
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: sequelize.literal('uuid_generate_v4()'),
+    },
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    last_name: {
+      type: DataTypes.STRING(25),
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
+    },
+    phone: {
+      type: DataTypes.STRING(15),
+    },
+    is_verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    password: {
+      type: DataTypes.STRING(250),
+    },
+    reset_token: {
+      type: DataTypes.STRING(250),
+    },
+    reset_token_expiry: {
+      type: DataTypes.DATE,
+    },
+    gender: {
+      type: DataTypes.ENUM(userGender),
+      allowNull: false,
+    },
+    date_of_birth: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   }, {
     sequelize,
     modelName: 'User',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
+    tableName: 'users',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   });
+
   return User;
 };
