@@ -40,26 +40,45 @@ exports.findOne = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const hashpassword = await bcrypt.hash(req.body.password, 10);
+  const hashPassword = await bcrypt.hash(req.body.password, 10);
   const userHash = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
     phone: req.body.phone,
-    password: hashpassword,
-    is_admin: true,
+    gender: req.body.gender,
+    date_of_birth: req.body.date_of_birth,
+    password: hashPassword,
   };
-  try {
-    const user = await User.create(userHash);
-    console.log(user);
-    res.status(201).send({
-      User: user,
-      message: data.controllers.admin.create.successMessage,
+  const dateOfBirth = req.body.date_of_birth;
+  const today = new Date();
+  const dateSplit = dateOfBirth.split('-');
+  const year = dateSplit[2];
+  const age = today.getFullYear() - year;
+  if (age >= 18) {
+    try {
+      const user = await User.create(userHash);
+      res.status(201).send({
+        User: {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          email: req.body.email,
+          phone: req.body.phone,
+          gender: req.body.gender,
+          date_of_birth: req.body.date_of_birth,
+        },
+        message: data.controllers.admin.create.successMessage,
+      });
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  } else {
+    res.status(406).send({
+      message: data.controllers.admin.create.errorMessage,
     });
-  } catch (error) {
-    console.log(error);
   }
 };
+
 exports.update = async (req, res) => {
   const user = await User.update(req.body, { where: { is_admin: 0, id: req.params.id } });
   if (!user) {

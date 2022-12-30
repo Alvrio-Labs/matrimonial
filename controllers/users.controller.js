@@ -7,7 +7,6 @@ const User = db.User;
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 
-// Create a user
 exports.create = async (req, res) => {
   const hashPassword = await bcrypt.hash(req.body.password, 10);
   const userHash = {
@@ -36,14 +35,14 @@ exports.create = async (req, res) => {
           gender: req.body.gender,
           date_of_birth: req.body.date_of_birth,
         },
-        message: 'User created',
+        message: data.controllers.user.create.successMessage,
       });
     } catch (error) {
       res.status(400).send(error);
     }
   } else {
     res.status(406).send({
-      message: 'User age is less than 18, cannot add.',
+      message: data.controllers.user.create.errorMessage,
     });
   }
 };
@@ -63,25 +62,23 @@ exports.findOne = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: `Error retrieving user with id=${req.params.id}`,
+        message: data.controllers.user.get.errorMessage + req.params.id,
       });
     });
 };
 
-// Delete a User with the specified id in the request
 exports.delete = (req, res) => {
-  // const id = req.params.id;
   User.destroy({
     where: { id: req.params.id },
   })
     .then((num) => {
       if (num === 1) {
         res.status(200).send({
-          message: "User was deleted successfully!"
+          message: data.controllers.user.delete.successMessage,
         });
       } else {
         res.status(404).send({
-          message: `Cannot delete user with id=${req.params.id}`,
+          message: data.controllers.user.delete.errorMessage + req.params.id,
         });
       }
     });
@@ -91,10 +88,12 @@ exports.delete = (req, res) => {
 exports.update = async (req, res) => {
   const user = await User.update(req.body, { where: { id: req.params.id } });
   if (!user) {
-    res.status(404).send(`No user with this id = ${req.params.id} `);
+    res.status(404).send({
+      message: data.controllers.user.update.errorMessage + req.params.id,
+    });
   } else {
     res.status(202).send({
-      message: `User data has been updated`
+      message: data.controllers.user.update.successMessage,
     });
   }
 };
@@ -106,10 +105,14 @@ exports.updatePassword = async (req, res) => {
     if (user) {
       const newPassword = await bcrypt.hash(password, 10);
       user.update({ password: newPassword }).then((next) => {
-        res.status(200).send({ message: 'Password Update' });
+        res.status(200).send({
+          message: data.controllers.user.password.successMessage,
+        });
       });
     } else {
-      res.status(404).send('Internal Server Error Cannot Update Password');
+      res.status(404).send({
+        message: data.controllers.user.password.errorMessage + req.params.id,
+      });
     }
   } catch (error) {
     res.status(400).send(error.message);

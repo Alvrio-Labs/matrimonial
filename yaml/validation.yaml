@@ -23,6 +23,7 @@ controllers:
       errorMessage: Error retrieving user with id
     create:
       successMessage: User created
+      errorMessage: User age is less than 18
     update:
       errorMessage: Not Found Error updating User with id = 
       successMessage: User updated
@@ -30,7 +31,7 @@ controllers:
       errorMessage: Not Found Error updating User with id = 
       successMessage: User deleted
   user:
-  get:
+    get:
       errorMessage: Error retrieving user with id
     create:
       successMessage: User created
@@ -40,7 +41,10 @@ controllers:
     delete:
       errorMessage: Error updating User with id = 
       successMessage: User deleted
-    
+    password:
+      errorMessage: Internal Server Error Cannot Update Password try again after some time 
+      successMessage: Password has been updated
+
 auth:
   forgotPassword:
     errorMessage: No user of this id
