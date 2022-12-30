@@ -7,6 +7,7 @@ const db = require('../../models');
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 
+// eslint-disable-next-line prefer-destructuring
 const User = db.User;
 
 exports.findAll = async (req, res) => {

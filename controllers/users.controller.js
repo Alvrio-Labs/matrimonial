@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const db = require('../models');
 
+// eslint-disable-next-line prefer-destructuring
 const User = db.User;
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
