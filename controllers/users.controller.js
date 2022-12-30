@@ -81,7 +81,7 @@ exports.delete = (req, res) => {
         });
       } else {
         res.status(404).send({
-          message: `Cannot delete user with id=${req.params.id}`
+          message: `Cannot delete user with id=${req.params.id}`,
         });
       }
     });

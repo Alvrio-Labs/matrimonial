@@ -43,16 +43,17 @@ exports.create = async (req, res) => {
     email: req.body.email,
     phone: req.body.phone,
     password: hashpassword,
-  }
+    is_admin: true,
+  };
   try {
-    const user = await User.create(userHash)
-    console.log(user)
+    const user = await User.create(userHash);
+    console.log(user);
     res.status(201).send({
       User: user,
       message: 'User created'
-    })
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 exports.update = async (req, res) => {
