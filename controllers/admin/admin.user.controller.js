@@ -5,7 +5,7 @@ const db = require('../../models');
 
 const User = db.User;
 
-exports.adminDashboard = async (req, res) => {
+exports.findAll = async (req, res) => {
   try {
     const userdata = await User.findAll({ where: { is_admin: 0 } }).then((user) => {
       res.status(200).send(user);

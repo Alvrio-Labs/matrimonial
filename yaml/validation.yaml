@@ -16,6 +16,7 @@ user :
   lastName:
     max: 50
     min: 2
+
 status:
  get:
    errorMessage: Not found some error occurred while retrieving task.
@@ -26,6 +27,31 @@ status:
    updatedsuccessfully: Accepted user was updated successfully
    issueMessage: Cannot update user with id=
    errorMessage: Not Found Error updating User with id=
+
+controllers:
+  admin:
+    get:
+      errorMessage: Error retrieving user with id
+    create:
+      successMessage: User created
+    update:
+      errorMessage: Not Found Error updating User with id = 
+      successMessage: User updated
+    delete:
+      errorMessage: Not Found Error updating User with id = 
+      successMessage: User deleted
+  user:
+  get:
+      errorMessage: Error retrieving user with id
+    create:
+      successMessage: User created
+    update:
+      errorMessage: Error updating User with id = 
+      successMessage: User updated
+    delete:
+      errorMessage: Error updating User with id = 
+      successMessage: User deleted
+    
 auth:
   forgotPassword:
     errorMessage: No user of this id
