@@ -1,7 +1,11 @@
 const bcrypt = require('bcrypt');
 const _ = require('jsonwebtoken');
-
+const YAML = require('js-yaml');
+const fs = require('fs');
 const db = require('../../models');
+
+const validation = fs.readFileSync('yaml/validation.yaml');
+const data = YAML.load(validation);
 
 const User = db.User;
 
@@ -30,10 +34,10 @@ exports.findOne = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: `Error retrieving user with id=${req.params.id}`,
+        message: data.controllers.admin.get.errorMessage + req.params.id,
       });
     });
-}
+};
 
 exports.create = async (req, res) => {
   const hashpassword = await bcrypt.hash(req.body.password, 10);
@@ -50,7 +54,7 @@ exports.create = async (req, res) => {
     console.log(user);
     res.status(201).send({
       User: user,
-      message: 'User created'
+      message: data.controllers.admin.create.successMessage,
     });
   } catch (error) {
     console.log(error);
@@ -59,10 +63,12 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   const user = await User.update(req.body, { where: { is_admin: 0, id: req.params.id } });
   if (!user) {
-    res.status(404).send(`No user with this id = ${req.params.id} `);
+    res.status(404).send({
+      message: data.controllers.admin.update.errorMessage + req.params.id,
+    });
   } else {
     res.status(202).send({
-      message: `User data has been updated`
+      message: data.controllers.admin.update.successMessage,
     });
   }
 };
@@ -74,11 +80,11 @@ exports.delete = (req, res) => {
     .then((num) => {
       if (num === 1) {
         res.status(200).send({
-          message: "User was deleted successfully!"
+          message: data.controllers.admin.delete.successMessage,
         });
       } else {
         res.status(404).send({
-          message: `Cannot delete user with id=${req.params.id}`,
+          message: data.controllers.admin.delete.errorMessage + req.params.id,
         });
       }
     });

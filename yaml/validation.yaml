@@ -17,17 +17,6 @@ user :
     max: 50
     min: 2
 
-status:
- get:
-   errorMessage: Not found some error occurred while retrieving task.
- delete:
-   errorMessage: Cannot delete user with id=
-   deleteSuccuessfully: No Content user was deleted successfully!
- update:
-   updatedsuccessfully: Accepted user was updated successfully
-   issueMessage: Cannot update user with id=
-   errorMessage: Not Found Error updating User with id=
-
 controllers:
   admin:
     get:
