@@ -66,7 +66,7 @@ exports.create = async (req, res) => {
           gender: req.body.gender,
           date_of_birth: req.body.date_of_birth,
         },
-        message: data.controllers.admin.create.successMessage,
+        message: successHandler.createRequest().message,
       });
     } catch (error) {
       res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);

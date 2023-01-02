@@ -8,6 +8,7 @@ const User = db.User;
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 const { errorHandler } = require('../utility/error.handler');
+const { successHandler } = require('../utility/success.handler');
 
 exports.create = async (req, res) => {
   const hashPassword = await bcrypt.hash(req.body.password, 10);
@@ -37,9 +38,7 @@ exports.create = async (req, res) => {
           gender: req.body.gender,
           date_of_birth: req.body.date_of_birth,
         },
-        message: data.controllers.user.create.successMessage,
-        // message: data.api_messages.response.updateFail('of user id'),
-
+        message: successHandler.createRequest().message,
       });
     } catch (error) {
       res.status(400).send(error);
@@ -59,7 +58,6 @@ exports.findOne = (req, res) => {
         phone: user.phone,
         gender: user.gender,
         date_of_birth: user.date_of_birth,
-
       });
     })
     .catch((err) => {
@@ -75,8 +73,8 @@ exports.delete = (req, res) => {
   })
     .then((num) => {
       if (num === 1) {
-        res.status(200).send({
-          message: data.controllers.user.delete.successMessage,
+        res.status(successHandler.successRequest().status).send({
+          message: successHandler.successRequest().deleteMessage(),
         });
       } else {
         res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
@@ -90,8 +88,8 @@ exports.update = async (req, res) => {
   if (!user) {
     res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
   } else {
-    res.status(202).send({
-      message: data.controllers.user.update.successMessage,
+    res.status(successHandler.AcceptedRequest().status).send({
+      message: successHandler.AcceptedRequest().updatedMessage,
     });
   }
 };
