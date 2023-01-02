@@ -105,8 +105,10 @@ const createSchema = Joi.object({
   phone: Joi.number().integer().min(data.users.mobile.min).max(data.users.mobile.max)
     .message(data.users.mobile.errorMessage)
     .required(),
-  gender: Joi.string().valid(...data.users.gender.type).message(data.users.gender.errorMessage)
-    .required(),
+  // gender: Joi.string().valid(...data.users.gender.type).message(data.users.gender.errorMessage)
+  //   .required(),
+  // gender: Joi.string().valid(...data.users.gender.type).message(data.users.gender.errorMessage)
+    // .required(),
   date_of_birth: Joi.string().required(),
   password: Joi.string().pattern(new RegExp(data.users.password.regex)).min(data.users.password.min).message(data.users.password.errorMessage)
     .required(),

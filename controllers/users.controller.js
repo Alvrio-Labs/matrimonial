@@ -7,6 +7,7 @@ const db = require('../models');
 const User = db.User;
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
+const { errorHandler } = require('../utility/error.handler');
 
 exports.create = async (req, res) => {
   const hashPassword = await bcrypt.hash(req.body.password, 10);
@@ -43,7 +44,7 @@ exports.create = async (req, res) => {
     }
   } else {
     res.status(406).send({
-      message: data.controllers.user.create.errorMessage,
+      message: errorHandler.notFound,
     });
   }
 };
@@ -63,7 +64,7 @@ exports.findOne = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: data.controllers.user.get.errorMessage + req.params.id,
+        message: errorHandler.notFound,
       });
     });
 };
