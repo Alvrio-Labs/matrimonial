@@ -23,7 +23,7 @@ users :
 controllers:
   admin:
     get:
-      errorMessage: Error retrieving user with id
+      errorMessage: 'Error retrieving user with id={{}}'
     create:
       successMessage: User created
       errorMessage: User age is less than 18
@@ -64,3 +64,21 @@ auth:
     invalid: User with this token does not exist
     notFound: User with this id does not exist
 
+api_messages:
+  response:
+    success:
+      message: '{{title}} created successfully.'
+    fail:
+      message: 'Unable to create {{title}}.'
+    updateFail:
+      message: 'Unable to update {{title}}.'
+  validation:
+    notEmpty: '{{field}} cannot be empty.'
+    isString: '{{field}} must be a string.'
+    isEmail: 'Please enter a valid email address.'
+    isInEnum: 'Invalid value for {{field}}.'
+    isNumeric: '{{field}} must be numeric value.'
+    userAlreadyExists: 'User already exists with given email, first name and last name'
+    isExists: '{{field}} does not exist.'
+    isMandatory: '{{field}} is a mandatory field'
+    isAnArray: '{{field}} should be an array.'

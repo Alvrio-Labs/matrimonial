@@ -3,6 +3,7 @@ const _ = require('jsonwebtoken');
 const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../../models');
+const { errorHandler } = require('../../utility/error.handler');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
@@ -15,7 +16,7 @@ exports.findAll = async (req, res) => {
     const userdata = await User.findAll({ where: { is_admin: false } });
     res.status(200).send(userdata);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
   }
 };
 
@@ -32,9 +33,7 @@ exports.findOne = async (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
-        message: data.controllers.admin.get.errorMessage + req.params.id,
-      });
+      res.status(errorHandler.internalServerError().status).send(errorHandler.internalServerError().error);
     });
 };
 
@@ -69,21 +68,17 @@ exports.create = async (req, res) => {
         message: data.controllers.admin.create.successMessage,
       });
     } catch (error) {
-      res.status(400).send(error);
+      res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
     }
   } else {
-    res.status(406).send({
-      message: data.controllers.admin.create.errorMessage,
-    });
+    res.status(errorHandler.notAccepted().status).send(errorHandler.notAccepted().error);
   }
 };
 
 exports.update = async (req, res) => {
   const user = await User.update(req.body, { where: { is_admin: false, id: req.params.id } });
   if (!user) {
-    res.status(404).send({
-      message: data.controllers.admin.update.errorMessage + req.params.id,
-    });
+    res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
   } else {
     res.status(202).send({
       message: data.controllers.admin.update.successMessage,
@@ -101,9 +96,7 @@ exports.delete = (req, res) => {
           message: data.controllers.admin.delete.successMessage,
         });
       } else {
-        res.status(404).send({
-          message: data.controllers.admin.delete.errorMessage + req.params.id,
-        });
+        res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
       }
     });
 };

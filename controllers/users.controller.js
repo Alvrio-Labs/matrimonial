@@ -38,14 +38,14 @@ exports.create = async (req, res) => {
           date_of_birth: req.body.date_of_birth,
         },
         message: data.controllers.user.create.successMessage,
+        // message: data.api_messages.response.updateFail('of user id'),
+
       });
     } catch (error) {
       res.status(400).send(error);
     }
   } else {
-    res.status(406).send({
-      message: errorHandler.notFound,
-    });
+    res.status(errorHandler.internalServerError().status).send(errorHandler.internalServerError().error);
   }
 };
 
@@ -63,8 +63,8 @@ exports.findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
-        message: errorHandler.notFound,
+      res.status(errorHandler.notFound().status).send({
+        message: errorHandler.notFound().message,
       });
     });
 };
@@ -79,9 +79,7 @@ exports.delete = (req, res) => {
           message: data.controllers.user.delete.successMessage,
         });
       } else {
-        res.status(404).send({
-          message: data.controllers.user.delete.errorMessage + req.params.id,
-        });
+        res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
       }
     });
 };
@@ -90,9 +88,7 @@ exports.delete = (req, res) => {
 exports.update = async (req, res) => {
   const user = await User.update(req.body, { where: { id: req.params.id } });
   if (!user) {
-    res.status(404).send({
-      message: data.controllers.user.update.errorMessage + req.params.id,
-    });
+    res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
   } else {
     res.status(202).send({
       message: data.controllers.user.update.successMessage,
@@ -113,10 +109,10 @@ exports.updatePassword = async (req, res) => {
       });
     } else {
       res.status(404).send({
-        message: data.controllers.user.password.errorMessage + req.params.id,
+        message: data.api_messages.updateFail('of user id') + req.params.id,
       });
     }
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
   }
 };

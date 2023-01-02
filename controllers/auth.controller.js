@@ -4,6 +4,7 @@ const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
+const errorHandler = require('../utility/error.handler');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
@@ -29,7 +30,6 @@ exports.forgetPassword = async (req, res) => {
         <h1>Clink on link to reset password</h1>
         <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
     };
-    console.log('Token is ' + resetToken);
     TRANSPORTER.sendMail(mailOptions, (err, result) => {
       if (err) {
         res.status(404).send(err);
@@ -38,7 +38,6 @@ exports.forgetPassword = async (req, res) => {
       }
     });
     const currentUser = await user.update({ reset_token: resetToken });
-    console.log(currentUser);
     if (!currentUser) {
       res.status(404).send({
         message: data.auth.forgotPassword.invalid,
@@ -57,9 +56,7 @@ exports.forgetPassword = async (req, res) => {
       });
     }
   } else {
-    return res.status(404).send({
-      message: data.auth.forgotPassword.errorMessage,
-    });
+    res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
   }
   return null;
 };
@@ -91,9 +88,7 @@ exports.resetPassword = async (req, res) => {
       return null;
     });
   } else {
-    return res.status(404).send({
-      message: data.auth.resetPassword.notFound,
-    });
+    res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
   }
   return null;
 };
@@ -115,9 +110,7 @@ exports.login = async (req, res) => {
       return res.status(401).send(data.load.invalid);
     }
   } else {
-    return res.status(404).send({
-      message: data.load.errorMessage,
-    });
+    res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
   }
   return null;
 };
