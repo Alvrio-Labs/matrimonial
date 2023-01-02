@@ -71,19 +71,19 @@ exports.resetPassword = async (req, res) => {
     jwt.verify(resetToken, fpSalt).then((err, token) => {
       if (err) {
         return res.status(401).json({
-          message: data.resetPassword.errorMessage,
+          message: data.auth.resetPassword.errorMessage,
         });
       }
 
       User.findOne({ where: { reset_token: token } }).then((error, user) => {
         if (error) {
           return res.status(400).json({
-            error: data.resetPassword.invalid,
+            error: data.auth.resetPassword.invalid,
           });
         }
         if (user) {
           user.update({ password: newPassword, reset_token: '' }).then(() => res.status(200).send({
-            message: data.resetPassword.successMessage,
+            message: data.auth.resetPassword.successMessage,
           }));
         }
         return null;
@@ -92,7 +92,7 @@ exports.resetPassword = async (req, res) => {
     });
   } else {
     return res.status(404).send({
-      message: data.resetPassword.notFound,
+      message: data.auth.resetPassword.notFound,
     });
   }
   return null;
@@ -108,7 +108,7 @@ exports.login = async (req, res) => {
         expiresIn: process.env.EXPIRY_IN,
       });
       res.json({
-        message: data.login.successMessage,
+        message: data.auth.login.successMessage,
         token: jwtToken,
       });
     } else {

@@ -2,22 +2,23 @@ const Joi = require('joi');
 const fs = require('fs');
 const YAML = require('js-yaml');
 
-const validation = fs.readFileSync('../yaml/validation.yaml');
+const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
-// schema to create a user
+// schema to create a users
 const createSchema = Joi.object({
-  first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
-  last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
+  first_name: Joi.string().required().max(data.users.firstName.max).min(data.users.firstName.min),
+  last_name: Joi.string().required().max(data.users.lastName.max).min(data.users.lastName.min),
   email: Joi.string().min(3).required().email(),
-  phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
-    .message(data.user.mobile.errorMessage)
+  phone: Joi.number().integer().min(data.users.mobile.min).max(data.users.mobile.max)
+    .message(data.users.mobile.errorMessage)
     .required(),
-  gender: Joi.string().valid(...data.user.gender.type).message(data.user.gender.errorMessage).required(),
+  // gender: Joi.string().valid(...data.users.gender.type).message(data.users.gender.errorMessage)
+  //   .required(),
   date_of_birth: Joi.string().required(),
-  password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(data.user.password.min).message(data.user.password.errorMessage)
+  password: Joi.string().pattern(new RegExp(data.users.password.regex)).min(data.users.password.min).message(data.users.password.errorMessage)
     .required(),
 });
-// validation with schema to create a user
+// validation with schema to create a users
 const create = async (req, res, next) => {
   const value = await createSchema.validate(req.body);
   if (value.error) {
@@ -32,7 +33,7 @@ const create = async (req, res, next) => {
 const getSchema = Joi.object({
   id: Joi.string(),
 });
-// validation with schema to get a user data
+// validation with schema to get a users data
 const get = async (req, res, next) => {
   const value = getSchema.validate(req.body);
   if (value.error) {
@@ -46,7 +47,7 @@ const get = async (req, res, next) => {
 const deleteSchema = Joi.object({
   id: Joi.string(),
 });
-// validation with schema to get a user data
+// validation with schema to get a users data
 const deleteValidation = async (req, res, next) => {
   const value = deleteSchema.validate(req.body);
   if (value.error) {
@@ -57,20 +58,20 @@ const deleteValidation = async (req, res, next) => {
     next();
   }
 };
-// schema to create a user
+// schema to create a users
 const updateSchema = Joi.object({
-  first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
-  last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
+  first_name: Joi.string().required().max(data.users.firstName.max).min(data.users.firstName.min),
+  last_name: Joi.string().required().max(data.users.lastName.max).min(data.users.lastName.min),
   email: Joi.string().min(3).required().email(),
-  phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
-    .message(data.user.mobile.errorMessage)
+  phone: Joi.number().integer().min(data.users.mobile.min).max(data.users.mobile.max)
+    .message(data.users.mobile.errorMessage)
     .required(),
-  gender: Joi.string().valid(...data.user.gender.type).required(),
+  gender: Joi.string().valid(...data.users.gender.type).required(),
   date_of_birth: Joi.string().required(),
-  password: Joi.string().pattern(new RegExp(data.user.password.regex)).min(data.user.password.min).message(data.user.password.errorMessage)
+  password: Joi.string().pattern(new RegExp(data.users.password.regex)).min(data.users.password.min).message(data.users.password.errorMessage)
     .required(),
 });
-// validation with schema to create a user
+// validation with schema to create a users
 const update = async (req, res, next) => {
   const value = updateSchema.validate(req.body);
   if (value.error) {

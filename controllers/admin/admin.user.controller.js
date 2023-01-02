@@ -12,7 +12,7 @@ const User = db.User;
 
 exports.findAll = async (req, res) => {
   try {
-    const userdata = await User.findAll({ where: { is_admin: 0 } }).then((user) => {
+    const userdata = await User.findAll({ where: { is_admin: false } }).then((user) => {
       res.status(200).send(user);
     });
     console.log(userdata);
@@ -22,7 +22,7 @@ exports.findAll = async (req, res) => {
 };
 
 exports.findOne = async (req, res) => {
-  const userdata = await User.findByPk(req.params.id, { where: { is_admin: 0 } })
+  const userdata = await User.findByPk(req.params.id, { where: { is_admin: false } })
     .then((user) => {
       res.status(200).send({
         first_name: user.first_name,
@@ -81,7 +81,7 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const user = await User.update(req.body, { where: { is_admin: 0, id: req.params.id } });
+  const user = await User.update(req.body, { where: { is_admin: false, id: req.params.id } });
   if (!user) {
     res.status(404).send({
       message: data.controllers.admin.update.errorMessage + req.params.id,
