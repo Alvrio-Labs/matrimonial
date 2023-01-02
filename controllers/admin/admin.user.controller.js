@@ -4,6 +4,7 @@ const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../../models');
 const { errorHandler } = require('../../utility/error.handler');
+const { successHandler } = require('../../utility/success.handler');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
@@ -13,8 +14,8 @@ const User = db.User;
 
 exports.findAll = async (req, res) => {
   try {
-    const userdata = await User.findAll({ where: { is_admin: false } });
-    res.status(200).send(userdata);
+    const usersdata = await User.findAll({ where: { is_admin: false } });
+    res.status(successHandler.successRequest().status).send(usersdata);
   } catch (error) {
     res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
   }
@@ -23,7 +24,7 @@ exports.findAll = async (req, res) => {
 exports.findOne = async (req, res) => {
   User.findByPk(req.params.id, { where: { is_admin: false } })
     .then((user) => {
-      res.status(200).send({
+      res.status(successHandler.successRequest().status).send({
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
@@ -56,7 +57,7 @@ exports.create = async (req, res) => {
   if (age >= 18) {
     try {
       const user = await User.create(userHash);
-      res.status(201).send({
+      res.status(successHandler.createRequest().status).send({
         User: {
           first_name: req.body.first_name,
           last_name: req.body.last_name,
@@ -80,8 +81,8 @@ exports.update = async (req, res) => {
   if (!user) {
     res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
   } else {
-    res.status(202).send({
-      message: data.controllers.admin.update.successMessage,
+    res.status(successHandler.AcceptedRequest().status).send({
+      message: successHandler.AcceptedRequest().updatedMessage,
     });
   }
 };
@@ -92,8 +93,8 @@ exports.delete = (req, res) => {
   })
     .then((num) => {
       if (num === 1) {
-        res.status(200).send({
-          message: data.controllers.admin.delete.successMessage,
+        res.status(successHandler.successRequest().status).send({
+          message: successHandler.successRequest().deleteMessage(),
         });
       } else {
         res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);

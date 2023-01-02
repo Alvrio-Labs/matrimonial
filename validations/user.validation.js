@@ -17,7 +17,7 @@ const createSchema = Joi.object({
   // password: Joi.string().pattern(new RegExp(data.users.password.regex)).min(data.users.password.min).message(data.users.password.errorMessage)
   //   .required(),
   // eslint-disable-next-line prefer-regex-literals
-  password: Joi.string().pattern(new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)).min(8).message('password must contain number,upper char , lower char , special char')
+  password: Joi.string().pattern(new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]$/)).min(8).message('password must contain number,upper char , lower char , special char')
     .required(),
 });
 // validation with schema to create a users
