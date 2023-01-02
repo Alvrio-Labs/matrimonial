@@ -7,6 +7,9 @@ users :
     errorMessage: Invalid mobile number
     min: 1000000000
     max: 9999999999
+  # gender:
+  #   type: ["Male", "Female", "Others"]
+  #   errorMessage: Select a gender
   gender:
     type: ["Male", "Female", "Others"]
     errorMessage: Select a gender

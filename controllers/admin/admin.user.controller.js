@@ -12,17 +12,15 @@ const User = db.User;
 
 exports.findAll = async (req, res) => {
   try {
-    const userdata = await User.findAll({ where: { is_admin: false } }).then((user) => {
-      res.status(200).send(user);
-    });
-    console.log(userdata);
+    const userdata = await User.findAll({ where: { is_admin: false } });
+    res.status(200).send(userdata);
   } catch (error) {
     res.status(400).send(error);
   }
 };
 
 exports.findOne = async (req, res) => {
-  const userdata = await User.findByPk(req.params.id, { where: { is_admin: false } })
+  User.findByPk(req.params.id, { where: { is_admin: false } })
     .then((user) => {
       res.status(200).send({
         first_name: user.first_name,
