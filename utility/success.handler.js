@@ -2,6 +2,7 @@ const successHandler = {
   successRequest: () => ({
     status: 200,
     message: 'success',
+    deleteMessage: 'User data has been deleted',
   }),
   createRequest: () => ({
     status: 201,
