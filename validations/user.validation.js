@@ -4,23 +4,19 @@ const YAML = require('js-yaml');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
-// schema to create a users
+// schema to create a user
 const createSchema = Joi.object({
-  first_name: Joi.string().required().max(data.users.firstName.max).min(data.users.firstName.min),
-  last_name: Joi.string().required().max(data.users.lastName.max).min(data.users.lastName.min),
+  first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
+  last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
   email: Joi.string().min(3).required().email(),
-  phone: Joi.number().integer().min(data.users.mobile.min).max(data.users.mobile.max)
-    .message(data.users.mobile.errorMessage)
+  phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
+    .message(data.user.mobile.errorMessage)
     .required(),
-  // gender: Joi.array().valid(data.users.gender.type).message(data.users.errorMessage),
   date_of_birth: Joi.string().required(),
-  // password: Joi.string().pattern(new RegExp(data.users.password.regex)).min(data.users.password.min).message(data.users.password.errorMessage)
-  //   .required(),
-  // eslint-disable-next-line prefer-regex-literals
-  password: Joi.string().pattern(new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]$/)).min(8).message('password must contain number,upper char , lower char , special char')
+  password: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage)
     .required(),
 });
-// validation with schema to create a users
+// validation with schema to create a user
 const create = async (req, res, next) => {
   const value = await createSchema.validate(req.body);
   if (value.error) {
@@ -35,7 +31,7 @@ const create = async (req, res, next) => {
 const getSchema = Joi.object({
   id: Joi.string(),
 });
-// validation with schema to get a users data
+// validation with schema to get a user data
 const get = async (req, res, next) => {
   const value = getSchema.validate(req.body);
   if (value.error) {
@@ -49,7 +45,7 @@ const get = async (req, res, next) => {
 const deleteSchema = Joi.object({
   id: Joi.string(),
 });
-// validation with schema to get a users data
+// validation with schema to get a user data
 const deleteValidation = async (req, res, next) => {
   const value = deleteSchema.validate(req.body);
   if (value.error) {
@@ -60,20 +56,19 @@ const deleteValidation = async (req, res, next) => {
     next();
   }
 };
-// schema to create a users
+// schema to create a user
 const updateSchema = Joi.object({
-  first_name: Joi.string().required().max(data.users.firstName.max).min(data.users.firstName.min),
-  last_name: Joi.string().required().max(data.users.lastName.max).min(data.users.lastName.min),
+  first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
+  last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
   email: Joi.string().min(3).required().email(),
-  phone: Joi.number().integer().min(data.users.mobile.min).max(data.users.mobile.max)
-    .message(data.users.mobile.errorMessage)
+  phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
+    .message(data.user.mobile.errorMessage)
     .required(),
-  // gender: Joi.array().valid(data.users.gender.type).message(data.users.errorMessage),
   date_of_birth: Joi.string().required(),
-  password: Joi.string().pattern(new RegExp(data.users.password.regex)).min(data.users.password.min).message(data.users.password.errorMessage)
+  password: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage)
     .required(),
 });
-// validation with schema to create a users
+// validation with schema to create a user
 const update = async (req, res, next) => {
   const value = updateSchema.validate(req.body);
   if (value.error) {
