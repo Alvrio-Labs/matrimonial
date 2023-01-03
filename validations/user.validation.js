@@ -6,9 +6,12 @@ const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 // schema to create a user
 const createSchema = Joi.object({
-  first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
-  last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
-  email: Joi.string().min(3).required().email(),
+  first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min)
+    .message(data.api_messages.validation.notEmpty),
+  last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min)
+    .message(data.api_messages.validation.notEmpty),
+  email: Joi.string().min(3).required().email()
+    .message(data.api_messages.validation.isEmail),
   phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
     .message(data.user.mobile.errorMessage)
     .required(),
