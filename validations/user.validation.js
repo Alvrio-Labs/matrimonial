@@ -77,31 +77,19 @@ const deleteValidation = async (req, res, next) => {
   }
 };
 // schema to create a user
-// const updateSchema = Joi.object({
-//   first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min),
-//   last_name: Joi.string().required().max(data.user.lastName.max).min(data.user.lastName.min),
-//   email: Joi.string().min(3).required().email(),
-//   phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
-//     .message(data.user.mobile.errorMessage)
-//     .required(),
-//   // date_of_birth: Joi.string().required(),
-//   date_of_birth: Joi.number().integer().required().min(18),
+const updateSchema = Joi.object({
+  first_name: Joi.string().max(data.user.firstName.max).min(data.user.firstName.min),
+  last_name: Joi.string().max(data.user.lastName.max).min(data.user.lastName.min),
+  email: Joi.string().min(3).email(),
+  phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
+    .message(data.user.mobile.errorMessage),
+  // date_of_birth: Joi.string(),
+  date_of_birth: Joi.number().integer().min(18),
 
-//   password: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage)
-//     .required(),
-// });
+  password: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage),
+});
 // // validation with schema to create a user
 
-var updateSchema = Joi.object({
-  first_name: Joi.string().max(50).min(2),
-  last_name: Joi.string().max(50).min(2),
-  email: Joi.string().min(3).email(),
-  phone: Joi.string().length(7).pattern(/^[0-9]+$/),
-  mobile: Joi.number().integer().min(1000000000).max(9999999999).message("Invalid mobile number"),
-  gender: Joi.string().valid("Male", "Female", "Others"),
-  date_of_birth: Joi.string(),
-  password: Joi.string().pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)).min(8).message('password must contain number,upper char , lower char , special char')
-});
 
 // validation with schema to update a user
 const update = async (req, res, next) => {
