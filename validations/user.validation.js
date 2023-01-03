@@ -14,7 +14,7 @@ const data = YAML.load(validation);
 // // const dateSplit = dateOfBirth.split('-');
 // // const year = dateSplit[2];
 // // const age = today.getFullYear() - year;
-// const date18YearsAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 18);
+const date18YearsAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 18);
 
 
 // schema to create a user
@@ -28,7 +28,8 @@ const createSchema = Joi.object({
   phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
     .message(data.user.mobile.errorMessage)
     .required(),
-  date_of_birth: Joi.string().required(),
+  date_of_birth: Joi.date().required(),
+  // date_of_birth: Joi.date().min(Date.now - 18).required(),
 
   // date_of_birth: Joi.date().greater(year - 18).required,
   // date_of_birth: Joi.date().min(year - 18).required,

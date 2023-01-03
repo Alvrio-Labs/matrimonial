@@ -46,19 +46,6 @@ exports.create = async (req, res) => {
       message: 'age less than 18',
     });
   }
-
-  // const user = await User.create(userHash);
-  // res.status(201).send({
-  //   User: {
-  //     first_name: req.body.first_name,
-  //     last_name: req.body.last_name,
-  //     email: req.body.email,
-  //     phone: req.body.phone,
-  //     gender: req.body.gender,
-  //     date_of_birth: req.body.date_of_birth,
-  //   },
-  //   message: successHandler.createRequest().message,
-  // });
 };
 
 exports.findOne = (req, res) => {
@@ -77,9 +64,6 @@ exports.findOne = (req, res) => {
       res.status(errorHandler.notFound().status).send({
         message: errorHandler.notFound().message,
       });
-      // res.status(400).send({
-      //   message: errorHandler().message('user not found'),
-      // });
     });
 };
 
