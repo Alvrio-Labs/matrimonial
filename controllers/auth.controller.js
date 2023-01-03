@@ -40,7 +40,7 @@ exports.forgetPassword = async (req, res) => {
       const currentUser = await user.update({ reset_token: resetToken });
       if (!currentUser) {
         res.status(404).send({
-          message: data.auth.forgotPassword.invalid,
+          message: data.api_messages.response.notFound.message,
         });
       } else {
         TRANSPORTER.sendMail(mailOptions, (err, result) => {
@@ -83,8 +83,9 @@ exports.resetPassword = async (req, res) => {
 
         User.findOne({ where: { reset_token: token } }).then((error, user) => {
           if (error) {
-            return res.status(400).json({
-              error: data.auth.resetPassword.invalid,
+            const msg = data.api_messages.response.invalid.message.replace('{{title}}', 'email');
+            return res.status(401).send({
+              message: msg,
             });
           }
           if (user) {

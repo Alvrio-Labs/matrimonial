@@ -19,19 +19,10 @@ user :
 
 auth:
   forgotPassword:
-    errorMessage: No user of this id
     successMessage: The email has been sent 
-    serverError: Not sended , Try again later
-    invalid: No user of this id
-  login:
-    errorMessage: User not found
-    successMessage: Success
-    invalid: email or password not vaild
   resetPassword:
     errorMessage: Incorrect or expired
     successMessage: Your Password has been updated
-    invalid: User with this token does not exist
-    notFound: User with this id does not exist
 
 api_messages:
   response:
