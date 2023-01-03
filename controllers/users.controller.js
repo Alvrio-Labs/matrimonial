@@ -36,7 +36,7 @@ exports.create = async (req, res) => {
           gender: req.body.gender,
           date_of_birth: req.body.date_of_birth,
         },
-        message: successHandler.createRequest().message,
+        message: data.api_messages.response.success.message,
       });
     } catch (error) {
       res.status(400).send(error);
