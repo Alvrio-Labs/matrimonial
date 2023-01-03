@@ -8,25 +8,24 @@ const User = db.User;
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 const { errorHandler } = require('../utility/error.handler');
-const { successHandler } = require('../utility/success.handler');
 
 exports.create = async (req, res) => {
   const hashPassword = await bcrypt.hash(req.body.password, 10);
-  const userHash = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email: req.body.email,
-    phone: req.body.phone,
-    gender: req.body.gender,
-    date_of_birth: req.body.date_of_birth,
-    password: hashPassword,
-  };
   const dateOfBirth = req.body.date_of_birth.split('-')[2];
   const today = new Date();
   const age = today.getFullYear() - dateOfBirth;
   if (age >= 18) {
     try {
-      const user = await User.create(userHash);
+      await User.create({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        phone: req.body.phone,
+        gender: req.body.gender,
+        date_of_birth: req.body.date_of_birth,
+        password: hashPassword,
+
+      });
       res.status(201).send({
         User: {
           first_name: req.body.first_name,
@@ -96,8 +95,8 @@ exports.update = async (req, res) => {
       });
     } else {
       await User.update(req.body, { where: { id: req.params.id } });
-      res.status(successHandler.AcceptedRequest().status).send({
-        message: successHandler.AcceptedRequest().updatedMessage,
+      res.status(202).send({
+        message: data.api_messages.response.updateSuccess.message,
       });
     }
   } catch (error) {
@@ -119,8 +118,9 @@ exports.updatePassword = async (req, res) => {
         });
       });
     } else {
+      const msg = data.api_messages.response.updateFail.message.replace('{{title}}', `of user ${req.params.id}`);
       res.status(404).send({
-        message: data.api_messages.updateFail('of user id') + req.params.id,
+        message: msg,
       });
     }
   } catch (error) {

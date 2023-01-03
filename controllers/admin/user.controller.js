@@ -4,7 +4,6 @@ const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../../models');
 const { errorHandler } = require('../../utility/error.handler');
-const { successHandler } = require('../../utility/success.handler');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
@@ -14,8 +13,8 @@ const User = db.User;
 
 exports.findAll = async (req, res) => {
   try {
-    const usersdata = await User.findAll({ where: { is_admin: false } });
-    res.status(successHandler.successRequest().status).send(usersdata);
+    const users = await User.findAll({ where: { is_admin: false } });
+    res.status(200).send(users);
   } catch (error) {
     res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
   }
@@ -41,15 +40,6 @@ exports.findOne = async (req, res) => {
 
 exports.create = async (req, res) => {
   const hashPassword = await bcrypt.hash(req.body.password, 10);
-  const userHash = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email: req.body.email,
-    phone: req.body.phone,
-    gender: req.body.gender,
-    date_of_birth: req.body.date_of_birth,
-    password: hashPassword,
-  };
   const dateOfBirth = req.body.date_of_birth;
   const today = new Date();
   const dateSplit = dateOfBirth.split('-');
@@ -57,8 +47,17 @@ exports.create = async (req, res) => {
   const age = today.getFullYear() - year;
   if (age >= 18) {
     try {
-      const user = await User.create(userHash);
-      res.status(successHandler.createRequest().status).send({
+      await User.create({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        phone: req.body.phone,
+        gender: req.body.gender,
+        date_of_birth: req.body.date_of_birth,
+        password: hashPassword,
+
+      });
+      res.status(201).send({
         User: {
           first_name: req.body.first_name,
           last_name: req.body.last_name,
@@ -67,7 +66,7 @@ exports.create = async (req, res) => {
           gender: req.body.gender,
           date_of_birth: req.body.date_of_birth,
         },
-        message: successHandler.createRequest().message,
+        message: data.api_messages.response.success.message,
       });
     } catch (error) {
       res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
@@ -86,8 +85,8 @@ exports.update = async (req, res) => {
       });
     } else {
       await User.update(req.body, { where: { is_admin: false, id: req.params.id } });
-      res.status(successHandler.AcceptedRequest().status).send({
-        message: successHandler.AcceptedRequest().updatedMessage,
+      res.status(202).send({
+        message: data.api_messages.response.updateSuccess.message,
       });
     }
   } catch (error) {

@@ -38,6 +38,8 @@ api_messages:
       message: "No user found of this id"
     invalid:
       message: '{{title}} is invalid'
+    updateSuccess:
+      message: 'Updated Successfully'
 
   validation:
     notEmpty: 'cannot be empty.'
