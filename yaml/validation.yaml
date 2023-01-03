@@ -41,6 +41,13 @@ api_messages:
       message: 'Unable to create {{title}}.'
     updateFail:
       message: 'Unable to update {{title}}.'
+    delete:
+      message: 'deleted successfully {{title}}.'
+    notFound:
+      message: "No user found of this id"
+    invalid:
+      message: '{{title}} is invalid'
+
   validation:
     notEmpty: 'cannot be empty.'
     isString: '{{field}} must be a string.'

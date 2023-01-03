@@ -48,49 +48,62 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.findOne = (req, res) => {
-  User.findByPk(req.params.id)
-    .then((user) => {
-      res.status(200).send({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        phone: user.phone,
-        gender: user.gender,
-        date_of_birth: user.date_of_birth,
-      });
-    })
-    .catch((err) => {
-      res.status(errorHandler.notFound().status).send({
-        message: errorHandler.notFound().message,
-      });
+exports.findOne = async (req, res) => {
+  const user = await User.findByPk(req.params.id);
+  try {
+    res.status(200).send({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      date_of_birth: user.date_of_birth,
     });
+  } catch (error) {
+    res.status(errorHandler.errorHandler.notFound().status).send({
+      message: data.api_messages.response.notFound.message,
+    });
+  }
 };
 
-exports.delete = (req, res) => {
-  User.destroy({
-    where: { id: req.params.id },
-  })
-    .then((num) => {
-      if (num === 1) {
-        res.status(successHandler.successRequest().status).send({
-          message: successHandler.successRequest().deleteMessage(),
-        });
-      } else {
-        res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
-      }
+exports.delete = async (req, res) => {
+  try {
+    const user = User.destroy({
+      where: { id: req.params.id },
     });
+    if (user) {
+      const msg = data.api_messages.response.delete.message.replace('{{title}}', `of user ${req.params.id}`);
+      res.send({
+        message: msg,
+      });
+    } else {
+      res.status(errorHandler.errorHandler.notFound().status).send({
+        message: data.api_messages.response.notFound.message,
+      });
+    }
+  } catch (error) {
+    res.status(errorHandler.errorHandler.error().status).send({ message: errorHandler.errorHandler.error });
+  }
 };
 
 // update a user
 exports.update = async (req, res) => {
-  const user = await User.update(req.body, { where: { id: req.params.id } });
-  if (!user) {
-    res.status(errorHandler.notFound().status).send(errorHandler.notFound().error);
-  } else {
-    res.status(successHandler.AcceptedRequest().status).send({
-      message: successHandler.AcceptedRequest().updatedMessage,
-    });
+  const user = await User.findByPk(req.params.id);
+  try {
+    if (!user) {
+      res.status(errorHandler.errorHandler.notFound().status).send({
+        message: data.api_messages.response.notFound.message,
+      });
+    } else {
+      await User.update(req.body, { where: { id: req.params.id } });
+      res.status(successHandler.AcceptedRequest().status).send({
+        message: successHandler.AcceptedRequest().updatedMessage,
+      });
+    }
+  } catch (error) {
+    res.send(({
+      message: errorHandler.errorHandler.internalServerError().error,
+    }));
   }
 };
 
@@ -111,6 +124,6 @@ exports.updatePassword = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(errorHandler.badRequest().status).send(errorHandler.badRequest().error);
+    res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
   }
 };
