@@ -21,11 +21,9 @@ exports.create = async (req, res) => {
     date_of_birth: req.body.date_of_birth,
     password: hashPassword,
   };
-  const dateOfBirth = req.body.date_of_birth;
+  const dateOfBirth = req.body.date_of_birth.split('-')[2];
   const today = new Date();
-  const dateSplit = dateOfBirth.split('-');
-  const year = dateSplit[2];
-  const age = today.getFullYear() - year;
+  const age = today.getFullYear() - dateOfBirth;
   if (age >= 18) {
     try {
       const user = await User.create(userHash);
@@ -44,8 +42,23 @@ exports.create = async (req, res) => {
       res.status(400).send(error);
     }
   } else {
-    res.status(errorHandler.internalServerError().status).send(errorHandler.internalServerError().error);
+    res.send({
+      message: 'age less than 18',
+    });
   }
+
+  // const user = await User.create(userHash);
+  // res.status(201).send({
+  //   User: {
+  //     first_name: req.body.first_name,
+  //     last_name: req.body.last_name,
+  //     email: req.body.email,
+  //     phone: req.body.phone,
+  //     gender: req.body.gender,
+  //     date_of_birth: req.body.date_of_birth,
+  //   },
+  //   message: successHandler.createRequest().message,
+  // });
 };
 
 exports.findOne = (req, res) => {
@@ -61,12 +74,12 @@ exports.findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      // res.status(errorHandler.notFound().status).send({
-      //   message: errorHandler.notFound().message,
-      // });
-      res.status(400).send({
-        message: errorHandler().message('user not found'),
+      res.status(errorHandler.notFound().status).send({
+        message: errorHandler.notFound().message,
       });
+      // res.status(400).send({
+      //   message: errorHandler().message('user not found'),
+      // });
     });
 };
 
