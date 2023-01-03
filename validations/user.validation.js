@@ -4,7 +4,7 @@ const YAML = require('js-yaml');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
-
+const date = new Date().getFullYear();
 
 // // const dateOfBirth = req.body.date_of_birth;
 // const today = new Date();
@@ -28,7 +28,7 @@ const createSchema = Joi.object({
   phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
     .message(data.user.mobile.errorMessage)
     .required(),
-  date_of_birth: Joi.date().required(),
+  // date_of_birth: Joi.date().min(date - date18YearsAgo).required(),
   // date_of_birth: Joi.date().min(Date.now - 18).required(),
 
   // date_of_birth: Joi.date().greater(year - 18).required,
@@ -84,8 +84,8 @@ const updateSchema = Joi.object({
   phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
     .message(data.user.mobile.errorMessage),
   // date_of_birth: Joi.string(),
-  date_of_birth: Joi.number().integer().min(18),
-
+  // date_of_birth: Joi.date().min().required(),
+  // birthdate:
   password: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage),
 });
 // // validation with schema to create a user
