@@ -1,8 +1,8 @@
 const router = require('express').Router();
 
-const User = require('../../controllers/admin/admin.user.controller');
+const User = require('../../controllers/admin/user.controller');
 const validation = require('../../validations/user.validation');
-const { verifyToken } = require('../../utility/auth.policy');
+const { verifyToken } = require('../../policy/auth.policy');
 
 module.exports = (app) => {
   router.post('/', verifyToken, validation.create, User.create);

@@ -36,7 +36,7 @@ auth:
 api_messages:
   response:
     success:
-      message: '{{title}} created successfully.'
+      message: 'created successfully.'
     fail:
       message: 'Unable to create {{title}}.'
     updateFail:

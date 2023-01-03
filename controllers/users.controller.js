@@ -61,8 +61,11 @@ exports.findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(errorHandler.notFound().status).send({
-        message: errorHandler.notFound().message,
+      // res.status(errorHandler.notFound().status).send({
+      //   message: errorHandler.notFound().message,
+      // });
+      res.status(400).send({
+        message: errorHandler().message('user not found'),
       });
     });
 };
