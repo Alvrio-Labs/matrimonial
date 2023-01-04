@@ -28,6 +28,7 @@ const createSchema = Joi.object({
   phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
     .message(data.user.mobile.errorMessage)
     .required(),
+  data_of_birth: Joi.date().min(date - 18).required(),
   // date_of_birth: Joi.date().min(date - date18YearsAgo).required(),
   // date_of_birth: Joi.date().min(Date.now - 18).required(),
 
