@@ -70,9 +70,30 @@ exports.delete = async (req, res) => {
 };
 
 // update a user
+// exports.update = async (req, res) => {
+//   const user = await User.findByPk(req.params.id);
+//   try {
+//     if (!user) {
+//       res.status(errorHandler.errorHandler.notFound().status).send({
+//         message: data.api_messages.response.notFound.message,
+//       });
+//     } else {
+//       await User.update(req.body, { where: { id: req.params.id } });
+//       res.status(202).send({
+//         message: data.api_messages.response.updateSuccess.message,
+//       });
+//     }
+//   } catch (error) {
+//     res.send(({
+//       message: errorHandler.errorHandler.internalServerError().error,
+//     }));
+//   }
+// };
+
 exports.update = async (req, res) => {
-  const user = await User.findByPk(req.params.id);
   try {
+    const user = await User.findByPk(req.params.id);
+    const userData = await serialize.update(user);
     if (!user) {
       res.status(errorHandler.errorHandler.notFound().status).send({
         message: data.api_messages.response.notFound.message,
@@ -81,6 +102,8 @@ exports.update = async (req, res) => {
       await User.update(req.body, { where: { id: req.params.id } });
       res.status(202).send({
         message: data.api_messages.response.updateSuccess.message,
+        user: userData,
+
       });
     }
   } catch (error) {

@@ -53,8 +53,9 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const user = await User.findByPk(req.params.id);
   try {
+    const user = await User.findByPk(req.params.id);
+    const userData = await serialize.update(user);
     if (!user) {
       res.status(errorHandler.errorHandler.notFound().status).send({
         message: data.api_messages.response.notFound.message,
@@ -63,6 +64,8 @@ exports.update = async (req, res) => {
       await User.update(req.body, { where: { is_admin: false, id: req.params.id } });
       res.status(202).send({
         message: data.api_messages.response.updateSuccess.message,
+        user: userData,
+
       });
     }
   } catch (error) {
@@ -71,6 +74,7 @@ exports.update = async (req, res) => {
     }));
   }
 };
+
 
 exports.delete = (req, res) => {
   try {
