@@ -5,7 +5,7 @@ const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
 const errorHandler = require('../utility/error.handler');
-const serialize = require('../serializers/auth.serializer');
+const serialize = require('../serializers/user.serializer');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
@@ -19,18 +19,21 @@ exports.forgetPassword = async (req, res) => {
   const user = await User.findOne({
     where: { email: req.body.email },
   });
+  const userData = serialize.forgotPassword(user);
   try {
     if (user) {
       const resetToken = jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
         expiresIn: process.env.EXPIRY_IN,
       });
       const mailOptions = {
+        data: userData,
         from: process.env.EMAIL,
         to: email,
         subject: 'To Change Password',
         html: `
           <h1>Clink on link to reset password</h1>
           <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
+
       };
       TRANSPORTER.sendMail(mailOptions, (err, result) => {
         if (err) {
@@ -82,7 +85,6 @@ exports.resetPassword = async (req, res) => {
             message: data.auth.resetPassword.errorMessage,
           });
         }
-
         User.findOne({ where: { reset_token: token } }).then((error, user) => {
           if (error) {
             const msg = data.api_messages.response.invalid.message.replace('{{title}}', 'email');
@@ -114,26 +116,22 @@ exports.resetPassword = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const result = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
+    const userData = await serialize.show(user);
 
-    if (result != null) {
-      const isMatch = await bcrypt.compare(password, result.password);
-      if (result.email === email && isMatch) {
-        const jwtToken = jwt.sign({ isMatch: result }, process.env.SECRET_KEY, {
-          expiresIn: process.env.EXPIRY_IN,
-        });
-        res.json({
-          token: jwtToken,
-        });
-      } else {
-        const msg = data.api_messages.response.invalid.message.replace('{{title}}', 'email or password');
-        return res.status(401).send({
-          message: msg,
-        });
-      }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (user.email === email && isMatch) {
+      const jwtToken = jwt.sign({ isMatch: user }, process.env.SECRET_KEY, {
+        expiresIn: process.env.EXPIRY_IN,
+      });
+      res.json({
+        token: jwtToken,
+        user: userData,
+      });
     } else {
-      res.status(errorHandler.errorHandler.notFound().status).send({
-        message: data.api_messages.response.notFound.message,
+      const msg = data.api_messages.response.invalid.message.replace('{{title}}', 'email or password');
+      return res.status(401).send({
+        message: msg,
       });
     }
   } catch (error) {

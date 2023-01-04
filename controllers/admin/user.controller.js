@@ -1,16 +1,16 @@
-const bcrypt = require('bcrypt');
-const _ = require('jsonwebtoken');
+/* eslint-disable prefer-destructuring */
 const YAML = require('js-yaml');
 const fs = require('fs');
-const db = require('../../models');
+const db = require('../../models/index');
+
+const User = db.User;
 const { errorHandler } = require('../../utility/error.handler');
 const serialize = require('../../serializers/user.serializer');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 
-// eslint-disable-next-line prefer-destructuring
-const User = db.User;
+// const User = db.User;
 
 exports.index = async (req, res) => {
   const users = await User.findAll({ where: { is_admin: false } });
@@ -55,7 +55,7 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
-    const userData = await serialize.update(user);
+    const userData = await serialize.show(user);
     if (!user) {
       res.status(errorHandler.errorHandler.notFound().status).send({
         message: data.api_messages.response.notFound.message,
@@ -74,7 +74,6 @@ exports.update = async (req, res) => {
     }));
   }
 };
-
 
 exports.delete = (req, res) => {
   try {

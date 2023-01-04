@@ -29,19 +29,7 @@ const show = async (user) => {
   return userData;
 };
 
-const update = async (user) => {
-  const userData = {
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-    phone: user.phone,
-    gender: user.gender,
-    date_of_birth: user.date_of_birth,
-  };
-  return userData;
-};
 module.exports = {
   index,
   show,
-  update,
 };

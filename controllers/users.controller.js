@@ -35,20 +35,6 @@ exports.show = async (req, res) => {
   }
 };
 
-exports.index = async (req, res) => {
-  const users = await User.findAll();
-  const userList = await serialize.index(users);
-  try {
-    res.status(200).send({
-      users: userList,
-    });
-  } catch (error) {
-    res.status(404).send({
-      message: data.api_messages.response.notFound.message,
-    });
-  }
-};
-
 exports.delete = async (req, res) => {
   try {
     const user = User.destroy({
@@ -68,27 +54,6 @@ exports.delete = async (req, res) => {
     res.status(errorHandler.errorHandler.error().status).send({ message: errorHandler.errorHandler.error });
   }
 };
-
-// update a user
-// exports.update = async (req, res) => {
-//   const user = await User.findByPk(req.params.id);
-//   try {
-//     if (!user) {
-//       res.status(errorHandler.errorHandler.notFound().status).send({
-//         message: data.api_messages.response.notFound.message,
-//       });
-//     } else {
-//       await User.update(req.body, { where: { id: req.params.id } });
-//       res.status(202).send({
-//         message: data.api_messages.response.updateSuccess.message,
-//       });
-//     }
-//   } catch (error) {
-//     res.send(({
-//       message: errorHandler.errorHandler.internalServerError().error,
-//     }));
-//   }
-// };
 
 exports.update = async (req, res) => {
   try {
