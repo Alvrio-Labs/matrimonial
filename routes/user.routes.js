@@ -5,7 +5,8 @@ const validation = require('../validations/user.validation');
 
 module.exports = (app) => {
   router.post('/', User.create);
-  router.get('/:id', User.findOne);
+  router.get('/:id', User.show);
+  router.get('/', User.index);
   router.put('/:id', validation.update, User.update);
   router.delete('/:id', validation.deleteValidation, User.delete);
   app.use('/api/users', router);

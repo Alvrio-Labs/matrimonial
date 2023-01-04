@@ -1,5 +1,6 @@
 const userGender = ['Male', 'Female', 'Others'];
 const { DataTypes, Model } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize) => {
   class User extends Model {
@@ -36,6 +37,12 @@ module.exports = (sequelize) => {
     },
     password: {
       type: DataTypes.STRING(250),
+      // password hashing method
+      set(value) {
+        if (value) {
+          this.setDataValue('password', bcrypt.hashSync(value, 10));
+        }
+      },
     },
     reset_token: {
       type: DataTypes.STRING(250),
