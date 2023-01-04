@@ -9,10 +9,8 @@ const serialize = require('../serializers/user.serializer');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
-
 const { User } = db;
 const { TRANSPORTER } = require('../utility/nodemailer');
-
 
 exports.forgetPassword = async (req, res) => {
   const { email } = req.body;

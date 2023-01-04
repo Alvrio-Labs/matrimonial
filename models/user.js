@@ -77,6 +77,9 @@ module.exports = (sequelize) => {
     if (ageCheck < birthDate) {
       throw new Error('Age must be above 18+');
     }
+    const comparePassword = function (password) {
+      return bcrypt.compareSync(password, model.password);
+    };
   });
 
   return User;
