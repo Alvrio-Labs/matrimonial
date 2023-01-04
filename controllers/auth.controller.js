@@ -5,12 +5,14 @@ const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
 const errorHandler = require('../utility/error.handler');
+const serialize = require('../serializers/auth.serializer');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 
 const { User } = db;
 const { TRANSPORTER } = require('../utility/nodemailer');
+
 
 exports.forgetPassword = async (req, res) => {
   const { email } = req.body;
@@ -110,10 +112,10 @@ exports.resetPassword = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  const result = await User.findOne({ where: { email } });
-
   try {
+    const { email, password } = req.body;
+    const result = await User.findOne({ where: { email } });
+
     if (result != null) {
       const isMatch = await bcrypt.compare(password, result.password);
       if (result.email === email && isMatch) {
@@ -121,7 +123,6 @@ exports.login = async (req, res) => {
           expiresIn: process.env.EXPIRY_IN,
         });
         res.json({
-          message: 'Successful',
           token: jwtToken,
         });
       } else {
