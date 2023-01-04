@@ -1,3 +1,7 @@
+require('dotenv').config();
+require('dotenv').config({ path: './.env.development' });
+require('dotenv').config({ path: './.env.test' });
+require('dotenv').config({ path: './.env.production' });
 const dotenv = require('dotenv');
 const path = require('path');
 const express = require('express');
@@ -16,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require('./routes/user.routes')(app);
 require('./routes/auth.routes')(app);
+require('./routes/admin/user.routes')(app);
+
 // set port, listen for requests
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

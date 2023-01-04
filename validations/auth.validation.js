@@ -42,7 +42,7 @@ const forgotPasswordValidation = async (req, res, next) => {
 
 //  schema to reset password
 const resetPasswordSchema = Joi.object({
-  newPassword: Joi.string().pattern(new RegExp(data.user.password.regex)).min(8).message(data.user.password.errorMessage)
+  newPassword: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage)
     .required(),
   reset_token: Joi.required(),
 });

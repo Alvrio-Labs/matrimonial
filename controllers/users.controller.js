@@ -2,78 +2,100 @@ const YAML = require('js-yaml');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const db = require('../models');
-
-const USER = db.User;
+const serialize = require('../serializers/user.serializer');
+// eslint-disable-next-line prefer-destructuring
+const User = db.User;
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
+const { errorHandler } = require('../utility/error.handler');
 
 exports.create = async (req, res) => {
-  const hashpassword = await bcrypt.hash(req.body.password, 10);
-  const newUser = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email: req.body.email,
-    phone: req.body.phone,
-    password: hashpassword,
-    gender: req.body.gender,
-    date_of_birth: req.body.date_of_birth,
-  };
   try {
-    const saveperson = await USER.create(newUser);
-    console.log(saveperson);
-  } catch (err) {
-    console.log(err);
+    const user = await User.create(req.body);
+    const userData = await serialize.show(user);
+    res.status(201).send({
+      user: userData,
+    });
+  } catch (error) {
+    res.status(422).send({ error: error.message });
   }
 };
-exports.findAll = (req, res) => {
-  USER.findAll()
-    .then((User) => {
-      res.status(200).send(User);
-    })
-    .catch((err) => {
-      res.status(500).send(
-        { message: err.message || data.status.get.errorMessage },
-      );
+
+exports.show = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const userData = await serialize.show(user);
+    res.status(200).send({
+      user: userData,
     });
+  } catch (error) {
+    res.status(404).send({
+      message: data.api_messages.response.notFound.message,
+    });
+  }
 };
 
-exports.delete = (req, res) => {
-  const { id } = req.params;
-  USER.destroy({
-    where: { id: id },
-  })
-    .then((num) => {
-      if (num === 1) {
-        res.status(200).send({
-          message: data.status.delete.deleteSuccuessfully,
-        });
-      } else {
-        res.status(404).send({
-          message: data.status.delete.errorMessage + id,
-        });
-      }
+exports.delete = async (req, res) => {
+  try {
+    const user = User.destroy({
+      where: { id: req.params.id },
     });
-};
-
-exports.update = (req, res) => {
-  const { id } = req.params.id;
-  USER.update(req.body, {
-    where: { id: id },
-  })
-    .then((num) => {
-      if (num === 1) {
-        res.send({
-          message: data.status.update.updatedsuccessfully,
-        });
-      } else {
-        res.send({
-          message: data.status.update.issueMessage + id,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: data.status.update.errorMessage + id,
+    if (user) {
+      const msg = data.api_messages.response.delete.message.replace('{{title}}', `of user ${req.params.id}`);
+      res.send({
+        message: msg,
       });
-    });
+    } else {
+      res.status(errorHandler.errorHandler.notFound().status).send({
+        message: data.api_messages.response.notFound.message,
+      });
+    }
+  } catch (error) {
+    res.status(errorHandler.errorHandler.error().status).send({ message: errorHandler.errorHandler.error });
+  }
+};
+
+exports.update = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const userData = await serialize.update(user);
+    if (!user) {
+      res.status(errorHandler.errorHandler.notFound().status).send({
+        message: data.api_messages.response.notFound.message,
+      });
+    } else {
+      await User.update(req.body, { where: { id: req.params.id } });
+      res.status(202).send({
+        message: data.api_messages.response.updateSuccess.message,
+        user: userData,
+
+      });
+    }
+  } catch (error) {
+    res.send(({
+      message: errorHandler.errorHandler.internalServerError().error,
+    }));
+  }
+};
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const { id, password } = req.body;
+    const user = await User.findByPk(id);
+    if (user) {
+      const newPassword = await bcrypt.hash(password, 10);
+      user.update({ password: newPassword }).then((next) => {
+        res.status(200).send({
+          message: data.controllers.user.password.successMessage,
+        });
+      });
+    } else {
+      const msg = data.api_messages.response.updateFail.message.replace('{{title}}', `of user ${req.params.id}`);
+      res.status(404).send({
+        message: msg,
+      });
+    }
+  } catch (error) {
+    res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
+  }
 };
