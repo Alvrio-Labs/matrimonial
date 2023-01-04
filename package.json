@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "production:start": "npx sequelize-cli db:create || npx sequelize-cli db:migrate && nodemon server.js dotenv -e .env.production",
-    "development:start": "npx sequelize-cli db:create || npx sequelize-cli db:migrate && nodemon server.js dotenv -e .env.development",
-    "test:start": "npx sequelize-cli db:create || npx sequelize-cli db:migrate && nodemon server.js dotenv -e .env.test",
+    "production:start": "nodemon server.js dotenv -e .env.production",
+    "development:start": "nodemon server.js dotenv -e .env.development",
+    "test:start": "nodemon server.js dotenv -e .env.test",
     "development:db:create": "npx sequelize-cli db:create --env development",
     "production:db:create": "npx sequelize-cli db:create --env production",
     "test:db:create": "npx sequelize-cli db:create --env test",

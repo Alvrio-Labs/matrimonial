@@ -4,6 +4,7 @@ const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../../models');
 const { errorHandler } = require('../../utility/error.handler');
+const serialize = require('../../serializers/user.serializer');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
@@ -11,68 +12,43 @@ const data = YAML.load(validation);
 // eslint-disable-next-line prefer-destructuring
 const User = db.User;
 
-exports.findAll = async (req, res) => {
+exports.index = async (req, res) => {
+  const users = await User.findAll({ where: { is_admin: false } });
+  const userList = await serialize.index(users);
   try {
-    const users = await User.findAll({ where: { is_admin: false } });
-    res.status(200).send(users);
+    res.status(200).send({
+      users: userList,
+    });
   } catch (error) {
-    res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
+    res.status(404).send({
+      message: data.api_messages.response.notFound.message,
+    });
   }
 };
 
-exports.findOne = async (req, res) => {
-  const user = await User.findByPk(req.params.id, { where: { is_admin: false } });
+exports.show = async (req, res) => {
   try {
+    const user = await User.findByPk(req.params.id, { where: { is_admin: false } });
+    const userData = await serialize.show(user);
     res.status(200).send({
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      phone: user.phone,
-      gender: user.gender,
-      date_of_birth: user.date_of_birth,
+      user: userData,
     });
   } catch (error) {
-    res.status(errorHandler.errorHandler.notFound().status).send({
+    res.status(404).send({
       message: data.api_messages.response.notFound.message,
     });
   }
 };
 
 exports.create = async (req, res) => {
-  const hashPassword = await bcrypt.hash(req.body.password, 10);
-  const dateOfBirth = req.body.date_of_birth;
-  const today = new Date();
-  const dateSplit = dateOfBirth.split('-');
-  const year = dateSplit[2];
-  const age = today.getFullYear() - year;
-  if (age >= 18) {
-    try {
-      await User.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        phone: req.body.phone,
-        gender: req.body.gender,
-        date_of_birth: req.body.date_of_birth,
-        password: hashPassword,
-
-      });
-      res.status(201).send({
-        User: {
-          first_name: req.body.first_name,
-          last_name: req.body.last_name,
-          email: req.body.email,
-          phone: req.body.phone,
-          gender: req.body.gender,
-          date_of_birth: req.body.date_of_birth,
-        },
-        message: data.api_messages.response.success.message,
-      });
-    } catch (error) {
-      res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
-    }
-  } else {
-    res.status(errorHandler.errorHandler.notAccepted().status).send(errorHandler.errorHandler.notAccepted().error);
+  try {
+    const user = await User.create(req.body);
+    const userData = await serialize.show(user);
+    res.status(201).send({
+      user: userData,
+    });
+  } catch (error) {
+    res.status(422).send({ error: error.message });
   }
 };
 
