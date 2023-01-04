@@ -1,10 +1,9 @@
 const userGender = ['Male', 'Female', 'Others'];
-const bcrypt = require('bcrypt');
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
   class User extends Model {
-    static associate(models) {
+    static associate(_models) {
       // define association here
     }
   }
@@ -62,6 +61,15 @@ module.exports = (sequelize) => {
     tableName: 'users',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+  });
+
+  User.beforeCreate((model, _options) => {
+    const ageCheck = new Date();
+    ageCheck.setFullYear(ageCheck.getFullYear() - 18);
+    const birthDate = new Date(model.date_of_birth);
+    if (ageCheck < birthDate) {
+      throw new Error('Age must be above 18+');
+    }
   });
 
   return User;

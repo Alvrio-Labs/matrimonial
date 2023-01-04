@@ -11,40 +11,6 @@ const { errorHandler } = require('../utility/error.handler');
 
 exports.create = async (req, res) => {
   const hashPassword = await bcrypt.hash(req.body.password, 10);
-  const dateOfBirth = req.body.date_of_birth.split('-')[2];
-  const today = new Date();
-  const age = today.getFullYear() - dateOfBirth;
-  // if (age >= 18) {
-  //   try {
-  //     await User.create({
-  //       first_name: req.body.first_name,
-  //       last_name: req.body.last_name,
-  //       email: req.body.email,
-  //       phone: req.body.phone,
-  //       gender: req.body.gender,
-  //       date_of_birth: req.body.date_of_birth,
-  //       password: hashPassword,
-
-  //     });
-  //     res.status(201).send({
-  //       User: {
-  //         first_name: req.body.first_name,
-  //         last_name: req.body.last_name,
-  //         email: req.body.email,
-  //         phone: req.body.phone,
-  //         gender: req.body.gender,
-  //         date_of_birth: req.body.date_of_birth,
-  //       },
-  //       message: data.api_messages.response.success.message,
-  //     });
-  //   } catch (error) {
-  //     res.status(400).send(error);
-  //   }
-  // } else {
-  //   res.send({
-  //     message: 'age less than 18',
-  //   });
-  // }
   try {
     await User.create({
       first_name: req.body.first_name,
@@ -68,7 +34,7 @@ exports.create = async (req, res) => {
       message: data.api_messages.response.success.message,
     });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(422).send({ error: error.message });
   }
 };
 
