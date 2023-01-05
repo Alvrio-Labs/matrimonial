@@ -29,7 +29,6 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      // unique: true,
       unique: {
         args: true,
         msg: 'Email address already in use!',
