@@ -36,10 +36,12 @@ const create = async (req, res, next) => {
   }
 };
 
-// validation with schema to get a user data
+// schema to get a user
 const getSchema = Joi.object({
   id: Joi.string(),
 });
+
+// validation with schema to get a user data
 const get = async (req, res, next) => {
   const value = getSchema.validate(req.body);
   if (value.error) {
@@ -50,9 +52,11 @@ const get = async (req, res, next) => {
     next();
   }
 };
+// schema to delete a user
 const deleteSchema = Joi.object({
   id: Joi.string(),
 });
+
 // validation with schema to get a user data
 const deleteValidation = async (req, res, next) => {
   const value = deleteSchema.validate(req.body);
@@ -64,20 +68,17 @@ const deleteValidation = async (req, res, next) => {
     next();
   }
 };
-// schema to create a user
+
+// schema to update a user
 const updateSchema = Joi.object({
   first_name: Joi.string().max(data.user.firstName.max).min(data.user.firstName.min),
   last_name: Joi.string().max(data.user.lastName.max).min(data.user.lastName.min),
   email: Joi.string().min(3).email(),
   phone: Joi.number().integer().min(data.user.mobile.min).max(data.user.mobile.max)
     .message(data.user.mobile.errorMessage),
-  // date_of_birth: Joi.string(),
-  // date_of_birth: Joi.date().min().required(),
-  // birthdate:
+  date_of_birth: Joi.date(),
   password: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage),
 });
-// // validation with schema to create a user
-
 
 // validation with schema to update a user
 const update = async (req, res, next) => {

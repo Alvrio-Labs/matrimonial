@@ -1,10 +1,7 @@
-const YAML = require('js-yaml');
-const fs = require('fs');
 const db = require('../models/index');
 const serialize = require('../serializers/user.serializer');
 // eslint-disable-next-line prefer-destructuring
 const User = db.User;
-const validationMsg = YAML.load(fs.readFileSync('yaml/validation.yaml'));
 
 exports.show = async (req, res) => {
   try {

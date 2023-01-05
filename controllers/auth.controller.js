@@ -1,76 +1,14 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
 const errorHandler = require('../utility/error.handler');
-const serialize = require('../serializers/user.serializer');
+const { requestforgetPassword, requestlogin } = require('../utility/auth');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 const { User } = db;
-const { TRANSPORTER } = require('../utility/nodemailer');
-
-exports.forgetPassword = async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({
-    where: { email: req.body.email },
-  });
-  const userData = serialize.forgotPassword(user);
-  try {
-    if (user) {
-      const resetToken = jwt.sign({ id: req.body.id }, process.env.RESET_PASSWORD_KEY, {
-        expiresIn: process.env.EXPIRY_IN,
-      });
-      const mailOptions = {
-        data: userData,
-        from: process.env.EMAIL,
-        to: email,
-        subject: 'To Change Password',
-        html: `
-          <h1>Clink on link to reset password</h1>
-          <p> <a href ="http://localhost:3000/reset-password/${resetToken}"</a> Click here</p>`,
-
-      };
-      TRANSPORTER.sendMail(mailOptions, (err, result) => {
-        if (err) {
-          res.status(404).send(err);
-        } else {
-          res.status(200).send(data.auth.forgotPassword.successMessage, result.response);
-        }
-      });
-      const currentUser = await user.update({ reset_token: resetToken });
-      if (!currentUser) {
-        res.status(404).send({
-          message: data.api_messages.response.notFound.message,
-        });
-      } else {
-        TRANSPORTER.sendMail(mailOptions, (err, result) => {
-          if (err) {
-            res.status(404).send({
-              message: data.auth.forgotPassword.serverError,
-            });
-          } else {
-            res.status(200).send({
-              message: data.auth.forgotPassword.successMessage,
-            });
-          }
-        });
-      }
-    } else {
-      res.status(errorHandler.errorHandler.notFound().status).send({
-        message: data.api_messages.response.notFound.message,
-      });
-    }
-  } catch (error) {
-    res.send(({
-      message: errorHandler.errorHandler.internalServerError().error,
-    }));
-  }
-
-  return null;
-};
 
 exports.resetPassword = async (req, res) => {
   try {
@@ -111,30 +49,26 @@ exports.resetPassword = async (req, res) => {
   return null;
 };
 
-exports.login = async (req, res) => {
+exports.forgetPassword = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (user.email === email && isMatch) {
-      const jwtToken = jwt.sign({ isMatch: user }, process.env.SECRET_KEY, {
-        expiresIn: process.env.EXPIRY_IN,
-      });
-      const responseData = await serialize.show(user);
-      res.json({
-        token: jwtToken,
-        user: responseData,
-      });
-    } else {
-      return res.status(401).send({
-        message: 'Invalid email or password!',
-      });
-    }
+    const requestPasswordService = await requestforgetPassword(req, res, next);
+    return res.json(requestPasswordService);
   } catch (error) {
-    res.send(({
-      message: errorHandler.errorHandler.internalServerError().error,
-    }));
+    res.status(400).send({
+      message: error,
+    });
+  }
+  return null;
+};
+
+exports.login = async (req, res, next) => {
+  try {
+    const requestloginService = await requestlogin(req, res, next);
+    return res.json(requestloginService);
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+    });
   }
   return null;
 };
