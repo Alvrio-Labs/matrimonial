@@ -69,6 +69,11 @@ module.exports = (sequelize) => {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
+  function encryptPasswordIfChanged(user, options) {
+    if (user.changed('password')) {
+      (user.get('password'));
+    }
+  }
 
   User.beforeCreate((model, _options) => {
     const ageCheck = new Date();
@@ -78,6 +83,7 @@ module.exports = (sequelize) => {
       throw new Error('Age must be above 18+');
     }
   });
+  User.beforeUpdate(encryptPasswordIfChanged);
 
   return User;
 };

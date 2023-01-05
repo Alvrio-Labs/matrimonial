@@ -3,14 +3,10 @@ const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../../models/index');
 
-const User = db.User;
-const { errorHandler } = require('../../utility/error.handler');
-const serialize = require('../../serializers/user.serializer');
-
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
-
-// const User = db.User;
+const User = db.User;
+const serialize = require('../../serializers/user.serializer');
 
 exports.index = async (req, res) => {
   const users = await User.findAll({ where: { is_admin: false } });
@@ -29,13 +25,13 @@ exports.index = async (req, res) => {
 exports.show = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id, { where: { is_admin: false } });
-    const userData = await serialize.show(user);
+    const responseData = await serialize.show(user);
     res.status(200).send({
-      user: userData,
+      user: responseData,
     });
   } catch (error) {
     res.status(404).send({
-      message: data.api_messages.response.notFound.message,
+      message: 'User not found.',
     });
   }
 };
@@ -43,9 +39,9 @@ exports.show = async (req, res) => {
 exports.create = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    const userData = await serialize.show(user);
+    const responseData = await serialize.show(user);
     res.status(201).send({
-      user: userData,
+      user: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
@@ -55,42 +51,25 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
-    const userData = await serialize.show(user);
-    if (!user) {
-      res.status(errorHandler.errorHandler.notFound().status).send({
-        message: data.api_messages.response.notFound.message,
-      });
-    } else {
-      await User.update(req.body, { where: { is_admin: false, id: req.params.id } });
-      res.status(202).send({
-        message: data.api_messages.response.updateSuccess.message,
-        user: userData,
-
-      });
-    }
+    user.update(req.body, { where: { is_admin: false } });
+    const responseData = await serialize.show(user);
+    res.status(202).send({
+      user: responseData,
+    });
   } catch (error) {
-    res.send(({
-      message: errorHandler.errorHandler.internalServerError().error,
-    }));
+    res.status(422).send({ error: error.message });
   }
 };
 
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
   try {
-    const user = User.destroy({
-      where: { id: req.params.id },
+    const _ = User.destroy({ where: { id: req.params.id } });
+    res.send({
+      message: 'User deleted!',
     });
-    if (user) {
-      const msg = data.api_messages.response.delete.message.replace('{{title}}', `of user ${req.params.id}`);
-      res.send({
-        message: msg,
-      });
-    } else {
-      res.status(errorHandler.errorHandler.notFound().status).send({
-        message: data.api_messages.response.notFound.message,
-      });
-    }
   } catch (error) {
-    res.status(errorHandler.errorHandler.error().status).send({ message: errorHandler.errorHandler.error });
+    res.status(404).send({
+      message: 'User not found.',
+    });
   }
 };

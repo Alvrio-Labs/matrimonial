@@ -6,16 +6,6 @@ const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 const date = new Date().getFullYear();
 
-// // const dateOfBirth = req.body.date_of_birth;
-// const today = new Date();
-// const year = today.getFullYear();
-// // const year = today.split('-')[0];
-// console.log(year);
-// // const dateSplit = dateOfBirth.split('-');
-// // const year = dateSplit[2];
-// // const age = today.getFullYear() - year;
-const date18YearsAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 18);
-
 
 // schema to create a user
 const createSchema = Joi.object({
@@ -29,14 +19,10 @@ const createSchema = Joi.object({
     .message(data.user.mobile.errorMessage)
     .required(),
   data_of_birth: Joi.date().min(date - 18).required(),
-  // date_of_birth: Joi.date().min(date - date18YearsAgo).required(),
-  // date_of_birth: Joi.date().min(Date.now - 18).required(),
-
-  // date_of_birth: Joi.date().greater(year - 18).required,
-  // date_of_birth: Joi.date().min(year - 18).required,
   password: Joi.string().min(data.user.password.min).message(data.user.password.errorMessage)
     .required(),
 });
+
 // validation with schema to create a user
 const create = async (req, res, next) => {
   const value = await createSchema.validate(req.body);
@@ -49,10 +35,11 @@ const create = async (req, res, next) => {
     next();
   }
 };
+
+// validation with schema to get a user data
 const getSchema = Joi.object({
   id: Joi.string(),
 });
-// validation with schema to get a user data
 const get = async (req, res, next) => {
   const value = getSchema.validate(req.body);
   if (value.error) {

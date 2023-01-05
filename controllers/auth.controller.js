@@ -115,21 +115,20 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
-    const userData = await serialize.show(user);
-
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (user.email === email && isMatch) {
       const jwtToken = jwt.sign({ isMatch: user }, process.env.SECRET_KEY, {
         expiresIn: process.env.EXPIRY_IN,
       });
+      const responseData = await serialize.show(user);
       res.json({
         token: jwtToken,
-        user: userData,
+        user: responseData,
       });
     } else {
-      const msg = data.api_messages.response.invalid.message.replace('{{title}}', 'email or password');
       return res.status(401).send({
-        message: msg,
+        message: 'Invalid email or password!',
       });
     }
   } catch (error) {
