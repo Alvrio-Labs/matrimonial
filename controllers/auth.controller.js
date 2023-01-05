@@ -3,8 +3,8 @@ const YAML = require('js-yaml');
 const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
-const errorHandler = require('../utility/error.handler');
-const { requestforgetPassword, requestlogin } = require('../utility/auth');
+const errorHandler = require('../utilities/error.handler');
+const { requestforgetPassword, requestlogin } = require('../utilities/auth');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
