@@ -9,6 +9,7 @@ require('./auth.routes')(router);
 require('./family_details.routes')(router);
 require('./education_details.routes')(router);
 
+require('./personalInfo.routes')(router);
 // admin routes
 
 require('./admin/user.routes')(router);
