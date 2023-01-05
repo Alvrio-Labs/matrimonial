@@ -12,7 +12,7 @@ const loginSchema = Joi.object({
 });
 
 // validation with schema to login
-const loginValidation = async (req, res, next) => {
+const login = async (req, res, next) => {
   const value = await loginSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -24,13 +24,13 @@ const loginValidation = async (req, res, next) => {
 };
 
 //  schema to forget Password
-const forgertPassword = Joi.object({
+const forgertPasswordSchema = Joi.object({
   email: Joi.required(),
 });
 
 // validation to forget password
-const forgotPasswordValidation = async (req, res, next) => {
-  const value = await forgertPassword.validate(req.body);
+const forgotPassword = async (req, res, next) => {
+  const value = await forgertPasswordSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
       message: value.error.details[0].message,
@@ -48,7 +48,7 @@ const resetPasswordSchema = Joi.object({
 });
 
 // validation to reset password
-const resetPasswordValidation = async (req, res, next) => {
+const resetPassword = async (req, res, next) => {
   const value = resetPasswordSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
@@ -60,5 +60,5 @@ const resetPasswordValidation = async (req, res, next) => {
 };
 
 module.exports = {
-  resetPasswordValidation, forgotPasswordValidation, loginValidation,
+  resetPassword, forgotPassword, login,
 };

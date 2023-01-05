@@ -14,4 +14,3 @@ const TRANSPORTER = nodemailer.createTransport(
 module.exports = {
   TRANSPORTER,
 };
-

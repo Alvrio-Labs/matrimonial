@@ -18,6 +18,9 @@ module.exports = (sequelize) => {
     first_name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     last_name: {
       type: DataTypes.STRING(25),
@@ -26,7 +29,11 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'Email address already in use!',
+      },
+
     },
     phone: {
       type: DataTypes.STRING(15),
@@ -69,6 +76,11 @@ module.exports = (sequelize) => {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
+  function encryptPasswordIfChanged(user, options) {
+    if (user.changed('password')) {
+      (user.get('password'));
+    }
+  }
 
   User.beforeCreate((model, _options) => {
     const ageCheck = new Date();
@@ -78,6 +90,7 @@ module.exports = (sequelize) => {
       throw new Error('Age must be above 18+');
     }
   });
+  User.beforeUpdate(encryptPasswordIfChanged);
 
   return User;
 };

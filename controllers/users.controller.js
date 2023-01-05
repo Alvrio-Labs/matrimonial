@@ -1,101 +1,56 @@
-const YAML = require('js-yaml');
-const bcrypt = require('bcrypt');
-const fs = require('fs');
-const db = require('../models');
+const db = require('../models/index');
 const serialize = require('../serializers/user.serializer');
 // eslint-disable-next-line prefer-destructuring
 const User = db.User;
-const validation = fs.readFileSync('yaml/validation.yaml');
-const data = YAML.load(validation);
-const { errorHandler } = require('../utility/error.handler');
+
+exports.show = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const responseData = await serialize.show(user);
+    res.status(200).send({
+      user: responseData,
+    });
+  } catch (error) {
+    res.status(404).send({
+      message: 'User not found.',
+    });
+  }
+};
 
 exports.create = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    const userData = await serialize.show(user);
+    const responseData = await serialize.show(user);
     res.status(201).send({
-      user: userData,
+      user: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
   }
 };
 
-exports.show = async (req, res) => {
+exports.update = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
-    const userData = await serialize.show(user);
-    res.status(200).send({
-      user: userData,
+    user.update(req.body);
+    const responseData = await serialize.show(user);
+    res.status(202).send({
+      user: responseData,
     });
   } catch (error) {
-    res.status(404).send({
-      message: data.api_messages.response.notFound.message,
-    });
+    res.status(422).send({ error: error.message });
   }
 };
 
 exports.delete = async (req, res) => {
   try {
-    const user = User.destroy({
-      where: { id: req.params.id },
+    const _ = User.destroy({ where: { id: req.params.id } });
+    res.send({
+      message: 'User deleted!',
     });
-    if (user) {
-      const msg = data.api_messages.response.delete.message.replace('{{title}}', `of user ${req.params.id}`);
-      res.send({
-        message: msg,
-      });
-    } else {
-      res.status(errorHandler.errorHandler.notFound().status).send({
-        message: data.api_messages.response.notFound.message,
-      });
-    }
   } catch (error) {
-    res.status(errorHandler.errorHandler.error().status).send({ message: errorHandler.errorHandler.error });
-  }
-};
-
-exports.update = async (req, res) => {
-  try {
-    const user = await User.findByPk(req.params.id);
-    const userData = await serialize.update(user);
-    if (!user) {
-      res.status(errorHandler.errorHandler.notFound().status).send({
-        message: data.api_messages.response.notFound.message,
-      });
-    } else {
-      await User.update(req.body, { where: { id: req.params.id } });
-      res.status(202).send({
-        message: data.api_messages.response.updateSuccess.message,
-        user: userData,
-
-      });
-    }
-  } catch (error) {
-    res.send(({
-      message: errorHandler.errorHandler.internalServerError().error,
-    }));
-  }
-};
-
-exports.updatePassword = async (req, res) => {
-  try {
-    const { id, password } = req.body;
-    const user = await User.findByPk(id);
-    if (user) {
-      const newPassword = await bcrypt.hash(password, 10);
-      user.update({ password: newPassword }).then((next) => {
-        res.status(200).send({
-          message: data.controllers.user.password.successMessage,
-        });
-      });
-    } else {
-      const msg = data.api_messages.response.updateFail.message.replace('{{title}}', `of user ${req.params.id}`);
-      res.status(404).send({
-        message: msg,
-      });
-    }
-  } catch (error) {
-    res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
+    res.status(404).send({
+      message: 'User not found.',
+    });
   }
 };

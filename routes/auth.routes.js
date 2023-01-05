@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
 const auth = require('../controllers/auth.controller');
-const { resetPasswordValidation, forgotPasswordValidation, loginValidation } = require('../validations/auth.validation');
+const { resetPassword, forgotPassword, login } = require('../validations/auth.validation');
 
 module.exports = (app) => {
-  router.post('/login', loginValidation, auth.login);
-  router.post('/forget-password', forgotPasswordValidation, auth.forgetPassword);
-  router.post('/reset-password', resetPasswordValidation, auth.resetPassword);
+  router.post('/login', login, auth.login);
+  router.post('/forget-password', forgotPassword, auth.forgetPassword);
+  router.post('/reset-password', resetPassword, auth.resetPassword);
 
   app.use('/api', router);
 };
