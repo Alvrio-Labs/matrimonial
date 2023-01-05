@@ -1,14 +1,14 @@
 const db = require('../models/index');
-const serialize = require('../serializers/personalInfo.serializer');
+const serialize = require('../serializers/educationalInfo.serializer');
 // eslint-disable-next-line prefer-destructuring
-const personalInfo = db.PersonalInfo;
+const personalInfo = db.EducationInfo;
 
 exports.show = async (req, res) => {
   try {
     const user = await personalInfo.findByPk(req.params.id);
     const responseData = await serialize.show(user);
     res.status(200).send({
-      user: responseData,
+      userEducationalInfo: responseData,
     });
   } catch (error) {
     res.status(404).send({
@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
     const user = await personalInfo.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
-      userPersonalData: responseData,
+      userEducationalInfo: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
@@ -35,7 +35,7 @@ exports.update = async (req, res) => {
     user.update(req.body);
     const responseData = await serialize.show(user);
     res.status(202).send({
-      user: responseData,
+      userEducationalInfo: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
