@@ -12,7 +12,7 @@ module.exports = {
      * }], {});
     */
     return queryInterface.insert('User', [{
-      id: 'cd371b80-d050-4a6c-968f-839ae8587570',
+      id: 'cd371b80-d050-4a6c-968f-839ae8512570',
       first_name: 'qwert',
       last_name: 'abc',
       email: 'abc@gmail.com',
