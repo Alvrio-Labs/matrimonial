@@ -6,6 +6,8 @@ const router = express.Router();
 
 require('./user.routes')(router);
 require('./auth.routes')(router);
+require('./personalInfo.routes')(router);
+
 
 // admin routes
 
