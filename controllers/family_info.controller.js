@@ -16,6 +16,7 @@ exports.show = async (req, res) => {
     });
   }
 };
+
 exports.create = async (req, res) => {
   try {
     const user = await familyInfo.create(req.body);
