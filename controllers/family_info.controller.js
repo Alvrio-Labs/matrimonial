@@ -46,11 +46,11 @@ exports.delete = async (req, res) => {
   try {
     const _ = familyInfo.destroy({ where: { id: req.params.id } });
     res.send({
-      message: 'User deleted!',
+      message: 'family details deleted!',
     });
   } catch (error) {
     res.status(404).send({
-      message: 'User not found.',
+      message: 'family details not found.',
     });
   }
 };
