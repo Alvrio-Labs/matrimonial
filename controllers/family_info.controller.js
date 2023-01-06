@@ -8,7 +8,7 @@ exports.show = async (req, res) => {
     const user = await familyInfo.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
-      FamilyDetails: responseData,
+      family_details: responseData,
     });
   } catch (error) {
     res.status(404).send({
@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
     const user = await familyInfo.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
-      FamilyDetails: responseData,
+      family_details: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
@@ -35,7 +35,7 @@ exports.update = async (req, res) => {
     user.update(req.body);
     const responseData = await serialize.show(user);
     res.status(202).send({
-      FamilyDetails: responseData,
+      family_details: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
