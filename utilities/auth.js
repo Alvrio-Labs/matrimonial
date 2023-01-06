@@ -50,6 +50,7 @@ const requestlogin = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     const decoded = await bcrypt.compare(password, user.password);
+
     if (user.email === email && decoded) {
       const jwtToken = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
         expiresIn: process.env.EXPIRY_IN,

@@ -1,11 +1,11 @@
 const db = require('../models/index');
-const serialize = require('../serializers/personalInfo.serializer');
+const serialize = require('../serializers/personal_info.serializer');
 // eslint-disable-next-line prefer-destructuring
 const personalInfo = db.PersonalInfo;
 
 exports.show = async (req, res) => {
   try {
-    const user = await personalInfo.findByPk(req.params.id);
+    const user = await personalInfo.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
       personalInfoData: responseData,
