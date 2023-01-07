@@ -4,8 +4,20 @@ const bcrypt = require('bcrypt');
 
 module.exports = (sequelize) => {
   class User extends Model {
-    static associate(_models) {
+    static associate(models) {
       // define association here
+      this.hasMany((models.connectionRequest), {
+        as: 'connectionRequest',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasMany((models.userConnection), {
+        as: 'userConnection',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
     }
   }
 
