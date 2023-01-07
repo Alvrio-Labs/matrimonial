@@ -6,7 +6,7 @@ const router = express.Router();
 
 require('./user.routes')(router);
 require('./auth.routes')(router);
-
+require('./life_style.routes')(router);
 // admin routes
 
 require('./admin/user.routes')(router);
