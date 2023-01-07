@@ -46,11 +46,11 @@ exports.delete = async (req, res) => {
   try {
     const _ = lifeStyle.destroy({ where: { id: req.params.id } });
     res.send({
-      message: 'family details deleted!',
+      message: 'life style details deleted!',
     });
   } catch (error) {
     res.status(404).send({
-      message: 'family details not found.',
+      message: 'life style details not found.',
     });
   }
 };
