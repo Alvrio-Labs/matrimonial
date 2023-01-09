@@ -1,11 +1,11 @@
 const db = require('../models/index');
 const serialize = require('../serializers/connection_request.serializer');
 
-const { userConnection } = db;
+const UserConnection = db.userConnection;
 
 exports.show = async (req, res) => {
   try {
-    const user = await userConnection.findOne({ where: { user_id: req.user_id } });
+    const user = await UserConnection.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
       connection_request: responseData,
@@ -19,7 +19,7 @@ exports.show = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const _ = userConnection.destroy({ where: { id: req.params.id } });
+    const _ = UserConnection.destroy({ where: { id: req.params.id } });
     res.send({
       message: 'connection request deleted!',
     });
