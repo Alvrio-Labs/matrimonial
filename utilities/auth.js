@@ -5,6 +5,7 @@ const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
 const errorHandler = require('./error.handler');
+
 const serialize = require('../serializers/user.serializer');
 
 const validation = fs.readFileSync('yaml/validation.yaml');
