@@ -1,53 +1,11 @@
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
-const YAML = require('js-yaml');
-const fs = require('fs');
 const db = require('../models');
 require('dotenv').config();
-const errorHandler = require('../utilities/error.handler');
 const { requestforgetPassword, requestlogin } = require('../utilities/auth');
 
-const validation = fs.readFileSync('yaml/validation.yaml');
-const data = YAML.load(validation);
 const { User } = db;
-
-exports.resetPassword = async (req, res) => {
-  try {
-    const { newPassword, resetToken } = req.body;
-    if (resetToken) {
-      const fpSalt = crypto.randomBytes(64).toString('base64');
-      jwt.verify(resetToken, fpSalt).then((err, token) => {
-        if (err) {
-          return res.status(401).json({
-            message: data.auth.resetPassword.errorMessage,
-          });
-        }
-        User.findOne({ where: { reset_token: token } }).then((error, user) => {
-          if (error) {
-            const msg = data.api_messages.response.invalid.message.replace('{{title}}', 'email');
-            return res.status(401).send({
-              message: msg,
-            });
-          }
-          if (user) {
-            user.update({ password: newPassword, reset_token: '' }).then(() => res.status(200).send({
-              message: data.auth.resetPassword.successMessage,
-            }));
-          }
-          return null;
-        });
-        return null;
-      });
-    } else {
-      res.status(errorHandler.errorHandler.badRequest().status).send(errorHandler.errorHandler.badRequest().error);
-    }
-  } catch (error) {
-    res.send(({
-      message: errorHandler.errorHandler.internalServerError().error,
-    }));
-  }
-
-  return null;
-};
 
 exports.forgetPassword = async (req, res, next) => {
   try {
@@ -71,4 +29,35 @@ exports.login = async (req, res, next) => {
     });
   }
   return null;
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const { reset_token, newPassword } = req.body;
+    if (reset_token) {
+      jwt.verify(reset_token, process.env.RESET_PASSWORD_KEY, (err, decodeddata) => {
+        if (err) {
+          res.status(401).json({
+            message: 'Incorrect or expired',
+          });
+        } else {
+          User.findOne({ where: { reset_token } }, (err, next)).then((user) => {
+            user.update({ password: newPassword, reset_token: '' }).then((_user) => {
+              res.status(200).send({
+                message: 'Password update',
+              });
+            });
+          });
+        }
+      });
+    } else {
+      return res.status(404).send({
+        message: 'No user of this id',
+      });
+    }
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+    });
+  }
 };
