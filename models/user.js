@@ -24,6 +24,8 @@ module.exports = (sequelize) => {
     first_name: {
       type: DataTypes.STRING,
       allowNull: false,
+      min: 2,
+      max: 30,
       validate: {
         is: /^[A-Za-z]+$/,
       },
@@ -31,6 +33,9 @@ module.exports = (sequelize) => {
     last_name: {
       type: DataTypes.STRING(25),
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     email: {
       type: DataTypes.STRING(100),

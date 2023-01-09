@@ -33,14 +33,23 @@ module.exports = (sequelize) => {
     father_name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     mother_name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     father_occupation: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     mother_occupation: {
       type: DataTypes.STRING,
@@ -53,14 +62,23 @@ module.exports = (sequelize) => {
     mother_gotra: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     grandmother_gotra: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     nanihal_place: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+      },
     },
     native_address: {
       type: DataTypes.STRING,
