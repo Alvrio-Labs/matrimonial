@@ -1,11 +1,11 @@
 const db = require('../models/index');
 const serialize = require('../serializers/life_style.serializer');
 
-const { lifeStyle } = db;
+const LifeStyle = db.lifeStyle;
 
 exports.show = async (req, res) => {
   try {
-    const user = await lifeStyle.findOne({ where: { user_id: req.user_id } });
+    const user = await LifeStyle.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
       life_style_details: responseData,
@@ -19,7 +19,7 @@ exports.show = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const user = await lifeStyle.create(req.body);
+    const user = await LifeStyle.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
       life_style_details: responseData,
@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await lifeStyle.findByPk(req.params.id);
+    const user = await LifeStyle.findByPk(req.params.id);
     user.update(req.body);
     const responseData = await serialize.show(user);
     res.status(202).send({
@@ -44,7 +44,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const _ = lifeStyle.destroy({ where: { id: req.params.id } });
+    const _ = LifeStyle.destroy({ where: { id: req.params.id } });
     res.send({
       message: 'life style details deleted!',
     });
