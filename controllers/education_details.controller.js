@@ -1,25 +1,25 @@
 const db = require('../models/index');
 const serialize = require('../serializers/educationalInfo.serializer');
-// eslint-disable-next-line prefer-destructuring
-const educationDetails = db.EducationInfo;
+
+const EducationDetail = db.EducationInfo;
 
 exports.show = async (req, res) => {
   try {
-    const user = await educationDetails.findOne({ where: { user_id: req.user_id } });
+    const user = await EducationDetail.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
       Education_details: responseData,
     });
   } catch (error) {
     res.status(404).send({
-      message: 'Education details not found.',
+      message: 'No education detail available for this id.',
     });
   }
 };
 
 exports.create = async (req, res) => {
   try {
-    const user = await educationDetails.create(req.body);
+    const user = await EducationDetail.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
       userEducationalInfo: responseData,
@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await educationDetails.findByPk(req.params.id);
+    const user = await EducationDetail.findByPk(req.params.id);
     user.update(req.body);
     const responseData = await serialize.show(user);
     res.status(202).send({
@@ -44,9 +44,9 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const _ = educationDetails.destroy({ where: { id: req.params.id } });
+    const _ = EducationDetail.destroy({ where: { id: req.params.id } });
     res.send({
-      message: 'User deleted!',
+      message: 'Education detail deleted!',
     });
   } catch (error) {
     res.status(404).send({

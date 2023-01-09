@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       unique: {
         args: true,
-        msg: 'user family details with this id already added',
+        msg: 'user education detail with this id already added',
       },
     },
     post_graduation_college: {
