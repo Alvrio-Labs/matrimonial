@@ -49,10 +49,9 @@ const requestlogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (user.email === email && isMatch) {
-      const jwtToken = jwt.sign({ isMatch: user }, process.env.SECRET_KEY, {
+    const decoded = await bcrypt.compare(password, user.password);
+    if (user.email === email && decoded) {
+      const jwtToken = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
         expiresIn: process.env.EXPIRY_IN,
       });
       const responseData = await serialize.show(user);

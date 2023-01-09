@@ -11,7 +11,7 @@ const verifyToken = async (req, res, next) => {
         message: 'Invalid token',
       });
     } else {
-      req.userId = decoded.id;
+      req.user_id = decoded.id;
       next();
     }
   });

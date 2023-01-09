@@ -4,8 +4,14 @@ const bcrypt = require('bcrypt');
 
 module.exports = (sequelize) => {
   class User extends Model {
-    static associate(_models) {
+    static associate(models) {
       // define association here
+      this.hasOne((models.EducationInfo), {
+        as: 'educationInfo',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
     }
   }
 
