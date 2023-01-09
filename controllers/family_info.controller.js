@@ -1,25 +1,25 @@
 const db = require('../models/index');
 const serialize = require('../serializers/family_info.serializer');
 
-const { familyInfo } = db;
+const FamilyDetail = db.familyInfo;
 
 exports.show = async (req, res) => {
   try {
-    const user = await familyInfo.findOne({ where: { user_id: req.user_id } });
+    const user = await FamilyDetail.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
       family_details: responseData,
     });
   } catch (error) {
     res.status(404).send({
-      message: 'family details not found ',
+      message: 'No family detail is available for this id.',
     });
   }
 };
 
 exports.create = async (req, res) => {
   try {
-    const user = await familyInfo.create(req.body);
+    const user = await FamilyDetail.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
       family_details: responseData,
@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await familyInfo.findByPk(req.params.id);
+    const user = await FamilyDetail.findByPk(req.params.id);
     user.update(req.body);
     const responseData = await serialize.show(user);
     res.status(202).send({
@@ -44,13 +44,13 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const _ = familyInfo.destroy({ where: { id: req.params.id } });
+    const _ = FamilyDetail.destroy({ where: { id: req.params.id } });
     res.send({
       message: 'family details deleted!',
     });
   } catch (error) {
     res.status(404).send({
-      message: 'family details not found.',
+      message: 'family details not available.',
     });
   }
 };
