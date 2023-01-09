@@ -28,7 +28,10 @@ module.exports = (sequelize) => {
     },
     user_id: {
       type: DataTypes.UUID,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'user life style detail  with this id already exist ',
+      },
     },
     drinker: {
       type: DataTypes.BOOLEAN,
