@@ -25,7 +25,10 @@ module.exports = (sequelize) => {
     },
     user_id: {
       type: DataTypes.UUID,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'user family details with this id already added',
+      },
     },
     father_name: {
       type: DataTypes.STRING,
