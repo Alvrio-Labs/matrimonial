@@ -1,28 +1,28 @@
 const db = require('../models/index');
 const serialize = require('../serializers/personal_info.serializer');
 // eslint-disable-next-line prefer-destructuring
-const personalInfo = db.PersonalInfo;
+const PersonalDetails = db.PersonalInfo;
 
 exports.show = async (req, res) => {
   try {
-    const user = await personalInfo.findOne({ where: { user_id: req.user_id } });
+    const user = await PersonalDetails.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
-      personalInfoData: responseData,
+      PersonalDetailsData: responseData,
     });
   } catch (error) {
     res.status(404).send({
-      message: 'User not found.',
+      message: 'Personal details not found.',
     });
   }
 };
 
 exports.create = async (req, res) => {
   try {
-    const user = await personalInfo.create(req.body);
+    const user = await PersonalDetails.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
-      personalInfoData: responseData,
+      PersonalDetailsData: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
@@ -31,11 +31,11 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await personalInfo.findByPk(req.params.id);
+    const user = await PersonalDetails.findByPk(req.params.id);
     user.update(req.body);
     const responseData = await serialize.show(user);
     res.status(202).send({
-      personalInfoData: responseData,
+      PersonalDetailsData: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
@@ -44,13 +44,13 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const _ = personalInfo.destroy({ where: { id: req.params.id } });
+    const _ = PersonalDetails.destroy({ where: { id: req.params.id } });
     res.send({
-      message: 'User deleted!',
+      message: 'Personal Info deleted!',
     });
   } catch (error) {
     res.status(404).send({
-      message: 'User not found.',
+      message: 'Personal Info not found.',
     });
   }
 };
