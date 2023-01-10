@@ -6,6 +6,18 @@ module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
       // define association here
+      this.hasOne((models.lifeStyle), {
+        as: 'lifeStyle',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.PersonalInfo), {
+        as: 'PersonalInfo',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
       this.hasOne((models.EducationInfo), {
         as: 'educationInfo',
         foreignKey: 'user_id',

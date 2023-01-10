@@ -1,7 +1,10 @@
+const animalLover = ['No', 'Dog lover', 'Cat lover', 'Bird lover', 'other'];
+const diet = ['Non-Vegetarian', 'Vegetarian'];
+
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class connectionRequest extends Model {
+  class lifeStyle extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -17,28 +20,40 @@ module.exports = (sequelize) => {
       });
     }
   }
-  connectionRequest.init({
+  lifeStyle.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: sequelize.literal('uuid_generate_v4()'),
     },
-    requestor_id: {
+    user_id: {
       type: DataTypes.UUID,
-      allowNull: false,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'user life style detail  with this id already exist ',
+      },
     },
-    requested_id: {
-      type: DataTypes.UUID,
+    drinker: {
+      type: DataTypes.BOOLEAN,
+    },
+    smoker: {
+      type: DataTypes.BOOLEAN,
+    },
+    diet: {
+      type: DataTypes.ENUM(diet),
       allowNull: false,
-      unique: true,
+    },
+    animal_lover: {
+      type: DataTypes.ENUM(animalLover),
+      allowNull: false,
     },
   }, {
     sequelize,
-    modelName: 'connectionRequest',
-    tableName: 'connection_request',
+    modelName: 'lifeStyle',
+    tableName: 'life_style',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+
   });
-  return connectionRequest;
+  return lifeStyle;
 };
