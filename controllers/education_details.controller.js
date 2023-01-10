@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await EducationDetail.findByPk(req.params.id);
+    const user = await EducationDetail.findOne({ where: { user_id: req.user_id } });
     if (user) {
       user.update(req.body);
       const responseData = await serialize.show(user);
