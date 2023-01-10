@@ -17,15 +17,23 @@ exports.show = async (req, res) => {
   }
 };
 
+
 exports.delete = async (req, res) => {
   try {
-    const _ = UserConnection.destroy({ where: { id: req.params.id } });
-    res.send({
-      message: 'connection request deleted!',
-    });
+    const user = await UserConnection.findOne({ where: { user_id: req.user_id } });
+    if (user) {
+      UserConnection.destroy({
+        where: { user_id: req.params.id },
+      });
+      res.send({
+        message: 'User Connection deleted!',
+      });
+    } else {
+      res.status(404).send({
+        message: 'User Connection  not found.',
+      });
+    }
   } catch (error) {
-    res.status(404).send({
-      message: 'connection request not found.',
-    });
+    res.status(422).send({ error: error.message });
   }
 };
