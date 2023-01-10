@@ -6,6 +6,18 @@ module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
       // define association here
+      this.hasOne((models.EducationInfo), {
+        as: 'educationInfo',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.FamilyDetail), {
+        as: 'familyInfo',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
       this.hasMany((models.connectionRequest), {
         as: 'connectionRequest',
         foreignKey: 'user_id',
@@ -32,11 +44,16 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         is: /^[A-Za-z]+$/,
+        len: [2, 50],
       },
     },
     last_name: {
       type: DataTypes.STRING(25),
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+        len: [2, 50],
+      },
     },
     email: {
       type: DataTypes.STRING(100),

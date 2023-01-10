@@ -1,30 +1,28 @@
 const db = require('../models/index');
-const serialize = require('../serializers/user.serializer');
+const serialize = require('../serializers/educationalInfo.serializer');
 
-// eslint-disable-next-line prefer-destructuring
-const User = db.User;
+const { EducationDetail } = db;
 
 exports.show = async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await EducationDetail.findOne({ where: { user_id: req.user_id } });
     const responseData = await serialize.show(user);
     res.status(200).send({
-      User: responseData,
+      Education_detail: responseData,
     });
   } catch (error) {
     res.status(404).send({
-      message: 'User not found.',
+      message: 'No education detail available for this id.',
     });
   }
 };
 
-
 exports.create = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const user = await EducationDetail.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
-      user: responseData,
+      Education_detail: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
@@ -33,11 +31,11 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await EducationDetail.findByPk(req.params.id);
     user.update(req.body);
     const responseData = await serialize.show(user);
     res.status(202).send({
-      user: responseData,
+      Education_detail: responseData,
     });
   } catch (error) {
     res.status(422).send({ error: error.message });
@@ -46,9 +44,9 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const _ = User.destroy({ where: { id: req.params.id } });
+    const _ = EducationDetail.destroy({ where: { id: req.params.id } });
     res.send({
-      message: 'User deleted!',
+      message: 'Education detail deleted!',
     });
   } catch (error) {
     res.status(404).send({
