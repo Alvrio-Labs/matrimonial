@@ -1,0 +1,60 @@
+{
+  "name": "matrimonial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prod:start": "nodemon server.js dotenv -e .env.production",
+    "dev:start": "nodemon server.js dotenv -e .env.development",
+    "test:start": "nodemon server.js dotenv -e .env.test",
+    "dev:db:create": "npx sequelize-cli db:create --env development",
+    "prod:db:create": "npx sequelize-cli db:create --env production",
+    "test:db:create": "npx sequelize-cli db:create --env test",
+    "lint": "eslint .",
+    "dev:db:migrate": "npx sequelize-cli db:migrate --env development",
+    "prod:db:migrate": "npx sequelize-cli db:migrate --env production",
+    "test:db:migrate:": "npx sequelize-cli db:migrate --env test",
+    "dev:db:seed": "npx sequelize-cli db:seed:all --env development",
+    "prod:db:seed": "npx sequelize-cli db:seed:all --env production",
+    "test:db:seed": "npx sequelize-cli db:seed:all --env test",
+    "dev:db:drp": "npx sequelize-cli db:drop --env development ",
+    "prod:db:drp": "npx sequelize-cli db:drop --env production ",
+    "test:db:delete": "npx sequelize-cli db:drop --env test "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alvrio-Labs/matrimonial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alvrio-Labs/matrimonial/issues"
+  },
+  "homepage": "https://github.com/Alvrio-Labs/matrimonial#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "config": "^3.3.8",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "handlebars": "^4.7.7",
+    "joi": "^17.7.0",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.8.0",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "postgres": "^3.3.2",
+    "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.5.2",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.20"
+  }
+}
