@@ -27,8 +27,10 @@ module.exports = (sequelize) => {
     },
     user_id: {
       type: DataTypes.UUID,
-      unique: true,
-      allowNull: false,
+      unique: {
+        args: true,
+        msg: 'user personal detail with this id already added',
+      },
     },
     job: {
       type: DataTypes.STRING,
