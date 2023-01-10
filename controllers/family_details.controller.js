@@ -29,7 +29,6 @@ exports.create = async (req, res) => {
   }
 };
 
-
 exports.update = async (req, res) => {
   try {
     const user = await FamilyDetail.findOne({ where: { user_id: req.user_id } });
@@ -54,7 +53,7 @@ exports.delete = async (req, res) => {
     const user = await FamilyDetail.findOne({ where: { user_id: req.user_id } });
     if (user) {
       FamilyDetail.destroy({
-        where: { id: req.params.id },
+        where: { user_id: req.params.id },
       });
       res.send({
         message: 'family detail deleted!',
