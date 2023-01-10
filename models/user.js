@@ -18,6 +18,18 @@ module.exports = (sequelize) => {
         constraints: true,
         onDelete: 'CASCADE',
       });
+      this.hasMany((models.connectionRequest), {
+        as: 'connectionRequest',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasMany((models.userConnection), {
+        as: 'userConnection',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
     }
   }
 
