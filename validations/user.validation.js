@@ -6,7 +6,6 @@ const validation = fs.readFileSync('yaml/validation.yaml');
 const data = YAML.load(validation);
 const date = new Date().getFullYear();
 
-
 // schema to create a user
 const createSchema = Joi.object({
   first_name: Joi.string().required().max(data.user.firstName.max).min(data.user.firstName.min)

@@ -10,7 +10,6 @@ require('./family_details.routes')(router);
 require('./education_details.routes')(router);
 
 // admin routes
-
 require('./admin/user.routes')(router);
 
 module.exports.router = router;
