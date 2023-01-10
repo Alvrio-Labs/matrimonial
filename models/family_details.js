@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class familyInfo extends Model {
+  class FamilyDetail extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       });
     }
   }
-  familyInfo.init({
+  FamilyDetail.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -98,10 +98,10 @@ module.exports = (sequelize) => {
     },
   }, {
     sequelize,
-    modelName: 'familyInfo',
+    modelName: 'FamilyDetail',
     tableName: 'family_info',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return familyInfo;
+  return FamilyDetail;
 };

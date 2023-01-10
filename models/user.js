@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         constraints: true,
         onDelete: 'CASCADE',
       });
-      this.hasOne((models.familyInfo), {
+      this.hasOne((models.FamilyDetail), {
         as: 'familyInfo',
         foreignKey: 'user_id',
         constraints: true,

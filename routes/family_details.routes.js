@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const FI = require('../controllers/family_info.controller');
+const FI = require('../controllers/family_details.controller');
 const { verifyToken } = require('../policy/auth.policy');
 
 module.exports = (app) => {

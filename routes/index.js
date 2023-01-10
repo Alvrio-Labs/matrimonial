@@ -6,7 +6,7 @@ const router = express.Router();
 
 require('./user.routes')(router);
 require('./auth.routes')(router);
-require('./family_info.routes')(router);
+require('./family_details.routes')(router);
 require('./education_details.routes')(router);
 
 // admin routes
