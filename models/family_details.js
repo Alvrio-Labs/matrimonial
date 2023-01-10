@@ -76,9 +76,6 @@ module.exports = (sequelize) => {
     nanihal_place: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        is: /^[A-Za-z]+$/,
-      },
     },
     native_address: {
       type: DataTypes.STRING,
