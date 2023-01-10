@@ -31,12 +31,18 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await PersonalDetails.findByPk(req.params.id);
-    user.update(req.body);
-    const responseData = await serialize.show(user);
-    res.status(202).send({
-      PersonalDetailsData: responseData,
-    });
+    const user = await PersonalDetails.findOne({ where: { user_id: req.user_id } });
+    if (user) {
+      user.update(req.body);
+      const responseData = await serialize.show(user);
+      res.status(202).send({
+        PersonalDetailsData: responseData,
+      });
+    } else {
+      res.status(404).send({
+        message: ' Personal details not found.',
+      });
+    }
   } catch (error) {
     res.status(422).send({ error: error.message });
   }
