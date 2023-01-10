@@ -18,6 +18,12 @@ module.exports = (sequelize) => {
         constraints: true,
         onDelete: 'CASCADE',
       });
+      this.hasOne((models.FamilyDetail), {
+        as: 'familyInfo',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
     }
   }
 
@@ -32,11 +38,16 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         is: /^[A-Za-z]+$/,
+        len: [2, 50],
       },
     },
     last_name: {
       type: DataTypes.STRING(25),
       allowNull: false,
+      validate: {
+        is: /^[A-Za-z]+$/,
+        len: [2, 50],
+      },
     },
     email: {
       type: DataTypes.STRING(100),

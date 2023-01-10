@@ -1,7 +1,7 @@
 const db = require('../models/index');
 const serialize = require('../serializers/educationalInfo.serializer');
 
-const EducationDetail = db.EducationInfo;
+const { EducationDetail } = db;
 
 exports.show = async (req, res) => {
   try {
