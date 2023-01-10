@@ -31,12 +31,18 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await FamilyDetail.findByPk(req.params.id);
-    user.update(req.body);
-    const responseData = await serialize.show(user);
-    res.status(202).send({
-      family_details: responseData,
-    });
+    const user = await FamilyDetail.findOne({ where: { user_id: req.user_id } });
+    if (user) {
+      user.update(req.body);
+      const responseData = await serialize.show(user);
+      res.status(202).send({
+        PersonalDetailsData: responseData,
+      });
+    } else {
+      res.status(404).send({
+        message: ' No family detail is available for this id.',
+      });
+    }
   } catch (error) {
     res.status(422).send({ error: error.message });
   }
@@ -44,13 +50,20 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const _ = FamilyDetail.destroy({ where: { id: req.params.id } });
-    res.send({
-      message: 'family details deleted!',
-    });
+    const user = await FamilyDetail.findOne({ where: { user_id: req.user_id } });
+    if (user) {
+      FamilyDetail.destroy({
+        where: { user_id: req.params.id },
+      });
+      res.send({
+        message: 'family detail deleted!',
+      });
+    } else {
+      res.status(404).send({
+        message: 'No family detail is available for this id.',
+      });
+    }
   } catch (error) {
-    res.status(404).send({
-      message: 'family details not available.',
-    });
+    res.status(422).send({ error: error.message });
   }
 };

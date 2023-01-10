@@ -68,7 +68,6 @@ const requestlogin = async (req, res, next) => {
     res.send(({
       message: errorHandler.errorHandler.internalServerError().error,
     }));
-    next();
   }
 };
 
