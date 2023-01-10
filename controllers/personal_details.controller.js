@@ -53,14 +53,14 @@ exports.delete = async (req, res) => {
     const user = await PersonalDetails.findOne({ where: { user_id: req.user_id } });
     if (user) {
       PersonalDetails.destroy({
-        where: { id: req.params.id },
+        where: { user_id: req.params.id },
       });
       res.send({
-        message: 'Personal Info deleted!',
+        message: 'Education Detail deleted!',
       });
     } else {
       res.status(404).send({
-        message: 'Personal Info not found.',
+        message: 'Education Detail not found.',
       });
     }
   } catch (error) {
