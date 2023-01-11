@@ -21,21 +21,6 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
-const connectDb = async () => {
-  console.log('Checking database connection...');
-  try {
-    await sequelize.authenticate();
-    console.log('Database connection established.');
-  } catch (e) {
-    console.log('Database connection failed', e);
-    process.exit(1);
-  }
-};
-
-(async () => {
-  await connectDb();
-  console.log(`Attempting to run server on port ${PORT}`);
-  app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-  });
-})();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
