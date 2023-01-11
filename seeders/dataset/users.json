@@ -1,0 +1,21 @@
+[
+  {
+    "first_name": "qwerty",
+    "last_name": "abcde",
+    "email": "qwert1@gmail.com",
+    "phone": "1234567890",
+    "password": "$2b$10$Fq53Vo5evFSragyD27GCr.WWCtcs3DUspA5AP4VLkiznD5K8jARf2",
+    "gender": "Male",
+    "date_of_birth": "2000-01-01"
+  },
+  {
+    "first_name": "qwerty",
+    "last_name": "abcde",
+    "email": "qwerty1@gmail.com",
+    "phone": "1234567890",
+    "password": "$2b$10$Fq53Vo5evFSragyD27GCr.WWCtcs3DUspA5AP4VLkiznD5K8jARf2",
+    "gender": "Male",
+    "date_of_birth": "2000-01-01",
+    "is_admin": "yes"
+  }
+]

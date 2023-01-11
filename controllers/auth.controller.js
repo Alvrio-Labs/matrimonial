@@ -16,7 +16,6 @@ exports.forgetPassword = async (req, res, next) => {
       message: error,
     });
   }
-  return null;
 };
 
 exports.login = async (req, res, next) => {
@@ -28,7 +27,6 @@ exports.login = async (req, res, next) => {
       message: error,
     });
   }
-  return null;
 };
 
 exports.resetPassword = async (req, res, next) => {

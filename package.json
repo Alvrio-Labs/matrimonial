@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prod:start": "nodemon server.js dotenv -e .env.production",
-    "dev:start": "nodemon server.js dotenv -e .env.development",
-    "test:start": "nodemon server.js dotenv -e .env.test",
+    "prod:start": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all  && nodemon server.js dotenv -e .env.production",
+    "dev:start": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && nodemon server.js dotenv -e .env.development",
+    "test:start": "npx sequelize-cli db:migrate && npx sequelize-cli && nodemon server.js dotenv -e .env.test",
     "dev:db:create": "npx sequelize-cli db:create --env development",
     "prod:db:create": "npx sequelize-cli db:create --env production",
     "test:db:create": "npx sequelize-cli db:create --env test",
@@ -19,7 +19,7 @@
     "test:db:seed": "npx sequelize-cli db:seed:all --env test",
     "dev:db:drp": "npx sequelize-cli db:drop --env development ",
     "prod:db:drp": "npx sequelize-cli db:drop --env production ",
-    "test:db:delete": "npx sequelize-cli db:drop --env test "
+    "test:db:drp": "npx sequelize-cli db:drop --env test "
   },
   "repository": {
     "type": "git",
