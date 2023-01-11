@@ -11,7 +11,6 @@ const db = require('./models');
 const { sequelize } = require('./models');
 
 db.sequelize.sync({ force: false });
-
 const app = express();
 const PORT = process.env.SERVER_PORT || 3011;
 dotenv.config({
@@ -19,15 +18,11 @@ dotenv.config({
 });
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(router);
-
 const connectDb = async () => {
   console.log('Checking database connection...');
-
   try {
     await sequelize.authenticate();
     console.log('Database connection established.');
@@ -39,9 +34,7 @@ const connectDb = async () => {
 
 (async () => {
   await connectDb();
-
   console.log(`Attempting to run server on port ${PORT}`);
-
   app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
   });
