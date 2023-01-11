@@ -10,7 +10,7 @@ const { User } = db;
 exports.forgetPassword = async (req, res, next) => {
   try {
     const requestPasswordService = await requestforgetPassword(req, res, next);
-    return res.json(requestPasswordService);
+    res.json(requestPasswordService);
   } catch (error) {
     res.status(400).send({
       message: error,
@@ -21,7 +21,7 @@ exports.forgetPassword = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const requestloginService = await requestlogin(req, res, next);
-    return res.json(requestloginService);
+    res.json(requestloginService);
   } catch (error) {
     res.status(400).send({
       message: error,
@@ -49,7 +49,7 @@ exports.resetPassword = async (req, res, next) => {
         }
       });
     } else {
-      return res.status(404).send({
+      res.status(404).send({
         message: 'No user of this id',
       });
     }
