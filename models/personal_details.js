@@ -4,11 +4,6 @@ const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
   class PersonalInfo extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
       this.belongsTo((models.User), {
@@ -17,12 +12,6 @@ module.exports = (sequelize) => {
         constraints: true,
         onDelete: 'CASCADE',
       });
-      // this.hasOne((models.userPreferences), {
-      //   as: 'userPreferences',
-      //   foreignKey: 'user_id',
-      //   constraints: true,
-      //   onDelete: 'CASCADE',
-      // });
     }
   }
   PersonalInfo.init({
