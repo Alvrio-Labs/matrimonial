@@ -195,7 +195,6 @@ exports.filter_index = async (req, res) => {
       }],
     });
     const userData = user.toJSON();
-    console.log(userData);
     const users = await User.findAll({
       where: {
         gender: {
@@ -236,17 +235,7 @@ exports.filter_index = async (req, res) => {
       offset: offset,
       limit: limit,
       condition: condition,
-      // where: {
-
-      //   id: {
-      //     [Op.ne]: user.id,
-      //   },
-      //   gender: {
-      //     [Op.ne]: user.gender,
-      //   },
-      // },
     });
-    console.log('usr', users);
     const keys = Object.values(users);
 
     const responseData = await serialize.filter(keys);
