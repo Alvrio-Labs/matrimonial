@@ -25,7 +25,7 @@ exports.show = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const user = await EducationDetail.create(req.body);
+    const user = await EducationInfo.create(req.body);
     const responseData = await serialize.show(user);
     res.status(201).send({
       Education_detail: responseData,
@@ -37,7 +37,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const user = await EducationDetail.findOne({ where: { user_id: req.user_id } });
+    const user = await EducationInfo.findOne({ where: { user_id: req.user_id } });
     if (user) {
       user.update(req.body);
       const responseData = await serialize.show(user);
@@ -55,9 +55,9 @@ exports.update = async (req, res) => {
 };
 exports.delete = async (req, res) => {
   try {
-    const user = await EducationDetail.findOne({ where: { user_id: req.user_id } });
+    const user = await EducationInfo.findOne({ where: { user_id: req.user_id } });
     if (user) {
-      EducationDetail.destroy({
+      EducationInfo.destroy({
         where: { user_id: req.params.id },
       });
       res.send({
