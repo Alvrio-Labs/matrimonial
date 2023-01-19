@@ -4,9 +4,8 @@ const { verifyToken } = require('../policy/auth.policy');
 
 module.exports = (app) => {
   router.post('/', UP.create);
-  // router.get('/:id', verifyToken, UP.show);
+  router.get('/:id', verifyToken, UP.show);
   router.put('/:id', verifyToken, UP.update);
   router.delete('/:id', verifyToken, UP.delete);
-  router.get('/:id', UP.show);
   app.use('/api/users/preferences', router);
 };

@@ -1,9 +1,7 @@
-const sequelize = require('sequelize');
 const db = require('../models/index');
 const serialize = require('../serializers/user_preferences.serializer');
 
 const { UserPreference } = db;
-const { User } = db;
 
 exports.create = async (req, res) => {
   try {
@@ -54,7 +52,7 @@ exports.delete = async (req, res) => {
   try {
     const user = await UserPreference.findByPk(req.params.id);
     if (user) {
-      User.destroy({
+      user.destroy({
         where: { id: req.params.id },
       });
       res.status(202).send({
@@ -67,34 +65,5 @@ exports.delete = async (req, res) => {
     }
   } catch (error) {
     res.status(422).send({ error: error.message });
-  }
-};
-
-exports.preference = async (req, res) => {
-  try {
-    console.log('hi');
-    const user = UserPreference.findByPk(req.params.id, {
-      attributes: ['id'],
-      include: [{
-        model: User,
-        as: 'user',
-        attributes: [
-          // eslint-disable-next-line quotes
-          sequelize.literal(`(
-            select * from users 
-            inner join user_preferences as up on up.user_id = users.id
-            )`),
-        ],
-      }],
-    });
-    console.log('bye');
-    res.status(200).send({
-      user: user,
-    });
-  } catch (error) {
-    console.log('q');
-    res.status(404).send({
-      message: 'no',
-    });
   }
 };
