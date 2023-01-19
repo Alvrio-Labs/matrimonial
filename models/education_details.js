@@ -58,7 +58,7 @@ module.exports = (sequelize) => {
   }, {
     sequelize,
     modelName: 'EducationInfo',
-    tableName: 'education_infos',
+    tableName: 'education_info',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });

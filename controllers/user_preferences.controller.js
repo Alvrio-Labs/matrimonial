@@ -3,9 +3,7 @@ const db = require('../models/index');
 const serialize = require('../serializers/user_preferences.serializer');
 
 const { UserPreference } = db;
-const { EducationDetail } = db;
 const { User } = db;
-const { FamilyDetail } = db;
 
 exports.create = async (req, res) => {
   try {

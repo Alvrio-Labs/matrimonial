@@ -7,6 +7,7 @@ const show = async (preferences) => {
     city: preferences.city,
     state: preferences.state,
     gender: preferences.gender,
+    salary: preferences.salary,
   };
   return preferencesData;
 };

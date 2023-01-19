@@ -6,6 +6,8 @@ const { FamilyInfo } = db;
 const { UserPreference } = db;
 const { User } = db;
 const { PersonalInfo } = db;
+const { EducationInfo } = db;
+const { lifeStyle } = db;
 
 exports.show = async (req, res) => {
   try {
@@ -84,11 +86,20 @@ exports.filter_index = async (req, res) => {
         as: 'family_info',
       },
       {
+        model: EducationInfo,
+        as: 'education_info',
+      },
+      {
+        model: lifeStyle,
+        as: 'life_style',
+      },
+      {
         model: PersonalInfo,
         as: 'personal_info',
       }],
     });
     const userData = user.toJSON();
+
     const users = await User.findAll({
       include: [
         {
@@ -100,39 +111,38 @@ exports.filter_index = async (req, res) => {
             },
           },
         },
+        {
+          model: PersonalInfo,
+          as: 'personal_info',
+          where: {
+            manglik: {
+              [Op.or]: userData.user_preference.manglik,
+            },
+          },
+        },
+        {
+          model: lifeStyle,
+          as: 'life_style',
+        },
+        {
+          model: EducationInfo,
+          as: 'education_info',
+        },
       ],
+      where: {
+        id: {
+          [Op.ne]: user.id,
+        },
+        gender: {
+          [Op.ne]: user.gender,
+        },
+      },
     });
-    // const users = await User.findAll({
-    //   include: [
-    //     {
-    //       model: FamilyInfo,
-    //       as: 'family_info',
-    //       where: {
-    //         city: {
-    //           [Op.eq]: userData.user_preference.city,
-    //         },
-    //         state: {
-    //           [Op.like]: userData.user_preference.state,
-    //         },
-    //       },
-    //     },
-    //     {
-    //       model: PersonalInfo,
-    //       as: 'personal_info',
-    //       where: {
-    //         manglik: {
-    //           [Op.or]: userData.user_preference.manglik,
-    //         },
-    //       },
-    //     },
-    //   ],
-    // });
     const responseData = await serialize.filter(users);
     res.status(200).send({
       user_preference: responseData,
     });
   } catch (error) {
-    console.log(error.message);
     res.status(404).send({
       message: error.message,
     });

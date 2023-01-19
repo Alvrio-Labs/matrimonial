@@ -1,12 +1,11 @@
 /** @type {import('sequelize-cli').Migration} */
-const userGender = ['Male', 'Female', 'Others'];
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     return [queryInterface.addColumn(
       'user_preferences',
       'gender',
-      Sequelize.ENUM(userGender),
+      Sequelize.STRING(10),
     ),
     queryInterface.addColumn(
       'user_preferences',
