@@ -107,7 +107,7 @@ exports.filter_index = async (req, res) => {
           as: 'family_info',
           where: {
             city: {
-              [Op.eq]: userData.user_preference.city,
+              [Op.or]: userData.user_preference.city,
             },
           },
         },
