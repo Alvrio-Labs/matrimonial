@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       // define association here
       this.belongsTo((models.User), {
         as: 'user',
-        foreignKey: 'id',
+        foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });

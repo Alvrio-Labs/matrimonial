@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class FamilyDetail extends Model {
+  class FamilyInfo extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,13 +11,19 @@ module.exports = (sequelize) => {
       // define association here
       this.belongsTo((models.User), {
         as: 'user',
-        foreignKey: 'id',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.UserPreference), {
+        as: 'user_preference',
+        foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
     }
   }
-  FamilyDetail.init({
+  FamilyInfo.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -95,10 +101,10 @@ module.exports = (sequelize) => {
     },
   }, {
     sequelize,
-    modelName: 'FamilyDetail',
+    modelName: 'FamilyInfo',
     tableName: 'family_info',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return FamilyDetail;
+  return FamilyInfo;
 };

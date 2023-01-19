@@ -1,18 +1,24 @@
 const db = require('../models/index');
 const serialize = require('../serializers/educationalInfo.serializer');
 
-const { EducationDetail } = db;
+const { EducationInfo } = db;
+const { User } = db;
 
 exports.show = async (req, res) => {
   try {
-    const user = await EducationDetail.findOne({ where: { user_id: req.user_id } });
+    const user = await EducationInfo.findByPk(req.params.id, {
+      include: [{
+        model: User,
+        as: 'User',
+      }],
+    });
     const responseData = await serialize.show(user);
     res.status(200).send({
-      Education_detail: responseData,
+      User: responseData,
     });
   } catch (error) {
     res.status(404).send({
-      message: 'No education detail available for this id.',
+      message: 'Education Detail not found.',
     });
   }
 };

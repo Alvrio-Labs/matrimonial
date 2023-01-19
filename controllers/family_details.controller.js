@@ -1,22 +1,41 @@
 const db = require('../models/index');
 const serialize = require('../serializers/family_info.serializer');
 
-const { FamilyDetail } = db;
+const FamilyDetail = db.FamilyInfo;
+// eslint-disable-next-line prefer-destructuring
+const User = db.User;
 
+// exports.show = async (req, res) => {
+//   try {
+//     const user = await FamilyDetail.findOne({ where: { user_id: req.user_id } });
+//     const responseData = await serialize.show(user);
+//     res.status(200).send({
+//       family_details: responseData,
+//     });
+//   } catch (error) {
+//     res.status(404).send({
+//       message: 'No family detail is available for this id.',
+//     });
+//   }
+// };
 exports.show = async (req, res) => {
   try {
-    const user = await FamilyDetail.findOne({ where: { user_id: req.user_id } });
+    const user = await User.findByPk(req.params.id, {
+      include: [{
+        model: FamilyDetail,
+        as: 'family_info',
+      }],
+    });
     const responseData = await serialize.show(user);
     res.status(200).send({
-      family_details: responseData,
+      User: user,
     });
   } catch (error) {
     res.status(404).send({
-      message: 'No family detail is available for this id.',
+      message: 'User not found.',
     });
   }
 };
-
 exports.create = async (req, res) => {
   try {
     const user = await FamilyDetail.create(req.body);

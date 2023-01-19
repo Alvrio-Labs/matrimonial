@@ -1,34 +1,15 @@
-const index = async (users) => {
-  const usersList = [];
-
-  users.forEach((u) => {
-    const user = {
-      id: u.id,
-      first_name: u.firstname,
-      last_name: u.last_name,
-      email: u.email,
-      phone: u.phone,
-      gender: u.gender,
-      date_of_birth: u.date_of_birth,
-    };
-    usersList.push(user);
-  });
-  return usersList;
-};
-
-const show = async (user) => {
-  const userData = {
-    id: user.id,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-    phone: user.phone,
-    gender: user.gender,
-    date_of_birth: user.date_of_birth,
+const show = async (preferences) => {
+  const preferencesData = {
+    id: preferences.id,
+    user_id: preferences.user_id,
+    martial_status: preferences.martial_status,
+    manglik: preferences.manglik,
+    city: preferences.city,
+    state: preferences.state,
+    gender: preferences.gender,
   };
-  return userData;
+  return preferencesData;
 };
-
 const filter = async (users) => {
   const usersList = [];
   users.forEach((u) => {
@@ -52,14 +33,11 @@ const filter = async (users) => {
       native_address: u.family_info.native_address,
       state: u.family_info.state,
       caste: u.family_info.caste,
-      // manglik: u.personal_info.manglik,
     };
     usersList.push(user);
   });
   return usersList;
 };
 module.exports = {
-  index,
-  show,
-  filter,
+  show, filter,
 };

@@ -1,8 +1,11 @@
+const { Op } = require('sequelize');
 const db = require('../models/index');
 const serialize = require('../serializers/user.serializer');
 
-// eslint-disable-next-line prefer-destructuring
-const User = db.User;
+const { FamilyInfo } = db;
+const { UserPreference } = db;
+const { User } = db;
+const { PersonalInfo } = db;
 
 exports.show = async (req, res) => {
   try {
@@ -17,6 +20,7 @@ exports.show = async (req, res) => {
     });
   }
 };
+
 exports.create = async (req, res) => {
   try {
     const user = await User.create(req.body);
@@ -28,6 +32,7 @@ exports.create = async (req, res) => {
     res.status(422).send({ error: error.message });
   }
 };
+
 exports.update = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -46,6 +51,7 @@ exports.update = async (req, res) => {
     res.status(422).send({ error: error.message });
   }
 };
+
 exports.delete = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -63,5 +69,72 @@ exports.delete = async (req, res) => {
     }
   } catch (error) {
     res.status(422).send({ error: error.message });
+  }
+};
+
+exports.filter_index = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id, {
+      include: [{
+        model: UserPreference,
+        as: 'user_preference',
+      },
+      {
+        model: FamilyInfo,
+        as: 'family_info',
+      },
+      {
+        model: PersonalInfo,
+        as: 'personal_info',
+      }],
+    });
+    const userData = user.toJSON();
+    const users = await User.findAll({
+      include: [
+        {
+          model: FamilyInfo,
+          as: 'family_info',
+          where: {
+            city: {
+              [Op.eq]: userData.user_preference.city,
+            },
+          },
+        },
+      ],
+    });
+    // const users = await User.findAll({
+    //   include: [
+    //     {
+    //       model: FamilyInfo,
+    //       as: 'family_info',
+    //       where: {
+    //         city: {
+    //           [Op.eq]: userData.user_preference.city,
+    //         },
+    //         state: {
+    //           [Op.like]: userData.user_preference.state,
+    //         },
+    //       },
+    //     },
+    //     {
+    //       model: PersonalInfo,
+    //       as: 'personal_info',
+    //       where: {
+    //         manglik: {
+    //           [Op.or]: userData.user_preference.manglik,
+    //         },
+    //       },
+    //     },
+    //   ],
+    // });
+    const responseData = await serialize.filter(users);
+    res.status(200).send({
+      user_preference: responseData,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(404).send({
+      message: error.message,
+    });
   }
 };
