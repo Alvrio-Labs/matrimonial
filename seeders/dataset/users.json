@@ -1,0 +1,11 @@
+[
+  {
+    "first_name": "qwerty",
+    "last_name": "abcde",
+    "email": "xyz@gmail.com",
+    "phone": "1234567890",
+    "password": "qwerty123",
+    "gender": "Male",
+    "date_of_birth": "2000-01-01"
+  }
+]
