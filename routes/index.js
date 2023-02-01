@@ -11,6 +11,7 @@ require('./user_connection.routes')(router);
 require('./family_details.routes')(router);
 require('./education_details.routes')(router);
 require('./personal_details.routes')(router);
+require('./user_preferences.routes')(router);
 // admin routes
 require('./admin/user.routes')(router);
 

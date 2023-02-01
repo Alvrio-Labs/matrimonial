@@ -56,11 +56,11 @@ exports.delete = async (req, res) => {
         where: { user_id: req.params.id },
       });
       res.send({
-        message: 'Education Detail deleted!',
+        message: 'Personal Detail deleted!',
       });
     } else {
       res.status(404).send({
-        message: 'Education Detail not found.',
+        message: 'Personal Detail not found.',
       });
     }
   } catch (error) {

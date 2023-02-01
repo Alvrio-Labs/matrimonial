@@ -1,7 +1,7 @@
 const db = require('../models/index');
 const serialize = require('../serializers/family_info.serializer');
 
-const { FamilyDetail } = db;
+const FamilyDetail = db.FamilyInfo;
 
 exports.show = async (req, res) => {
   try {

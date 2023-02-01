@@ -1,18 +1,25 @@
+const maritalStatus = ['single', 'married', 'widow', 'divorced', 'widower'];
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class EducationInfo extends Model {
+  class UserPreference extends Model {
     static associate(models) {
       // define association here
       this.belongsTo((models.User), {
-        as: 'User',
+        as: 'user',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.belongsTo((models.FamilyInfo), {
+        as: 'family_info',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
     }
   }
-  EducationInfo.init({
+  UserPreference.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -22,39 +29,27 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
       unique: {
         args: true,
-        msg: 'user education detail with this id already added',
+        msg: 'user preferences  with this id already exist ',
       },
     },
-    post_graduation_college: {
+    city: {
       type: DataTypes.STRING,
     },
-    post_graduation_year: {
-      type: DataTypes.DATE,
-    },
-    graduation_college: {
+    state: {
       type: DataTypes.STRING,
     },
-    graduation_year: {
-      type: DataTypes.DATE,
+    manglik: {
+      type: DataTypes.BOOLEAN,
     },
-    class_12th_school: {
-      type: DataTypes.STRING,
-    },
-    class_12th_passout_year: {
-      type: DataTypes.DATE,
-    },
-    class_10th_school: {
-      type: DataTypes.STRING,
-    },
-    class_10th_passout_year: {
-      type: DataTypes.DATE,
+    martial_status: {
+      type: DataTypes.ENUM(maritalStatus),
     },
   }, {
     sequelize,
-    modelName: 'EducationInfo',
-    tableName: 'education_info',
+    modelName: 'UserPreference',
+    tableName: 'user_preferences',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return EducationInfo;
+  return UserPreference;
 };
