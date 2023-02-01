@@ -2,7 +2,6 @@ const db = require('../models/index');
 const serialize = require('../serializers/personal_info.serializer');
 // eslint-disable-next-line prefer-destructuring
 const PersonalDetails = db.PersonalInfo;
-
 exports.show = async (req, res) => {
   try {
     const user = await PersonalDetails.findOne({ where: { user_id: req.user_id } });
@@ -16,7 +15,6 @@ exports.show = async (req, res) => {
     });
   }
 };
-
 exports.create = async (req, res) => {
   try {
     const user = await PersonalDetails.create(req.body);
@@ -28,7 +26,6 @@ exports.create = async (req, res) => {
     res.status(422).send({ error: error.message });
   }
 };
-
 exports.update = async (req, res) => {
   try {
     const user = await PersonalDetails.findOne({ where: { user_id: req.user_id } });
@@ -47,7 +44,6 @@ exports.update = async (req, res) => {
     res.status(422).send({ error: error.message });
   }
 };
-
 exports.delete = async (req, res) => {
   try {
     const user = await PersonalDetails.findOne({ where: { user_id: req.user_id } });
@@ -56,11 +52,11 @@ exports.delete = async (req, res) => {
         where: { user_id: req.params.id },
       });
       res.send({
-        message: 'Personal Detail deleted!',
+        message: 'Education Detail deleted!',
       });
     } else {
       res.status(404).send({
-        message: 'Personal Detail not found.',
+        message: 'Education Detail not found.',
       });
     }
   } catch (error) {
