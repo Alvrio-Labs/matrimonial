@@ -18,12 +18,6 @@ const { router } = require('./routes/index');
 const db = require('./models');
 const { sequelize } = require('./models');
 
-<<<<<<< HEAD
-=======
-// db.sequelize.sync({ force: false });
-const app = express();
-const PORT = process.env.SERVER_PORT || 3011;
->>>>>>> development
 dotenv.config({
   path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`),
 });
