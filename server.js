@@ -7,24 +7,21 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { router } = require('./routes/index');
+const db = require('./models');
 
+const { sequelize } = require('./models');
+
+db.sequelize.sync({ force: false });
 const app = express();
 const PORT = process.env.SERVER_PORT || 3011;
 dotenv.config({
   path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`),
 });
-app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/index.html`);
-});
-app.use(express.static(`${__dirname}/public`));
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(router);
-// set port, listen for requests
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
