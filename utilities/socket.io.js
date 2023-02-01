@@ -1,15 +1,21 @@
 /* eslint-disable no-invalid-this */
 const http = require('http');
 const express = require('express');
+const io = require('socket.io');
+const db = require('../models/index');
 
 const app = express();
 const server = http.createServer(app);
-const io = require('socket.io');
 // const message = require('../controllers/message.controller');
+const { User } = db;
 
 app.set('port', 4000);
 
 io.on('connection', (socket) => {
+  socket.on('handshake', async () => {
+    socket.emit(User.id);
+    console.log('handshake');
+  });
   socket.on('join', async (chat) => {
     socket.join(chat);
     io.emit('chat_joined');
