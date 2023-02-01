@@ -12,7 +12,7 @@ app.set('port', 4000);
 io.on('connection', (socket) => {
   socket.on('join', async (chat) => {
     socket.join(chat);
-    io.emit('chat-joined');
+    io.emit('chat_joined');
     console.log('chat joined');
   });
 
@@ -24,23 +24,16 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('typing', data);
   });
 
-  socket.on('stopTyping', () => {
-    socket.broadcast.emit('stopTyping');
-    socket.on('user_join', function (data) {
-      this.username = data;
-      socket.broadcast.emit('user_join', data);
-    });
+  socket.on('chat_message', function (data) {
+    // eslint-disable-next-line no-param-reassign
+    data.username = this.username;
+    socket.broadcast.emit('chat_message', data);
+  });
 
-    socket.on('chat_message', function (data) {
-      // eslint-disable-next-line no-param-reassign
-      data.username = this.username;
-      socket.broadcast.emit('chat_message', data);
-    });
-
-    socket.on('disconnect', function (data) {
-      socket.broadcast.emit('user_leave', this.username);
-    });
+  socket.on('disconnect', function (data) {
+    socket.broadcast.emit('user_leave', this.username);
   });
 });
+
 
 server.listen(4000);

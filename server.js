@@ -36,5 +36,6 @@ app.use(router);
 io.on('connection', (socket) => {
   socket.on('message', (msg) => {
     socket.broadcast.emit('message', msg);
+    // socket.to(chat_id).emit('message', msg);
   });
 });
