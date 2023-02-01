@@ -44,7 +44,6 @@ module.exports = (sequelize) => {
       });
     }
   }
-
   User.init({
     id: {
       type: DataTypes.UUID,
@@ -74,7 +73,6 @@ module.exports = (sequelize) => {
         args: true,
         msg: 'Email address already in use!',
       },
-
     },
     phone: {
       type: DataTypes.STRING(15),
@@ -122,7 +120,6 @@ module.exports = (sequelize) => {
       (user.get('password'));
     }
   }
-
   User.beforeCreate((model, _options) => {
     const ageCheck = new Date();
     ageCheck.setFullYear(ageCheck.getFullYear() - 18);
@@ -132,6 +129,5 @@ module.exports = (sequelize) => {
     }
   });
   User.beforeUpdate(encryptPasswordIfChanged);
-
   return User;
 };

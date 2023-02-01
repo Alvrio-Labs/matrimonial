@@ -29,6 +29,7 @@ exports.create = async (req, res) => {
   }
 };
 
+
 exports.update = async (req, res) => {
   try {
     const user = await LifeStyle.findOne({ where: { user_id: req.user_id } });
@@ -40,7 +41,11 @@ exports.update = async (req, res) => {
       });
     } else {
       res.status(404).send({
+<<<<<<< Updated upstream
         message: 'LifeStyle Detail not found.',
+=======
+        message: ' Lifestyle details not found.',
+>>>>>>> Stashed changes
       });
     }
   } catch (error) {
