@@ -6,38 +6,44 @@ module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
       // define association here
-      this.hasOne((models.EducationDetail), {
-        as: 'educationInfo',
+      this.hasOne((models.EducationInfo), {
+        as: 'education_info',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
-      this.hasOne((models.FamilyDetail), {
-        as: 'familyInfo',
+      this.hasOne((models.FamilyInfo), {
+        as: 'family_info',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
       this.hasMany((models.connectionRequest), {
-        as: 'connectionRequest',
+        as: 'connection_request',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
       this.hasMany((models.userConnection), {
-        as: 'userConnection',
+        as: 'user_connection',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
       this.hasOne((models.PersonalInfo), {
-        as: 'PersonalInfo',
+        as: 'personal_info',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
       this.hasOne((models.lifeStyle), {
-        as: 'lifeStyle',
+        as: 'life_style',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.UserPreference), {
+        as: 'user_preference',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',

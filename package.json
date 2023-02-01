@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prod:start": "npx sequelize-cli db:create || npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all  && nodemon server.js dotenv -e .env.production",
-    "dev:start": "npx sequelize-cli db:create || npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && nodemon server.js dotenv -e .env.development",
+    "dev:start": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && nodemon server.js dotenv -e .env.development",
     "test:start": "npx sequelize-cli db:create || npx sequelize-cli db:migrate && npx sequelize-cli && nodemon server.js dotenv -e .env.test",
     "dev:db:create": "npx sequelize-cli db:create --env development",
     "prod:db:create": "npx sequelize-cli db:create --env production",
