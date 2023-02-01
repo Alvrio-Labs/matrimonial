@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('message', async (data) => {
-    io.emit('newMessage', data);
+    io.emit('new_message', data);
   });
 
   socket.on('typing', (data) => {
