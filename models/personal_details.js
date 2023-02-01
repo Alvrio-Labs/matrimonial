@@ -1,6 +1,7 @@
 const maritalStatus = ['single', 'married', 'widow', 'divorced', 'widower'];
 const horoscope = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
 const { DataTypes, Model } = require('sequelize');
+
 module.exports = (sequelize) => {
   class PersonalInfo extends Model {
     /**
