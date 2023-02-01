@@ -47,6 +47,7 @@ exports.update = async (req, res) => {
     res.status(422).send({ error: error.message });
   }
 };
+
 exports.delete = async (req, res) => {
   try {
     const user = await EducationDetail.findOne({ where: { user_id: req.user_id } });

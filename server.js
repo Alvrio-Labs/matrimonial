@@ -13,6 +13,10 @@ const PORT = process.env.SERVER_PORT || 3011;
 dotenv.config({
   path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`),
 });
+app.get('/', (req, res) => {
+  res.sendFile(`${__dirname}/index.html`);
+});
+app.use(express.static(`${__dirname}/public`));
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
