@@ -15,8 +15,7 @@ const server = app.listen(PORT, () => {
 
 const io = require('socket.io')(server);
 const { router } = require('./routes/index');
-const db = require('./models');
-const { sequelize } = require('./models');
+// const connectToSocket = require('./utilities/socket.io');
 
 dotenv.config({
   path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`),
@@ -39,3 +38,5 @@ io.on('connection', (socket) => {
     // socket.to(chat_id).emit('message', msg);
   });
 });
+
+// connectToSocket(server);

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-invalid-this */
 const http = require('http');
 const express = require('express');
@@ -25,21 +26,18 @@ io.on('connection', (socket) => {
   socket.on('message', async (data) => {
     io.emit('new_message', data);
   });
-
-  socket.on('typing', (data) => {
-    socket.broadcast.emit('typing', data);
-  });
-
+  socket.on('typing', (chat_id) => socket.in(chat_id).emit('typing'));
   socket.on('chat_message', function (data) {
     // eslint-disable-next-line no-param-reassign
     data.username = this.username;
-    socket.broadcast.emit('chat_message', data);
+    socket.emit('chat_message', data);
   });
 
-  socket.on('disconnect', function (data) {
-    socket.broadcast.emit('user_leave', this.username);
+  socket.on('disconnect', (data) => {
+    socket.emit('user_leave', data.first_name);
   });
 });
 
 
 server.listen(4000);
+
