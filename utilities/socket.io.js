@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable no-invalid-this */
 const http = require('http');
 const express = require('express');
 const io = require('socket.io');
@@ -27,9 +26,7 @@ io.on('connection', (socket) => {
     io.emit('new_message', data);
   });
   socket.on('typing', (chat_id) => socket.in(chat_id).emit('typing'));
-  socket.on('chat_message', function (data) {
-    // eslint-disable-next-line no-param-reassign
-    data.username = this.username;
+  socket.on('chat_message', (data) => {
     socket.emit('chat_message', data);
   });
 
