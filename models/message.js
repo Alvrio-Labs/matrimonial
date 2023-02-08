@@ -1,4 +1,3 @@
-
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -23,16 +22,16 @@ module.exports = (sequelize) => {
       primaryKey: true,
       defaultValue: sequelize.literal('uuid_generate_v4()'),
     },
+    chat_id: {
+      type: DataTypes.UUID,
+    },
     sender_id: {
       type: DataTypes.UUID,
     },
     receiver_id: {
       type: DataTypes.UUID,
     },
-    chat_id: {
-      type: DataTypes.UUID,
-    },
-    message: {
+    messages: {
       type: DataTypes.STRING,
     },
   }, {

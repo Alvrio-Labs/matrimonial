@@ -1,18 +1,22 @@
 const { Op } = require('sequelize');
 const db = require('../models/index');
 
-const { User } = db;
+const { Message } = db;
 const { Chat } = db;
-
+const { User } = db;
 const serialize = require('../serializers/chat.serializer');
 
 exports.show = async (req, res) => {
   try {
-    const user = await Chat.findByPk(req.params.id);
-    console.log(user)
-    const responseData = await serialize.show(user);
+    const message = await Message.findAll({
+      where: {
+        chat_id: req.params.id,
+      },
+    });
+    console.log(message);
+    const responseData = await serialize.index(message);
     res.status(200).send({
-      User: responseData,
+      Chat: responseData,
     });
   } catch (error) {
     res.status(404).send({
@@ -20,6 +24,24 @@ exports.show = async (req, res) => {
     });
   }
 };
+
+//   try {
+//     const message = await Message.findAll({
+//       where: {
+//         chat_id: req.params.id,
+//       },
+//     });
+//     console.log(message);
+//     const responseData = await serialize.show(message);
+//     res.status(200).send({
+//       message: responseData,
+//     });
+//   } catch (error) {
+//     res.status(404).send({
+//       message: error.message,
+//     });
+//   }
+// };
 // exports.create = async (req, res) => {
 //   try {
 //     // const user = await ChatModel.findAll({
@@ -48,28 +70,45 @@ exports.show = async (req, res) => {
 // };
 exports.create = async (req, res) => {
   try {
-    const users = await Chat.findAll({
+    const chat = await Chat.findOne({
       where: {
-        [Op.or]:[{
-        [Op.and]:[{sender_id: req.body.sender_id},{reciever_id: req.body.reciever_id}], 
-        [Op.and]:[{sender_id: req.body.reciever_id},{reciever_id: req.body.sender_id}] 
-         }],
+        [Op.or]: [
+          {
+            [Op.and]: [
+              {
+                sender_id: req.body.sender_id,
+              },
+              {
+                receiver_id: req.body.receiver_id,
+              }],
+          },
+          {
+            [Op.and]: [
+              {
+                sender_id: req.body.receiver_id,
+              },
+              {
+                receiver_id: req.body.sender_id,
+              },
+            ],
+          },
+        ],
       },
     });
-    console.log('users' , users)
-    if (users.length > 0) {
+    console.log('chat', chat);
+    if (chat) {
       res.status(201).send({
         message: 'chat connection already exist',
       });
-      console.log('user' , users)
     } else {
       const chatRoom = await Chat.create(req.body);
       const responseData = await serialize.show(chatRoom);
       res.status(201).send({
-        user: responseData,
+        chat: responseData,
       });
     }
   } catch (error) {
+    console.log(error);
     res.status(422).send({ error: error.message });
   }
 };

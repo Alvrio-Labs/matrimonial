@@ -2,25 +2,13 @@ const { Op } = require('sequelize');
 
 const db = require('../models/index');
 
-const { User } = db;
 const { Message } = db;
-const { chat } = db;
 const serialize = require('../serializers/message.serializer');
-// exports.create = async (req, res) => {
-//   try {
-//     const user = await Message.create(req.body);
-//     const responseData = await serialize.show(user);
-//     res.status(200).send({
-//       message: responseData,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+
 exports.create = async (req, res) => {
   try {
-    const user = await Message.create(req.body);
-    const responseData = await serialize.show(user);
+    const message = await Message.create(req.body);
+    const responseData = await serialize.show(message);
     res.status(200).send({
       message: responseData,
     });
@@ -29,24 +17,21 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.index = async (req, res) => {
-  try {
-    const user = await chat.findOne({
-      where: {
-        chat_id: req.params.id,
-      },
-      include: [{
-        model: Message,
-        as: 'Message',
-      }],
-    });
-    console.log(user);
-    res.status(200).send({
-      message: user,
-    });
-  } catch (error) {
-    res.status(404).send({
-      message: error.message,
-    });
-  }
-};
+// exports.show = async (req, res) => {
+//   try {
+//     const message = await Message.findOne({
+//       where: {
+//         chat_id: req.params.id,
+//       },
+//     });
+//     console.log(message);
+//     const responseData = await serialize.show(message);
+//     res.status(200).send({
+//       message: responseData,
+//     });
+//   } catch (error) {
+//     res.status(404).send({
+//       message: error.message,
+//     });
+//   }
+// };

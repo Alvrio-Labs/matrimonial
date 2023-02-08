@@ -7,6 +7,10 @@ module.exports = {
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
+      chat_id: {
+        type: Sequelize.UUID,
+        allowNull: false,
+      },
       sender_id: {
         type: Sequelize.UUID,
         allowNull: false,
@@ -15,7 +19,7 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
       },
-      message: {
+      messages: {
         type: Sequelize.STRING,
       },
       created_at: {

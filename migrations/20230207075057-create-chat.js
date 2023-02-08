@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('chat_models', {
+    await queryInterface.createTable('chats', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
       },
-      reciever_id: {
+      receiver_id: {
         type: Sequelize.UUID,
         allowNull: false,
       },
@@ -26,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('chat_models');
+    await queryInterface.dropTable('chats');
   },
 };

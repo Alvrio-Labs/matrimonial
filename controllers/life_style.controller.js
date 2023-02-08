@@ -29,6 +29,7 @@ exports.create = async (req, res) => {
   }
 };
 
+
 exports.update = async (req, res) => {
   try {
     const user = await LifeStyle.findOne({ where: { user_id: req.user_id } });
@@ -47,6 +48,7 @@ exports.update = async (req, res) => {
     res.status(422).send({ error: error.message });
   }
 };
+
 exports.delete = async (req, res) => {
   try {
     const user = await LifeStyle.findOne({ where: { user_id: req.user_id } });

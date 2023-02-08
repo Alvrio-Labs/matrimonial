@@ -1,3 +1,4 @@
+
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -31,7 +32,7 @@ module.exports = (sequelize) => {
     sender_id: {
       type: DataTypes.UUID,
     },
-    reciever_id: {
+    receiver_id: {
       type: DataTypes.UUID,
     },
   }, {
