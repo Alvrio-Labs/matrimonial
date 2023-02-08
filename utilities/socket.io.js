@@ -14,14 +14,11 @@ app.set('port', 4000);
 io.on('connection', (socket) => {
   socket.on('handshake', async () => {
     socket.emit(User.id);
-    console.log('handshake');
   });
   socket.on('join', async (chat) => {
     socket.join(chat);
     io.emit('chat_joined');
-    console.log('chat joined');
   });
-
   socket.on('message', async (data) => {
     io.emit('new_message', data);
   });
@@ -29,12 +26,13 @@ io.on('connection', (socket) => {
   socket.on('chat_message', (data) => {
     socket.emit('chat_message', data);
   });
-
   socket.on('disconnect', (data) => {
     socket.emit('user_leave', data.first_name);
   });
+  socket.on('online', (userId) => {
+    socket.emit('is_online', userId);
+  });
 });
-
 
 server.listen(4000);
 
