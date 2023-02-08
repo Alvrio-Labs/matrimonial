@@ -13,7 +13,11 @@ const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-const io = require('socket.io')(server);
+const http = require('http').Server(app);
+
+const { init } = require('./utilities/socket.io');
+
+// const io = require('socket.io')(server);
 const { router } = require('./routes/index');
 // const connectToSocket = require('./utilities/socket.io');
 
@@ -31,11 +35,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
 
+init(http);
 
-io.on('connection', (socket) => {
-  socket.on('message', (msg) => {
-    socket.broadcast.emit('message', msg);
-    // socket.to(chat_id).emit('message', msg);
-  });
-});
+// init.on('connection', (socket) => {
+//   socket.on('message', (msg) => {
+//     socket.broadcast.emit('message', msg);
+//     // socket.to(chat_id).emit('message', msg);
+//   });
+// });
 

@@ -1,38 +1,87 @@
 /* eslint-disable camelcase */
-const http = require('http');
-const express = require('express');
-const io = require('socket.io');
-const db = require('../models/index');
+let io;
+const sockets = [];
 
-const app = express();
-const server = http.createServer(app);
-// const message = require('../controllers/message.controller');
-const { User } = db;
+function getConnectedUsers() {
+  const activeUsers = [];
+  io.on('setup', (userId, socketId) => {
+    io.join(userId);
+    io.emit('connected');
+    if (!(activeUsers.map((u) => u.userId).includes(userId))) {
+      activeUsers.push({
+        user_id: userId,
+        chat_id: socketId,
+      });
+    }
+    io.emit('activeUsers', activeUsers);
+  });
+  return activeUsers;
+}
+// function getConnectedUsers() {
+//   const users = []
+//   for (let [id, socket] of io.of('/').sockets) {
+//     users.push({
+//       user_id: socket.userId,
+//       socket_id: id,
+//       is_active: true,
+//     })
+//   }
+//   return users
+// }
 
-app.set('port', 4000);
 
-io.on('connection', (socket) => {
-  socket.on('handshake', async () => {
-    socket.emit(User.id);
-  });
-  socket.on('join', async (chat) => {
-    socket.join(chat);
-    io.emit('chat_joined');
-  });
-  socket.on('message', async (data) => {
-    io.emit('new_message', data);
-  });
-  socket.on('typing', (chat_id) => socket.in(chat_id).emit('typing'));
-  socket.on('chat_message', (data) => {
-    socket.emit('chat_message', data);
-  });
-  socket.on('disconnect', (data) => {
-    socket.emit('user_leave', data.first_name);
-  });
-  socket.on('online', (userId) => {
-    socket.emit('is_online', userId);
-  });
-});
+function getAllSocketUsers() {
+  const users = getConnectedUsers();
+  io.emit('all_socket_users', users);
+}
 
-server.listen(4000);
+function sendMessage(message) {
+  io.emit('new_message', message);
+}
+function unreadMessageCount(msg) {
+  io.emit('unread_message_count', msg);
+}
 
+function init(http) {
+  // eslint-disable-next-line global-require
+  io = require('socket.io')(http, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST'],
+      credentials: true,
+    },
+  });
+  io.on('connection', (socket) => {
+    const { userId } = socket.handshake.query;
+    io.emit('online', {
+      user_id: userId,
+      is_active: true,
+    });
+    socket.userId = userId;
+    const users = getConnectedUsers();
+    io.emit('connected-users', users);
+
+
+    socket.on('typing', (chat_id) => socket.in(chat_id).emit('typing'));
+
+    sockets.push(socket);
+
+    socket.on('disconnect', (arr) => {
+      io.emit('offline', {
+        user_id: userId,
+      });
+      const index = sockets.findIndex((s) => s.userId === userId);
+      sockets.splice(index, 1);
+    });
+  });
+
+  return io;
+}
+
+module.exports = {
+  init,
+  io,
+  sendMessage,
+  getAllSocketUsers,
+  unreadMessageCount,
+};

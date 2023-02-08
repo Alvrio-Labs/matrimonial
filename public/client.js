@@ -1,4 +1,3 @@
-
 const socket = io();
 let name;
 const textarea = document.querySelector('#textarea');
