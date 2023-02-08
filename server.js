@@ -14,12 +14,11 @@ const server = app.listen(PORT, () => {
 });
 
 const http = require('http').Server(app);
+const io = require('socket.io')(server);
 
 const { init } = require('./utilities/socket.io');
 
-// const io = require('socket.io')(server);
 const { router } = require('./routes/index');
-// const connectToSocket = require('./utilities/socket.io');
 
 dotenv.config({
   path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`),
@@ -37,10 +36,10 @@ app.use(router);
 
 init(http);
 
-// init.on('connection', (socket) => {
-//   socket.on('message', (msg) => {
-//     socket.broadcast.emit('message', msg);
-//     // socket.to(chat_id).emit('message', msg);
-//   });
-// });
+io.on('connection', (socket) => {
+  socket.on('message', (msg) => {
+    socket.broadcast.emit('message', msg);
+    // socket.to(chat_id).emit('message', msg);
+  });
+});
 
