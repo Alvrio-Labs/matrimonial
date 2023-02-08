@@ -17,21 +17,16 @@ exports.create = async (req, res) => {
   }
 };
 
-// exports.show = async (req, res) => {
-//   try {
-//     const message = await Message.findOne({
-//       where: {
-//         chat_id: req.params.id,
-//       },
-//     });
-//     console.log(message);
-//     const responseData = await serialize.show(message);
-//     res.status(200).send({
-//       message: responseData,
-//     });
-//   } catch (error) {
-//     res.status(404).send({
-//       message: error.message,
-//     });
-//   }
-// };
+exports.delete = async (req, res) => {
+  try {
+    const message = Message.destroy({ where: { id: req.params.id } });
+    res.send({
+      message: 'message deleted!',
+    });
+  } catch (error) {
+    res.status(404).send({
+      message: 'message not found.',
+    });
+  }
+};
+
