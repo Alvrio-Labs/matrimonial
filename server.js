@@ -39,4 +39,3 @@ io.on('connection', (socket) => {
   });
 });
 
-// connectToSocket(server);
