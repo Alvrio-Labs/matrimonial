@@ -94,6 +94,7 @@
         "no-var": "error",
         "object-shorthand": "off",
         "prefer-const": "error",
-        "prefer-template": "warn"
+        "prefer-template": "warn",
+        "no-param-reassign": ["error", { "props": false }]
     }
 }
