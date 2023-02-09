@@ -46,7 +46,7 @@ const upload = () => {
 
 exports.create = async (req, res) => {
   try {
-    const uploadSingle = upload().single('Image');
+    const uploadSingle = upload().single('Document');
     uploadSingle(req, res, async (err) => {
       if (err) {
         res.status(400).json({ message: err.message });
