@@ -1,13 +1,7 @@
-
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class Chat extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+  class chatRoom extends Model {
     static associate(models) {
       this.belongsTo((models.User), {
         as: 'user',
@@ -23,7 +17,7 @@ module.exports = (sequelize) => {
       });
     }
   }
-  Chat.init({
+  chatRoom.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -37,10 +31,10 @@ module.exports = (sequelize) => {
     },
   }, {
     sequelize,
-    modelName: 'Chat',
-    tableName: 'chats',
+    modelName: 'chatRoom',
+    tableName: 'chat_room',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return Chat;
+  return chatRoom;
 };

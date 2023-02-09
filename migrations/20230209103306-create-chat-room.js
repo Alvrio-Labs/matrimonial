@@ -1,6 +1,7 @@
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('chats', {
+    await queryInterface.createTable('chat_room', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -26,6 +27,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('chats');
+    await queryInterface.dropTable('chat_room');
   },
 };

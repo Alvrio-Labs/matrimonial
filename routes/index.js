@@ -12,7 +12,7 @@ require('./family_details.routes')(router);
 require('./education_details.routes')(router);
 require('./personal_details.routes')(router);
 require('./user_preferences.routes')(router);
-require('./chat.routes')(router);
+require('./chat_room.routes')(router);
 require('./message.routes')(router);
 // admin routes
 require('./admin/user.routes')(router);

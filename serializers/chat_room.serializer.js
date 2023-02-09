@@ -20,7 +20,7 @@ const index = async (messages) => {
         id: u.id,
         name: u.name,
       },
-      messages: u.messages,
+      content: u.content,
       chat_id: u.chat_id,
     };
     messageList.push(message);

@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
       },
-      messages: {
+      content: {
         type: Sequelize.STRING,
       },
       created_at: {

@@ -4,7 +4,7 @@ const show = async (msg) => {
     id: msg.id,
     sender_id: msg.sender_id,
     receiver_id: msg.receiver_id,
-    messages: msg.messages,
+    content: msg.content,
     chat_id: msg.chat_id,
   };
   return details;

@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const Message = require('../controllers/message_controller');
+const Message = require('../controllers/message.controller');
+const { verifyToken } = require('../policy/auth.policy');
 
 module.exports = (app) => {
-  router.post('/', Message.create);
-  router.delete('/:id', Message.delete);
+  router.post('/', verifyToken, Message.create);
+  router.delete('/:id', verifyToken, Message.delete);
   app.use('/api/messages', router);
 };

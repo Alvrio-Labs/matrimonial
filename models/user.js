@@ -48,18 +48,18 @@ module.exports = (sequelize) => {
         constraints: true,
         onDelete: 'CASCADE',
       });
-      // this.hasOne((models.Chat), {
-      //   as: 'chat',
-      //   foreignKey: 'id',
-      //   constraints: true,
-      //   onDelete: 'CASCADE',
-      // });
-      // this.hasOne((models.Message), {
-      //   as: 'message',
-      //   foreignKey: 'message_id',
-      //   constraints: true,
-      //   onDelete: 'CASCADE',
-      // });
+      this.hasOne((models.chatRoom), {
+        as: 'chat_room',
+        foreignKey: 'id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.Message), {
+        as: 'message',
+        foreignKey: 'id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
     }
   }
 
