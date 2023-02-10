@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const message = Message.destroy({ where: { id: req.params.id } });
+    const _ = Message.destroy({ where: { id: req.params.id } });
     res.send({
       message: 'message deleted!',
     });
