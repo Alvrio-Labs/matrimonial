@@ -13,17 +13,6 @@ const S3 = new aws.S3({
   secretAccessKey: process.env.S3_SECRET_ACCESSKEY,
   region: process.env.S3_BUCKET_REGION,
 });
-// const S3 = new S3Client({
-//   region: process.env.S3_BUCKET_REGION,
-//   credentials: {
-//     accessKeyId: process.env.S3_ACCESSKEY_ID,
-//     secretAccessKey: process.env.S3_SECRET_ACCESSKEY,
-//     region: process.env.S3_BUCKET_REGION,
-//   },
-//   sslEnabled: false,
-//   s3ForcePathStyle: true,
-//   signatureVersion: 'v4',
-// });
 
 const uploadToS3 = (fileData) => new Promise((resolve, reject) => {
   const params = {
@@ -43,17 +32,12 @@ const uploadToS3 = (fileData) => new Promise((resolve, reject) => {
 
 exports.create = async (req, res) => {
   try {
-    console.log(process.env.S3_ACCESSKEY_ID);
-    console.log('hi');
     uploadToS3(req, res, async (err) => {
-      console.log('here');
       if (err) {
-        console.log(err);
         res.status(400).json({ message: err.message });
       } else {
         const image = await userDocument.create(req.body);
         const responseData = await serialize.show(image);
-        console.log(image);
         res.status(201).send({
           message: responseData,
         });
