@@ -7,7 +7,6 @@ const show = async (chat) => {
   return details;
 };
 
-
 module.exports = {
   show,
 };

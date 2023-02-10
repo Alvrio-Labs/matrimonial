@@ -26,7 +26,7 @@ exports.create = async (req, res) => {
   try {
     const message = await Message.create(req.body);
     const responseData = await serialize.show(message);
-    res.status(200).send({
+    res.status(201).send({
       message: responseData,
     });
   } catch (error) {
