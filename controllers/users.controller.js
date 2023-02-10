@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const db = require('../models/index');
 const serialize = require('../serializers/user.serializer');
-const { uploadToS3 } = require('../utilities/S3Bucket');
+const { S3Upload } = require('../utilities/S3Bucket');
 
 const { FamilyInfo } = db;
 const { UserPreference } = db;
@@ -26,7 +26,7 @@ exports.show = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    uploadToS3(req, res, async (err) => {
+    S3Upload(req, res, async (err) => {
       if (err) {
         res.status(400).json({ message: err.message });
       } else {
