@@ -24,18 +24,6 @@ exports.show = async (req, res) => {
   }
 };
 
-// exports.create = async (req, res) => {
-//   try {
-//     const user = await User.create(req.body);
-//     const responseData = await serialize.show(user);
-//     res.status(201).send({
-//       user: responseData,
-//     });
-//   } catch (error) {
-//     res.status(422).send({ error: error.message });
-//   }
-// };
-
 exports.create = async (req, res) => {
   try {
     uploadToS3(req, res, async (err) => {
