@@ -40,29 +40,10 @@ const uploadToS3 = (fileData) => new Promise((resolve, reject) => {
     return resolve(data);
   });
 });
-// const upload = () => {
-//   multer({
-//     storage: multerS3({
-//       s3: S3,
-//       limits: {
-//         fileSize: '1048576',
-//       },
-//       bucket: process.env.AWS_BUCKET_NAME,
-//       metadata: function (req, res, cb) {
-//         cb(null, req.params.id + '-', +Date.now());
-//       },
-//       key: function (req, res, cb) {
-//         cb(null, req.params.id + '-' + Date.now());
-//       },
-
-//     }),
-//   });
-// };
 
 exports.create = async (req, res) => {
   try {
     console.log(process.env.S3_ACCESSKEY_ID);
-    // const uploadSingle = upload().single('Document');
     console.log('hi');
     uploadToS3(req, res, async (err) => {
       console.log('here');
