@@ -16,10 +16,8 @@ const S3UPLOAD = (fileData) => new Promise((resolve, reject) => {
   };
   S3.upload(params, (err, data) => {
     if (err) {
-      console.log(err);
       return reject(err);
     }
-    console.log(data);
     return resolve(data);
   });
 });
