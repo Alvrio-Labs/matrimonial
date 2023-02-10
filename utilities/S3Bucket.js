@@ -11,7 +11,7 @@ const S3 = new aws.S3({
 const S3_UPLOAD = (fileData) => new Promise((resolve, reject) => {
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `${Date.now().toString()}.jpg`,
+    Key: `${resolve.user_id + Date.now().toString()}.jpg`,
     Body: fileData,
   };
   S3.upload(params, (err, data) => {
