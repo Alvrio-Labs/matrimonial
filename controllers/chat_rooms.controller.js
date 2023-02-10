@@ -1,21 +1,15 @@
 const { Op } = require('sequelize');
 const db = require('../models/index');
 
-const { Message } = db;
 const { chatRoom } = db;
-const { User } = db;
 const serialize = require('../serializers/chat_room.serializer');
 
 exports.show = async (req, res) => {
   try {
-    const message = await Message.findAll({
-      where: {
-        chat_id: req.params.id,
-      },
-    });
-    const responseData = await serialize.index(message);
+    const chat = await chatRoom.findByPk(req.params.id);
+    const responseData = await serialize.show(chat);
     res.status(200).send({
-      Chat: responseData,
+      chat: responseData,
     });
   } catch (error) {
     res.status(404).send({
@@ -52,8 +46,9 @@ exports.create = async (req, res) => {
       },
     });
     if (chat) {
-      res.status(201).send({
-        message: 'chat connection already exist',
+      const responseData = await serialize.show(chat);
+      res.status(200).send({
+        chat: responseData,
       });
     } else {
       const chatroom = await chatRoom.create(req.body);
@@ -63,7 +58,6 @@ exports.create = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     res.status(422).send({ error: error.message });
   }
 };
