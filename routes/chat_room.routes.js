@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const chat = require('../controllers/chat_room.controller');
+const chat = require('../controllers/chat_rooms.controller');
 const { verifyToken } = require('../policy/auth.policy');
 
 module.exports = (app) => {
