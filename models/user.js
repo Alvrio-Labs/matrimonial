@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
-      // define association here
       this.hasOne((models.EducationInfo), {
         as: 'education_info',
         foreignKey: 'user_id',
@@ -80,7 +79,6 @@ module.exports = (sequelize) => {
         args: true,
         msg: 'Email address already in use!',
       },
-
     },
     phone: {
       type: DataTypes.STRING(15),
