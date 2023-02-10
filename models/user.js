@@ -48,6 +48,12 @@ module.exports = (sequelize) => {
         constraints: true,
         onDelete: 'CASCADE',
       });
+      this.hasOne((models.userDocument), {
+        as: 'userDocument',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
     }
   }
 
