@@ -17,11 +17,12 @@ const index = async (messages) => {
       id: u.id,
       sender: {
         id: u.id,
-        name: u.name,
+        fullname: u.user.first_name.concat(` ${u.user.last_name}`),
       },
       receiver: {
         id: u.id,
-        name: u.name,
+        fullname: u.user.first_name.concat(` ${u.user.last_name}`),
+
       },
       content: u.content,
       chat_id: u.chat_id,

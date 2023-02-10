@@ -50,13 +50,13 @@ module.exports = (sequelize) => {
       });
       this.hasMany((models.chatRoom), {
         as: 'chat_room',
-        foreignKey: 'id',
+        foreignKey: 'chat_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
       this.hasMany((models.Message), {
         as: 'message',
-        foreignKey: 'id',
+        foreignKey: 'chat_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
@@ -150,6 +150,5 @@ module.exports = (sequelize) => {
     }
   });
   User.beforeUpdate(encryptPasswordIfChanged);
-
   return User;
 };

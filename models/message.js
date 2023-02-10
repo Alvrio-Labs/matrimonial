@@ -5,7 +5,13 @@ module.exports = (sequelize) => {
     static associate(models) {
       this.belongsTo((models.chatRoom), {
         as: 'chat_room',
-        foreignKey: 'id',
+        foreignKey: 'chat_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.belongsTo((models.User), {
+        as: 'user',
+        foreignKey: 'sender_id',
         constraints: true,
         onDelete: 'CASCADE',
       });

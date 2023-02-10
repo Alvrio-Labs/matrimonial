@@ -1,7 +1,7 @@
 
 const db = require('../models/index');
 
-const { Message } = db;
+const { Message, User } = db;
 const serialize = require('../serializers/message.serializer');
 
 exports.index = async (req, res) => {
@@ -10,6 +10,10 @@ exports.index = async (req, res) => {
       where: {
         chat_id: req.params.id,
       },
+      include: [{
+        model: User,
+        as: 'user',
+      }],
     });
     const responseData = await serialize.index(message);
     res.status(200).send({

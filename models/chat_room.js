@@ -5,13 +5,7 @@ module.exports = (sequelize) => {
     static associate(models) {
       this.belongsTo((models.User), {
         as: 'user',
-        foreignKey: 'id',
-        constraints: true,
-        onDelete: 'CASCADE',
-      });
-      this.hasMany((models.Message), {
-        as: 'Message',
-        foreignKey: 'id',
+        foreignKey: 'sender_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
@@ -38,3 +32,4 @@ module.exports = (sequelize) => {
   });
   return chatRoom;
 };
+
