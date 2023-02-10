@@ -7,5 +7,5 @@ module.exports = (app) => {
   router.get('/:id', verifyToken, PI.show);
   router.put('/:id', verifyToken, PI.update);
   router.delete('/:id', verifyToken, PI.delete);
-  app.use('/api/user/personal-info', router);
+  app.use('/api/users/personal-info', router);
 };
