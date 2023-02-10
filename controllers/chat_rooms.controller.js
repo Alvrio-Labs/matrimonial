@@ -3,7 +3,7 @@ const db = require('../models/index');
 
 const { Message } = db;
 const { chatRoom } = db;
-const { User } = db;
+
 const serialize = require('../serializers/chat_room.serializer');
 
 exports.show = async (req, res) => {
@@ -13,7 +13,6 @@ exports.show = async (req, res) => {
         chat_id: req.params.id,
       },
     });
-    console.log(message);
     const responseData = await serialize.index(message);
     res.status(200).send({
       Chat: responseData,
@@ -51,7 +50,6 @@ exports.create = async (req, res) => {
         ],
       },
     });
-    console.log('chat', chat);
     if (chat) {
       res.status(201).send({
         message: 'chat connection already exist',
@@ -64,7 +62,6 @@ exports.create = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     res.status(422).send({ error: error.message });
   }
 };

@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
       message: responseData,
     });
   } catch (error) {
-    console.log(error);
+    res.status(422).send({ error: error.message });
   }
 };
 
