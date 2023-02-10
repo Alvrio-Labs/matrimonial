@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         constraints: true,
         onDelete: 'CASCADE',
       });
-      this.hasOne((models.Message), {
+      this.hasMany((models.Message), {
         as: 'Message',
         foreignKey: 'id',
         constraints: true,

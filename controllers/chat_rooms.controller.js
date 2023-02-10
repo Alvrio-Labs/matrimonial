@@ -1,8 +1,9 @@
 const { Op } = require('sequelize');
 const db = require('../models/index');
 
-const { Message, chatRoom } = db;
-
+const { Message } = db;
+const { chatRoom } = db;
+const { User } = db;
 const serialize = require('../serializers/chat_room.serializer');
 
 exports.show = async (req, res) => {
@@ -18,10 +19,11 @@ exports.show = async (req, res) => {
     });
   } catch (error) {
     res.status(404).send({
-      message: 'Chat connection not found.',
+      message: 'chat connection not found.',
     });
   }
 };
+
 exports.create = async (req, res) => {
   try {
     const chat = await chatRoom.findOne({
@@ -50,9 +52,8 @@ exports.create = async (req, res) => {
       },
     });
     if (chat) {
-      const responseData = await serialize.show(chat);
       res.status(201).send({
-        message: responseData,
+        message: 'chat connection already exist',
       });
     } else {
       const chatroom = await chatRoom.create(req.body);
@@ -62,6 +63,8 @@ exports.create = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     res.status(422).send({ error: error.message });
   }
 };
+
