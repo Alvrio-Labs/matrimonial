@@ -20,7 +20,7 @@ exports.show = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const user = await UserConnection.findOne({ where: { user_id: req.user_id } });
+    const user = await UserConnection.findByPK(req.params.id);
     if (user) {
       UserConnection.destroy({
         where: { user_id: req.params.id },
