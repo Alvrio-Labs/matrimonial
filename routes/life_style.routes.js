@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const LS = require('../controllers/life_style.controller');
+const LS = require('../controllers/life_styles.controller');
 const { verifyToken } = require('../policy/auth.policy');
 
 module.exports = (app) => {
