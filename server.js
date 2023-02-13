@@ -6,6 +6,13 @@ const dotenv = require('dotenv');
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  // origin: '*',
+  credentials: true,
+};
 
 const app = express();
 const PORT = process.env.SERVER_PORT || 3011;
@@ -24,7 +31,7 @@ dotenv.config({
   path: path.resolve(__dirname, `${process.env.NODE_ENV}.env`),
 });
 
-app.get('/', (req, res) => {
+app.get('/chat', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });
 app.use(express.static(`${__dirname}/public`));
@@ -33,6 +40,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
+app.use(cors(corsOptions));
 
 init(http);
 

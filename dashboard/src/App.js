@@ -1,14 +1,21 @@
 import './App.css';
-
-import Navbar from '../src/components/Navbar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Login from './components/Login';
+import { Link } from "react-router-dom";
+import { Table } from './components/Tables';
 function App() {
   return (
-    <div className="App">
-      <Navbar /> 
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </div>
+    <>
+
+      <BrowserRouter>
+      <Link to='/login' >login</Link>
+      <Link to='/Table' >table</Link>
+        <Routes>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/Table" element={<Table />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
