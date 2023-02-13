@@ -8,10 +8,10 @@ const S3 = new aws.S3({
   region: process.env.S3_BUCKET_REGION,
 });
 
-const S3UPLOAD = (fileData) => new Promise((resolve, reject) => {
+const S3_UPLOAD = (fileData) => new Promise((resolve, reject) => {
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `${Date.now().toString()}.jpg`,
+    Key: `${resolve.user_id + Date.now().toString()}.jpg`,
     Body: fileData,
   };
   S3.upload(params, (err, data) => {
@@ -23,5 +23,5 @@ const S3UPLOAD = (fileData) => new Promise((resolve, reject) => {
 });
 
 module.exports = {
-  S3UPLOAD,
+  S3_UPLOAD,
 };

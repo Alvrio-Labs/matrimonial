@@ -7,5 +7,5 @@ module.exports = (app) => {
   router.get('/:id', verifyToken, EI.show);
   router.put('/:id', verifyToken, EI.update);
   router.delete('/:id', verifyToken, EI.delete);
-  app.use('/api/user/education-details', router);
+  app.use('/api/users/education-details', router);
 };
