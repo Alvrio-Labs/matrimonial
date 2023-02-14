@@ -1,8 +1,8 @@
 {
   "name": "matrimonial",
   "version": "1.0.0",
+  "proxy": "http://localhost:5000",
   "description": "",
-  "proxy": "http://localhost:3000",
   "main": "index.js",
   "scripts": {
     "prod:start": "npx sequelize-cli db:create || npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all  && nodemon server.js dotenv -e .env.production",
