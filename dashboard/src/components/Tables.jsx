@@ -88,7 +88,13 @@ export const Table = () => {
   // })
   useEffect(() => {
     const getUserdata = async () => {
-      const reqData = await fetch("http://localhost:5000/api/admin/users?page=0");
+      const reqData = await fetch("http://localhost:5000/api/admin/users?page=0", {
+        method: 'Get',
+        mode: 'no-cors',
+        withCredentials: true,
+        crossorigin: true,
+
+      });
       setUsers(reqData.data);
       console.log(reqData)
       const resData = await reqData.json();
@@ -98,9 +104,9 @@ export const Table = () => {
     getUserdata();
   }, []);
   console.log('users' + users);
-   //delete 
+  //delete 
 
-   const deleteUser = async(id) => {
+  const deleteUser = async (id) => {
     try {
       const deleteUser = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
         method: "DELETE"
@@ -111,7 +117,7 @@ export const Table = () => {
     }
   }
 
-  
+
   return (
     <div>
       <div className="flex flex-col">
@@ -207,7 +213,7 @@ export const Table = () => {
                       </a>
                     </td>
                   </tr> */}
-                  {users.map((user) => (
+                  {/* {users.map((user) => (
                     <>
                     <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
                     <div key={user.id} className="user">{user.id}
@@ -246,8 +252,18 @@ export const Table = () => {
                     </td>
                     </td>
                     </>
+                  ))} */}
+                  {users.map(todo => (
+                    <tr key={todo.id}>
+                      <td>{todo.email}</td>
+                      {/* <td><EditTodo todo={todo} /></td> */}
+                      <td>
+                        {/* <button className="btn btn-danger" onClick={() => deleteTodo(todo.id)}>
+                          Delete
+                        </button> */}
+                      </td>
+                    </tr>
                   ))}
-
                 </tbody>
               </table>
             </div>
