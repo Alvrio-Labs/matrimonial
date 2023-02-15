@@ -246,7 +246,6 @@ export const Table = () => {
                     </td>
                     </td>
                     </>
-                    
                   ))}
 
                 </tbody>
