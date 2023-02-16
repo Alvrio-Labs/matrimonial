@@ -33,6 +33,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
+import axios from 'axios';
 
 export const Table = () => {
   // const [users, setUsers] = useState([]);
@@ -88,7 +89,14 @@ export const Table = () => {
   // })
   useEffect(() => {
     const getUserdata = async () => {
-      const reqData = await fetch("http://localhost:5000/api/admin/users?page=0", {
+      // const reqData = await fetch("http://localhost:5000/api/admin/users?page=0", {
+      //   method: 'Get',
+      //   mode: 'no-cors',
+      //   withCredentials: true,
+      //   crossorigin: true,
+
+      // });
+      const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0", {
         method: 'Get',
         mode: 'no-cors',
         withCredentials: true,
@@ -98,7 +106,7 @@ export const Table = () => {
       setUsers(reqData.data);
       console.log(reqData)
       const resData = await reqData.json();
-      setUsers(resData);
+      // setUsers(resData);
       // console.log(resData);
     }
     getUserdata();

@@ -8,13 +8,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  // origin: '*',
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+//   // origin: '*',
+//   credentials: true,
+// };
 
 const app = express();
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   next();
+// });
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000/api/admin/users?page=0');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 const PORT = process.env.SERVER_PORT || 3011;
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
@@ -40,7 +52,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 init(http);
 
