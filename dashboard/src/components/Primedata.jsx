@@ -58,314 +58,7 @@ export const Primedata = () => {
   ]
   return (
     <div>
-      <div className="flex flex-col">
-        <div className="overflow-x-auto">
-          <div className="p-1.5 w-full inline-block align-middle">
-            <div className="overflow-hidden border rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                    >
-                      ID
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                    >
-                      First Name
-                    </th>
 
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                    >
-                      Last Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                    >
-                      Phone
-                    </th>
-
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                    >
-                      Gender
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                    >
-                      Date Of Birth
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
-                    >
-                      Edit
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
-                    >
-                      Delete
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {/* {posts.map((user) => (
-                    <>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div key={user.id} className="user">{user.id}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.first_name}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div>{user.last_name}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.email}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.phone}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.gender}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.date_of_birth}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <a
-                          className="text-green-500 hover:text-green-700"
-                          href="#"
-                        >
-                          Edit
-                        </a>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          // href="#" onClick={() => deleteUser(user.id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </>
-                  ))} */}
-                  {
-                    users.map((user) => (
-                      <tr>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.id}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.first_name}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.last_name}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.email}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.phone}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.gender}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.date_of_birth}</td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.first_name}</td>
-
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">{user.first_name}</td>
-                      </tr>
-                    ))
-                  }
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* <DataTable value={users}> */}
-      <div className="overflow-x-auto">
-        <div className="p-1.5 w-full inline-block align-middle">
-          <div className="overflow-hidden border rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                  >
-                    ID
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                  >
-                    First Name
-                  </th>
-
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                  >
-                    Last Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                  >
-                    Email
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                  >
-                    Phone
-                  </th>
-
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                  >
-                    Gender
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                  >
-                    Date Of Birth
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
-                  >
-                    Edit
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
-                  >
-                    Delete
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {/* {posts.map((user) => (
-                    <>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div key={user.id} className="user">{user.id}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.first_name}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div>{user.last_name}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.email}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.phone}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.gender}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                        <div >{user.date_of_birth}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <a
-                          className="text-green-500 hover:text-green-700"
-                          href="#"
-                        >
-                          Edit
-                        </a>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          // href="#" onClick={() => deleteUser(user.id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </>
-                  ))} */}
-                {/* <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                  <div >
-                    <DataTable value={users} paginator rows={5} >
-
-                      <Column field="id" header="id"></Column>
-                      <Column header="First Name" field="first_name"></Column>
-                      <Column field="category" header="Category"></Column>
-                      <Column field="quantity" header="Quantity"></Column>
-                    </DataTable>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                  <div >
-                    <DataTable value={users} paginator rows={5} >
-
-                      <Column header="First Name" field="first_name"></Column>
-                      <Column field="category" header="Category"></Column>
-                      <Column field="quantity" header="Quantity"></Column>
-                    </DataTable>
-                  </div>
-                </td> */}
-
-                <div ></div>
-
-
-                <DataTable value={users} paginator rows={5} >
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                    <Column header="First Name" field="first_name"></Column>
-
-                    </td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                    <Column header="First Name" field="last_name"></Column>
-
-                    </td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                    <Column header="First Name" field="first_name"></Column>
-
-                    </td>
-
-                    <Column header="First Name" field="first_name"></Column>
-                    <Column field="category" header="Category"></Column>
-                    <Column field="quantity" header="Quantity"></Column>
-                  </DataTable>
-                
-                {/* <DataTable value={users} paginator rows={5} >
-
-                  <Column field="id" header="id"></Column>
-                  <Column header="First Name" field="first_name"></Column>
-                  <Column field="category" header="Category"></Column>
-                  <Column field="quantity" header="Quantity"></Column>
-                </DataTable> */}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
       {/* <DataTable value={users} paginator rows={5} >
 
         <Column field="id" header="id"></Column>
@@ -373,6 +66,30 @@ export const Primedata = () => {
         <Column field="category" header="Category"></Column>
         <Column field="quantity" header="Quantity"></Column>
       </DataTable> */}
+
+      <div className=''>
+        <table>
+        <DataTable value={users} paginator rows={5}>
+                    <Column header="ID" field="id" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                      
+                    </Column>
+                    <Column header="First Name" field="first_name" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
+                    <Column header="Last Name" field="last_name" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
+                    <Column header="Email" field="email" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
+                    <Column header="Gender" field="gender" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
+                    <Column header="Date of Birth" field="date_of_birth" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
+                    <Column header="Mobile" field="phone" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
+                    <Column header="Edit" field="first_name" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
+                    <Column header="Delete">
+                      <button className='text-red'>a</button>
+                    </Column>
+
+
+
+
+                </DataTable>
+        </table>
+      </div>
     </div>
   )
 }
