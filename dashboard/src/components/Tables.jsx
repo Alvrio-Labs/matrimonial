@@ -99,14 +99,14 @@ export const Table = () => {
       const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0", {
         method: 'Get',
         mode: 'no-cors',
-        withCredentials: true,
+        // withCredentials: true,
         crossorigin: true,
 
       });
-      setUsers(reqData.data);
-      console.log(reqData)
+      // setUsers(reqData.data);
+      console.log('reqData + ' + reqData.data)
       const resData = await reqData.json();
-      // setUsers(resData);
+      setUsers(resData);
       // console.log(resData);
     }
     getUserdata();

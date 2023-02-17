@@ -20,7 +20,7 @@ const app = express();
 //   next();
 // });
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000/api/admin/users?page=0');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
