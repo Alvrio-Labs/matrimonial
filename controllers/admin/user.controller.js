@@ -67,7 +67,7 @@ exports.index = async (req, res) => {
     const keys = Object.values(user);
     const responseData = await serialize.index(keys);
     res.status(200).send({
-      user_preference: responseData,
+      users: responseData,
     });
   } catch (error) {
     res.status(404).send({

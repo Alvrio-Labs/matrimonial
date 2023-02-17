@@ -1,35 +1,3 @@
-// export const Table = (props) => {
-//   return (
-//     <table>
-//       <thead>
-//         <tr>
-//           <td>ID #</td>
-//           <td>First Name</td>
-//           <td>Last Name</td>
-//           <td>Email</td>
-//           <td>phone</td>
-//           <td>gender</td>
-//           <td>Date Of Birth</td>
-
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {props.results.map((result) => (
-//           <tr key={result.id}>
-//             <td>{result.id}</td>
-//             <td>{result.first_name}</td>
-//             <td>{result.last_name}</td>
-//             <td>{result.email}</td>
-//             <td>{result.phone}</td>
-//             <td>{result.gender}</td>
-//             <td>{result.date_of_birth}</td>
-//           </tr>
-//         ))}
-//       </tbody>
-//     </table>
-//   );
-// };
-
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
@@ -87,31 +55,22 @@ export const Table = () => {
   // useEffect(() => {
   //   getTodos()
   // })
-  useEffect(() => {
-    const getUserdata = async () => {
-      // const reqData = await fetch("http://localhost:5000/api/admin/users?page=0", {
-      //   method: 'Get',
-      //   mode: 'no-cors',
-      //   withCredentials: true,
-      //   crossorigin: true,
+  // useEffect(() => {
+  //   const getUserdata = async () => {
+  //     const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0", {
+  //       method: 'Get',
+  //       mode: 'no-cors',
+  //       // withCredentials: true,
+  //       crossorigin: true,
 
-      // });
-      const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0", {
-        method: 'Get',
-        mode: 'no-cors',
-        // withCredentials: true,
-        crossorigin: true,
-
-      });
-      // setUsers(reqData.data);
-      console.log('reqData + ' + reqData.data)
-      const resData = await reqData.json();
-      setUsers(resData);
-      // console.log(resData);
-    }
-    getUserdata();
-  }, []);
-  console.log('users' + users);
+  //     });
+  //     console.log('reqData + ' + reqData.data)
+  //     const resData = await reqData.json();
+  //     setUsers(resData);
+  //   }
+  //   getUserdata();
+  // }, []);
+  // console.log('users' + users);
   //delete 
 
   const deleteUser = async (id) => {
@@ -124,6 +83,20 @@ export const Table = () => {
       console.log(error.message)
     }
   }
+  useEffect(() => {
+    const getUserdata = async () => {
+      const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0").then(res => {
+        console.log(res.data)
+        return res.data
+    }, )
+      console.log('reqData + ' + reqData)
+      // const resData = await reqData.json();
+      // const resData = await JSON.stringify(reqData)
+      setUsers(reqData);
+    }
+    getUserdata();
+  }, []);
+  console.log('users' + users);
 
 
   return (
@@ -194,33 +167,6 @@ export const Table = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {/* <tr>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                      1
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                      Jone Doe
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                      jonne62@gmail.com
-                    </td>
-                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                      <a
-                        className="text-green-500 hover:text-green-700"
-                        href="#"
-                      >
-                        Edit
-                      </a>
-                    </td>
-                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                      <a
-                        className="text-red-500 hover:text-red-700"
-                        href="#"
-                      >
-                        Delete
-                      </a>
-                    </td>
-                  </tr> */}
                   {/* {users.map((user) => (
                     <>
                     <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
@@ -261,9 +207,9 @@ export const Table = () => {
                     </td>
                     </>
                   ))} */}
-                  {users.map(todo => (
-                    <tr key={todo.id}>
-                      <td>{todo.email}</td>
+                  {users.map(user => (
+                    <tr key={user.id}>
+                      <td>{user.email}</td>
                       {/* <td><EditTodo todo={todo} /></td> */}
                       <td>
                         {/* <button className="btn btn-danger" onClick={() => deleteTodo(todo.id)}>
