@@ -1,12 +1,9 @@
 import './App.css';
-import 'primereact/resources/primereact.css';                       // core css
-// import 'primeicons/primeicons.css';                                 // icons
-// import 'primeflex/primeflex.css';                                   // css utility
+import 'primereact/resources/primereact.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout';
 import Login from './components/Login';
-import { Link } from "react-router-dom";
 import { Table } from './components/Tables';
 import FooterWebsite from './components/Footer';
 import HomePage from './components/Home';
