@@ -1,78 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
-import axios from 'axios';
 
 export const Table = () => {
-  // const [users, setUsers] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchAllUsers = async () => {
-  //     try {
-  //     //   const response = await fetch('http://localhost:3001/api/admin/users' , {
-  //     //   method:"GET",
-  //     //   headers: { "Content-Type": "application/json"},
-
-  //     // });
-  //       // const res = await axios.get("  http://localhost:3001/api/admin/users?page=1");
-  // const response = await fetch('http://localhost:3000/api/admin/users?page=0', {
-  //   method: 'Get',
-  //   mode: 'no-cors',       
-  //   withCredentials: true,    
-  //   crossorigin: true,    
-
-  // }) 
-  //       // const jsonData = await response.json()
-
-  //       // setUsers(jsonData);
-
-  //       setUsers(response.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchAllUsers();
-  // }, []);
-
 
   const [users, setUsers] = useState([]);
-  // const getTodos = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:5000/api/admin/users?page=0', {
-  //       method: 'Get',
-  //       mode: 'no-cors',       
-  //       withCredentials: true,    
-  //       crossorigin: true,    
-
-  //     }) 
-  //     const jsonData = await response.json()
-  //     console.log('response' + response)
-  //     setUsers(response)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // };
-  // useEffect(() => {
-  //   getTodos()
-  // })
-  // useEffect(() => {
-  //   const getUserdata = async () => {
-  //     const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0", {
-  //       method: 'Get',
-  //       mode: 'no-cors',
-  //       // withCredentials: true,
-  //       crossorigin: true,
-
-  //     });
-  //     console.log('reqData + ' + reqData.data)
-  //     const resData = await reqData.json();
-  //     setUsers(resData);
-  //   }
-  //   getUserdata();
-  // }, []);
-  // console.log('users' + users);
-  //delete 
-
   const deleteUser = async (id) => {
     try {
       const deleteUser = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
