@@ -83,21 +83,14 @@ export const Table = () => {
       console.log(error.message)
     }
   }
-  useEffect(() => {
-    const getUserdata = async () => {
-      const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0").then(res => {
-        console.log(res.data)
-        return res.data
-    }, )
-      console.log('reqData + ' + reqData)
-      // const resData = await reqData.json();
-      // const resData = await JSON.stringify(reqData)
-      setUsers(reqData);
-    }
-    getUserdata();
-  }, []);
-  console.log('users' + users);
 
+  useEffect(() => {
+    async function fetchData() {
+      const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0")
+      setUsers(reqData.data.users)
+    }
+    fetchData();
+  }, [users]); 
 
   return (
     <div>
@@ -167,7 +160,7 @@ export const Table = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {/* {users.map((user) => (
+                  {users.map((user) => (
                     <>
                     <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
                     <div key={user.id} className="user">{user.id}
@@ -186,8 +179,17 @@ export const Table = () => {
                     </div>
                     </td>
                     <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                    <div >{user.phone}
+                    </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
                     <div >{user.gender}
                     </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                    <div >{user.date_of_birth}
+                    </div>
+                    </td>
                     <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                       <a
                         className="text-green-500 hover:text-green-700"
@@ -204,20 +206,9 @@ export const Table = () => {
                         Delete
                       </button>
                     </td>
-                    </td>
                     </>
-                  ))} */}
-                  {users.map(user => (
-                    <tr key={user.id}>
-                      <td>{user.email}</td>
-                      {/* <td><EditTodo todo={todo} /></td> */}
-                      <td>
-                        {/* <button className="btn btn-danger" onClick={() => deleteTodo(todo.id)}>
-                          Delete
-                        </button> */}
-                      </td>
-                    </tr>
                   ))}
+                  
                 </tbody>
               </table>
             </div>
