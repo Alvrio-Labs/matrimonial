@@ -9,9 +9,26 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-import RadioGroup from '@material-ui/core/RadioGroup';
+// import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import Radio from '@mui/material/Radio';
+import FormLabel from '@mui/material/FormLabel';
+import { useState } from "react";
+import Axios from "axios";
 
 export default function AddUser() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [gender, setGender] = useState('');
+  function onChangeFirstName(e) {
+    setFirstName(e.target.value)
+  }
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -20,7 +37,23 @@ export default function AddUser() {
       password: data.get("password"),
     });
   };
+  const onSubmit = async e => {
+    e.preventDefault()
+    try {
+      const body = { firstName, lastName, email, phone, password, dateOfBirth, gender };
+      const response = await Axios.post('http://localhost:5000/api/admin/users', {
+        // method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
 
+      });
+      console.log(response)
+      // window.location = "/";
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
   return (
     <Container component="main" maxWidth="lg">
       <Box
@@ -54,7 +87,7 @@ export default function AddUser() {
               <Box
                 component="form"
                 noValidate
-                onSubmit={handleSubmit}
+                onSubmit={onSubmit}
                 sx={{ mt: 1 }}
               >
                 <TextField
@@ -64,15 +97,19 @@ export default function AddUser() {
                   id="first_name"
                   label="First Name"
                   name="first_name"
+                  value={firstName} onChange={onChangeFirstName}
                 />
                 <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="last_name"
-                label="Last Name"
-                name="last_name"
-              />
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="last_name"
+                  label="Last Name"
+                  name="last_name"
+
+                  value={lastName} onChange={ (e) => setLastName(e.target.value)}
+
+                />
                 <TextField
                   margin="normal"
                   required
@@ -82,6 +119,9 @@ export default function AddUser() {
                   name="email"
                   autoComplete="email"
                   autoFocus
+
+                  value={email} onChange={ (e) => setEmail(e.target.value)}
+
                 />
                 <TextField
                   margin="normal"
@@ -92,6 +132,9 @@ export default function AddUser() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+
+                  value={password} onChange={ (e) => setPassword(e.target.value)}
+
                 />
                 <TextField
                   margin="normal"
@@ -102,32 +145,41 @@ export default function AddUser() {
                   req={true}
                   type="number"
                   id="phone"
+
+                  value={phone} onChange={ (e) => setPhone(e.target.value)}
+
                 />
                 <TextField
                   margin="normal"
                   required
                   fullWidth
                   name="Date of Birth"
-                  // label="date_of_birth"
                   type="date"
                   id="date_of_birth"
+
+                  value={dateOfBirth} onChange={ (e) => setDateOfBirth(e.target.value)}
+
                 />
                 <TextField
                   margin="normal"
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="radio"
-                  id="password"
+                  name="Gender"
+                  type="text"
+                  id="gender"
+
+                  value={gender} onChange={ (e) => setGender(e.target.value)}
+
                 />
-                {/* <FormLabel component="legend">Gender</FormLabel>
-  <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-    <FormControlLabel value="female" control={<Radio />} label="Female" />
-    <FormControlLabel value="male" control={<Radio />} label="Male" />
-    <FormControlLabel value="other" control={<Radio />} label="Other" />
-    <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
-  </RadioGroup> */}
+                {/* <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="Gender"
+                  label="gender"
+                  type="radio"
+                  id="gender"
+                /> */}
                 <Button
                   type="submit"
                   fullWidth
@@ -136,7 +188,7 @@ export default function AddUser() {
                 >
                   Add User
                 </Button>
-                
+
               </Box>
             </Box>
           </Grid>
@@ -147,6 +199,63 @@ export default function AddUser() {
 }
 
 
-// 	"phone" : "1223456780",
-// 	"gender" : "Female",
-// 	"date_of_birth" :"10-10-2002" ,
+// // 	"phone" : "1223456780",
+// // 	"gender" : "Female",
+// // 	"date_of_birth" :"10-10-2002" ,
+
+
+// ** create-user.component.js ** //
+// import React, { Component } from 'react';
+// import axios from 'axios';
+// export default class AddUser extends Component {
+//     constructor(props) {
+//         super(props)
+//         this.onChangeUserName = this.onChangeUserName.bind(this);
+//         this.onChangeUserEmail = this.onChangeUserEmail.bind(this);
+//         this.onSubmit = this.onSubmit.bind(this);
+//         this.state = {
+//             name: '',
+//             email: ''
+//         }
+//     }
+//     onChangeUserName(e) {
+//         this.setState({ name: e.target.value })
+//     }
+//     onChangeUserEmail(e) {
+//         this.setState({ email: e.target.value })
+//     }
+//     onSubmit(e) {
+//         e.preventDefault()
+//         const userObject = {
+//             name: this.state.name,
+//             email: this.state.email
+//         };
+//         axios.post('http://localhost:4000/users/create', userObject)
+//             .then((res) => {
+//                 console.log(res.data)
+//             }).catch((error) => {
+//                 console.log(error)
+//             });
+//         this.setState({ name: '', email: '' })
+//     }
+
+//     render() {
+//         return (
+//             <div className="wrapper">
+//                 <form onSubmit={this.onSubmit}>
+//                     <div className="form-group">
+//                         <label>Add User Name</label>
+//                         <input type="text" value={this.state.name} onChange={this.onChangeUserName} className="form-control" />
+//                     </div>
+//                     <div className="form-group">
+//                         <label>Add User Email</label>
+//                         <input type="text" value={this.state.email} onChange={this.onChangeUserEmail} className="form-control" />
+//                     </div>
+//                     <div className="form-group">
+//                         <input type="submit" value="Create User" className="btn btn-success btn-block" />
+//                     </div>
+//                 </form>
+//             </div>
+//         )
+//     }
+// }
