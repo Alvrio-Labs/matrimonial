@@ -55,11 +55,11 @@ export const Primedata = () => {
             <Column header="Date of Birth" field="date_of_birth" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
             <Column header="Mobile" field="phone" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
             {/* <Column header="Edit" field="first_name" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column> */}
-            <Column header="Delete" Button>
+            {/* <Column header="Delete" Button>
               <button className='text-red'>a</button><Button />
               <Button label="Submit" />
 
-            </Column>
+            </Column> */}
             {/* <Button label="Submit" /> */}
             {/* <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}> */}
             {/* <div className="confirmation-content">
