@@ -84,6 +84,7 @@ export default function ForgotPassword() {
                 onSubmit={Auth}
                 sx={{ mt: 1 }}
               >
+                
                 <TextField
                   margin="normal"
                   required
@@ -94,7 +95,7 @@ export default function ForgotPassword() {
                   autoComplete="email"
                 />
                 <TextField
-                  required
+                  required= {true}
                   id="outlined-required"
                   label="Required"
                   defaultValue="Hello World"

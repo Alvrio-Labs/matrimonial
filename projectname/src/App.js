@@ -11,7 +11,7 @@ import ForgotPassword from './components/ForgotPassword';
 import CustomPaginationActionsTable from './components/Table';
 import Footer from './components/Footer';
 import Dashboard from './components/DashBoard';
-import { AddUser } from './components/AddUser';
+import AddUser from './components/AddUser';
 
 function App() {
   const [isSidebar, setIsSidebar] = useState(true);
