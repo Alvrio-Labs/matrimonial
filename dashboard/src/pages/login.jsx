@@ -74,7 +74,7 @@ export const Login = () => {
                         href="#"
                         className="font-medium text-purple-600 hover:underline"
                     >
-                        Sign up
+                        Sign uphdsgds
                     </a>
                 </p>
             </div>
