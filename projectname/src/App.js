@@ -9,6 +9,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Login from './components/Login';
 import ForgotPassword from './components/ForgotPassword';
 import CustomPaginationActionsTable from './components/Table';
+import Footer from './components/Footer';
+import Dashboard from './components/DashBoard';
+import { AddUser } from './components/AddUser';
 
 function App() {
   const [isSidebar, setIsSidebar] = useState(true);
@@ -37,9 +40,11 @@ function App() {
         {/* <Sidebar isSidebar={isSidebar} /> */}
         <main className="content">
           <Routes>
-            <Route path="/" element={<CustomPaginationActionsTable />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            {/* <Route path= '/footer' element={<Footer />}></Route> */}
+            {/* <Route path="/"table element={<CustomPaginationActionsTable />} /> */}
+            {/* <Route path="/login" element={<Login />} /> */}
+            {/* <Route path="/forgotpassword" element={<ForgotPassword />} /> */}
+            <Route path="/" element={<AddUser />} />
 
             {/* <Route path="/team" element={<Team />} />
             <Route path="/contacts" element={<Contacts />} />
