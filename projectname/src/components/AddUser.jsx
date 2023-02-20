@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 export default function AddUser() {
   const handleSubmit = (event) => {
@@ -99,10 +100,17 @@ export default function AddUser() {
                   name="phone"
                   label="Phone"
                   req={true}
-
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
+                  type="number"
+                  id="phone"
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="Date of Birth"
+                  // label="date_of_birth"
+                  type="date"
+                  id="date_of_birth"
                 />
                 <TextField
                   margin="normal"
@@ -110,20 +118,16 @@ export default function AddUser() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type="radio"
                   id="password"
-                  autoComplete="current-password"
                 />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
+                {/* <FormLabel component="legend">Gender</FormLabel>
+  <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+    <FormControlLabel value="female" control={<Radio />} label="Female" />
+    <FormControlLabel value="male" control={<Radio />} label="Male" />
+    <FormControlLabel value="other" control={<Radio />} label="Other" />
+    <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
+  </RadioGroup> */}
                 <Button
                   type="submit"
                   fullWidth
