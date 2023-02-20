@@ -3,9 +3,17 @@ import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 
 export const Primedata = () => {
+  
 
+  const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
+
+  const hideDeleteProductsDialog = () => {
+    setDeleteProductsDialog(false);
+};
   const [users, setUsers] = useState([]);
   const deleteUser = async (id) => {
     try {
@@ -25,37 +33,12 @@ export const Primedata = () => {
     }
     fetchData();
   }, [users]);
-
-  const columns = [
-    {
-      id: '1',
-      name: 'id ',
-    },
-    {
-      id: '2',
-      name: 'First Name',
-    },
-    {
-      id: '3',
-      name: 'Last Name',
-    },
-    {
-      id: '4',
-      name: 'Email',
-    },
-    {
-      id: '5',
-      name: 'PHONE',
-    },
-    {
-      id: '6',
-      name: 'GENDER',
-    },
-    {
-      id: '7',
-      name: 'DATE OF BIRTH	',
-    },
-  ]
+  const deleteProductsDialogFooter = (
+    <React.Fragment>
+        <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
+        <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteUser} />
+    </React.Fragment>
+);
   return (
     <div>
 
@@ -79,10 +62,19 @@ export const Primedata = () => {
                     <Column header="Gender" field="gender" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
                     <Column header="Date of Birth" field="date_of_birth" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
                     <Column header="Mobile" field="phone" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
-                    <Column header="Edit" field="first_name" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column>
-                    <Column header="Delete">
-                      <button className='text-red'>a</button>
+                    {/* <Column header="Edit" field="first_name" className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"></Column> */}
+                    <Column header="Delete" Button>
+                      <button className='text-red'>a</button><Button />
+                      <Button label="Submit" />
+
                     </Column>
+                    {/* <Button label="Submit" /> */}
+                    {/* <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}> */}
+                {/* <div className="confirmation-content">
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    {product && <span>Are you sure you want to delete the selected products?</span>}
+                </div> */}
+            {/* </Dialog> */}
 
 
 

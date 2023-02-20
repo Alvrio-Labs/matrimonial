@@ -16,17 +16,41 @@ const getPagination = (page, size) => {
   return { limit, offset };
 };
 
-exports.index = async (req, res) => {
-  const { page, size, id } = req.query;
-  const condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+// exports.index = async (req, res) => {
+//   const { page, size, id } = req.query;
+//   const condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
 
-  const { limit, offset } = getPagination(page, size);
+//   const { limit, offset } = getPagination(page, size);
+
+//   try {
+//     const user = await User.findAll({
+//       where: condition,
+//       limit,
+//       offset,
+//     });
+//     const keys = Object.values(user);
+//     const responseData = await serialize.index(keys);
+//     res.status(200).send({
+//       users: responseData,
+//     });
+//   } catch (error) {
+//     res.status(404).send({
+//       message: error.message,
+//     });
+//   }
+// };
+
+exports.index = async (req, res) => {
+  // const { page, size, id } = req.query;
+  // const condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+
+  // const { limit, offset } = getPagination(page, size);
 
   try {
     const user = await User.findAll({
-      where: condition,
-      limit,
-      offset,
+      // where: condition,
+      // limit,
+      // offset,
     });
     const keys = Object.values(user);
     const responseData = await serialize.index(keys);
@@ -39,6 +63,7 @@ exports.index = async (req, res) => {
     });
   }
 };
+
 
 exports.show = async (req, res) => {
   try {
