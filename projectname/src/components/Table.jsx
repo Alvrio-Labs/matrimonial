@@ -137,22 +137,23 @@ export default function CustomPaginationActionsTable() {
   }, []);
 
   return (
+    <>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableBody>
           {(rowsPerPage > 0
             ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : users
-          ).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
+          ).map((user) => (
+            <TableRow key={user.name}>
+              <TableCell component="th" scope="user">
+                {user.name}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                {row.calories}
+                {user.calories}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                {row.fat}
+                {user.fat}
               </TableCell>
             </TableRow>
           ))}
@@ -185,6 +186,15 @@ export default function CustomPaginationActionsTable() {
         </TableFooter>
       </Table>
     </TableContainer>
+
+    {/* <table>
+      <tr>
+        {users.map( (user)=> (
+          <td>{user.id}</td>
+        ))}
+      </tr>
+    </table> */}
+    </>
   );
 }
 
@@ -580,3 +590,4 @@ export default function CustomPaginationActionsTable() {
 //     </div>
 //   )
 // }
+

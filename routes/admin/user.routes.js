@@ -11,6 +11,6 @@ module.exports = (app) => {
   router.get('/', User.index);
   router.get('/:id', validation.get, User.show);
   router.put('/:id', validation.update, User.update);
-  router.delete('/:id', validation.deleteValidation, User.delete);
+  router.delete('/:id', User.delete);
   app.use('/api/admin/users', router);
 };

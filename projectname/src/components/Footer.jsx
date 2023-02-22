@@ -34,3 +34,19 @@
 // }
 
 // export default Footer
+
+
+import Box from '@mui/material/Box';
+import React from 'react'
+
+const Footer = () => {
+  return (
+    <>
+    <Box height = {100} ></Box>
+    // <div>Footer</div>
+
+    </>
+  )
+}
+
+export default Footer

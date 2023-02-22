@@ -29,23 +29,25 @@ export default function AddUser() {
   }
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     email: data.get("email"),
+  //     password: data.get("password"),
+  //   });
+  // };
   const onSubmit = async e => {
     e.preventDefault()
     try {
       const body = { firstName, lastName, email, phone, password, dateOfBirth, gender };
       const response = await Axios.post('http://localhost:5000/api/admin/users', {
         // method: "POST",
-        headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
-
+      }).then(function(response) {
+        console.log(response)
+        return response.json();
       });
       console.log(response)
       // window.location = "/";
@@ -54,6 +56,42 @@ export default function AddUser() {
       console.log(error.message)
     }
   }
+  const handleSubmit = async (e) => {
+    // alert('A form was submitted: ');
+    e.preventDefault();
+    const body = { firstName, lastName, email, phone, password, dateOfBirth, gender };
+
+    const data = await fetch('http://localhost:5000/api/admin/users', {
+        method: 'POST',
+        // We convert the React state to JSON and send it as the POST body
+        // body: JSON.stringify(data)
+        body: JSON.stringify(body)
+
+      }).then(function(response) {
+        console.log(response)
+        return response.json();
+      });
+
+}
+const handleSubmit1 = async e => {
+  e.preventDefault()
+  try {
+    const body = { firstName, lastName, email, phone, password, dateOfBirth, gender };
+    const response = await fetch('http://localhost:5000/api/admin/users' , {
+      method:"POST",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(body),
+
+    });
+    console.log(body)
+
+    console.log(response)
+    // window.location = "/";
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
   return (
     <Container component="main" maxWidth="lg">
       <Box
@@ -87,7 +125,7 @@ export default function AddUser() {
               <Box
                 component="form"
                 noValidate
-                onSubmit={onSubmit}
+                onSubmit={handleSubmit1}
                 sx={{ mt: 1 }}
               >
                 <TextField
