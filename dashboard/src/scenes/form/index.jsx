@@ -155,8 +155,8 @@ const Form = () => {
       .string()
       .matches(phoneRegExp, "Phone number is not valid")
       .required("required"),
-    gender: yup.required("required"),
-    date_of_birth: yup.required("required"),
+    // gender: yup.required("required"),
+    // date_of_birth: yup.DateSchema.required("required"),
   });
   const initialValues = {
     first_name: "",
