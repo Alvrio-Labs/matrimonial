@@ -6,7 +6,7 @@ const { verifyToken } = require('../../policy/auth.policy');
 
 module.exports = (app) => {
   // router.post('/', verifyToken, validation.create, User.create);
-  router.post('/', validation.create, User.create);
+  router.post('/', User.create);
 
   router.get('/', User.index);
   router.get('/:id', validation.get, User.show);
