@@ -16,6 +16,8 @@ import Form from './components/Form';
 import Layout from './components/Layout';
 import SideBar from './components/SideBar';
 import StickyHeadTable from './components/T1';
+import EditUser from './components/EditForm';
+import Contacts from './components/Table';
 
 function App() {
   const [isSidebar, setIsSidebar] = useState(true);
@@ -25,11 +27,14 @@ function App() {
       {/* <Layout /> */}
       {/* <SideBar /> */}
       <Routes>
-        <Route path='/footer' element={<Footer />}></Route>
+        <Route path='/footer' element={<Contacts />}></Route>
         <Route path="/table" element={<StickyHeadTable />} />
         <Route path="/login" element={<Form />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/" element={<AddUser />} />
+        <Route path="/add" element={<AddUser />} />
+        <Route path="/" element={<HomePage />} />
+
+        {/* <Route path="/edituser${}" element={<EditUser />} /> */}
 
         {/* <Route path="/team" element={<Team />} />
             <Route path="/contacts" element={<Contacts />} />
@@ -43,6 +48,7 @@ function App() {
             <Route path="/geography" element={<Geography />} /> */}
       </Routes>
       {/* <Sidebar /> */}
+      <Footer />
     </>
   );
 }

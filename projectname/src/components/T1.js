@@ -18,6 +18,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { Button } from '@mui/material';
+import BasicModal from './EditForm';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -125,7 +126,7 @@ export default function StickyHeadTable() {
     fetchData();
   }, []);
 
-  const deleteTodo = async(id) => {
+  const deleteTodo = async (id) => {
     try {
       const deleteTodo = await fetch(`http://localhost:3000/api/admin/users/${id}`, {
         method: "DELETE"
@@ -136,97 +137,49 @@ export default function StickyHeadTable() {
     }
   }
   const columns = [
-    { id: "name", label: "Name", },
-    { id: "code", },
+    { id: "name", label: "id", },
     {
-      id: "population",
-      label: "Population",
+      id: "firstName",
+      label: "First Name",
     },
     {
-      id: "size",
-      label: "Size\u00a0(km\u00b2)",
+      id: "lastName",
+      label: "Last Name",
     },
     {
-      id: "density",
-      label: "Density",
+      id: "phone",
+      label: "Phone",
     },
     {
-      id: "density",
-      label: "Density",
+      id: "email",
+      label: "Email",
     },
     {
-      id: "density",
-      label: "Density",
+      id: "gender",
+      label: "Gender",
+    },
+    {
+      id: "date_of_birth",
+      label: "Date of birth",
+    },
+    {
+      id: "edit",
+      label: "Edit",
+    },
+    {
+      id: "delete",
+      label: "Delete",
     }
   ];
   return (
     <>
-      {/* <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 400 }} aria-label="custom pagination table">
-        <TableBody>
-          {(rowsPerPage > 0
-            ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : users
-          ).map((user) => (
-            <TableRow key={user.name}>
-              <TableCell component="th" scope="user">
-                {user.name}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {user.calories}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {user.fat}
-              </TableCell>
-            </TableRow>
-          ))}
-
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={users.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer> */}
 
       <table>
-        {/* <tr>
-        {users.map( (user)=> (
-          <td>{user.id}</td>
-        ))}
-      </tr> */}
         <TableContainer component={Paper}>
-          {/* <SearchBar
-            value={searched}
-            onChange={(searchVal) => requestSearch(searchVal)}
-            onCancelSearch={() => cancelSearch()}
-          /> */}
-
           <TableRow>
             {columns.map(column => (
               <TableCell
-                key={column.id}
+                key={column.id} style={{ width: 160 }} align="center"
               >
                 {column.label}
               </TableCell>
@@ -235,22 +188,7 @@ export default function StickyHeadTable() {
 
           <Table sx={{ minWidth: 400 }} aria-label="custom pagination table">
             <TableBody>
-              {/* {(rowsPerPage > 0
-            ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : users
-          ).map((user) => (
-            <TableRow key={user.name}>
-              <TableCell component="th" scope="user">
-                {user.name}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {user.calories}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {user.fat}
-              </TableCell>
-            </TableRow>
-          ))} */}
+
               <tr>
                 {(rowsPerPage > 0
                   ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -261,28 +199,30 @@ export default function StickyHeadTable() {
                     <TableCell component="th" scope="user">
                       {user.id}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
+                    <TableCell style={{ width: 160 }} align="center">
                       {user.first_name}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
+                    <TableCell style={{ width: 160 }} align="center">
                       {user.last_name}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
+                    <TableCell style={{ width: 160 }} align="center">
                       {user.phone}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
+                    <TableCell style={{ width: 160 }} align="center">
                       {user.email}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
+                    <TableCell style={{ width: 160 }} align="center">
                       {user.gender}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
+                    <TableCell style={{ width: 160 }} align="center">
                       {user.date_of_birth}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
-                      delete
+                    <TableCell style={{ width: 160 }} align="center">
+                      {/* <Button ><BasicModal todo={user} /></Button> */}
+                      <Button >Edit</Button>
+
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="right">
+                    <TableCell style={{ width: 160 }} align="center">
                       <Button onClick={() => deleteTodo(user.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>

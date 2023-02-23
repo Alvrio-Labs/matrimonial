@@ -1,84 +1,52 @@
-// import './App.css';
-// import 'primereact/resources/primereact.css';
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Topbar from "./scenes/global/Topbar";
+import Sidebar from "./scenes/global/Sidebar";
+import Dashboard from "./scenes/dashboard";
+import Team from "./scenes/team";
+// import Invoices from "./scenes/invoices";
+import Contacts from "./scenes/contacts";
+// import Bar from "./scenes/bar";
+import Form from "./scenes/form";
+// import Line from "./scenes/line";
+// import Pie from "./scenes/pie";
+// import FAQ from "./scenes/faq";
+// import Geography from "./scenes/geography";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ColorModeContext, useMode } from "./theme";
+// import Calendar from "./scenes/calendar/calendar";
 
-// import { BrowserRouter, Routes, Route } from 'react-router-dom'
-// import Layout from './components/Layout';
-// import Login from './components/Login';
-// import FooterWebsite from './components/Footer';
-// import HomePage from './components/Home';
-// import { Primedata } from './components/Primedata';
-// import { useState } from 'react';
-// function App() {
-//   const [isLoggedIn, setisLoggedIn] = useState(null);
-//   const logIn = () => {
-//     setisLoggedIn(true);
-//   };
-//   const logOut = () => {
-//     setisLoggedIn(false);
-//   };
-
-//   return (
-//     <>
-//       <BrowserRouter>
-//         <Layout />
-//         {/* {isLoggedIn ? (
-//         <button onClick={logOut}>Logout</button>
-//       ) : (
-//         <button onClick={logIn}>Login</button>
-//       )} */}
-//         <Routes>
-//           <Route path="/" element={<Layout />} />
-//           <Route index element={<HomePage />} />
-//           <Route path="/login" element={<Login />}></Route>
-//           <Route path="/Table" element={<Primedata />}></Route>
-//         </Routes>
-//         <FooterWebsite />
-//       </BrowserRouter>
-//     </>
-//   );
-// }
-
-// export default App;
-
-
-import './App.css';
-import 'primereact/resources/primereact.css';
-
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout';
-import Login from './components/Login';
-import FooterWebsite from './components/Footer';
-import HomePage from './components/Home';
-import { Primedata } from './components/Primedata';
-import { useState } from 'react';
-import SideBar from './components/SideBar';
 function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(null);
-  const logIn = () => {
-    setisLoggedIn(true);
-  };
-  const logOut = () => {
-    setisLoggedIn(false);
-  };
+  const [theme, colorMode] = useMode();
+  const [isSidebar, setIsSidebar] = useState(true);
 
   return (
-    <>
-      <BrowserRouter>
-        <Layout />
-        {/* {isLoggedIn ? (
-        <button onClick={logOut}>Logout</button>
-      ) : (
-        <button onClick={logIn}>Login</button>
-      )} */}
-        <Routes>
-          <Route path="/" element={<Layout />} />
-          <Route index element={<HomePage />} />
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/Table" element={<Primedata />}></Route>
-        </Routes>
-        <FooterWebsite />
-      </BrowserRouter>
-    </>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="app">
+          <Sidebar isSidebar={isSidebar} />
+          <main className="content">
+            <Topbar setIsSidebar={setIsSidebar} />
+            <Routes>
+              <Route path="/" element={<Form />}  />
+
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/contacts" element={<Contacts />} />
+              {/* <Route path="/invoices" element={<Invoices />} /> */}
+              <Route path="/form" element={<Form />} />
+              {/* <Route path="/bar" element={<Bar />} />
+              <Route path="/pie" element={<Pie />} />
+              <Route path="/line" element={<Line />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/geography" element={<Geography />} /> */}
+            </Routes>
+          </main>
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 

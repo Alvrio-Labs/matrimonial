@@ -27,16 +27,6 @@ export default function AddUser() {
   function onChangeFirstName(e) {
     setFirstName(e.target.value)
   }
-
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     password: data.get("password"),
-  //   });
-  // };
   const onSubmit = async e => {
     e.preventDefault()
     try {
@@ -80,10 +70,10 @@ const handleSubmit1 = async e => {
     const response = await fetch('http://localhost:5000/api/admin/users' , {
       method:"POST",
       headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(body),
+      // body: JSON.stringify(body),
 
     });
-    console.log(body)
+    // console.log(body)
 
     console.log(response)
     // window.location = "/";
@@ -92,6 +82,7 @@ const handleSubmit1 = async e => {
     console.log(error.message)
   }
 }
+
   return (
     <Container component="main" maxWidth="lg">
       <Box
@@ -193,6 +184,7 @@ const handleSubmit1 = async e => {
                   fullWidth
                   name="Date of Birth"
                   type="date"
+                  
                   id="date_of_birth"
 
                   value={dateOfBirth} onChange={ (e) => setDateOfBirth(e.target.value)}
@@ -201,9 +193,9 @@ const handleSubmit1 = async e => {
                 <TextField
                   margin="normal"
                   required
-                  fullWidth
                   name="Gender"
                   type="text"
+                  label="gender"
                   id="gender"
 
                   value={gender} onChange={ (e) => setGender(e.target.value)}
@@ -222,7 +214,8 @@ const handleSubmit1 = async e => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 2 }} 
+                  // onClick={() => handleSubmit1()}
                 >
                   Add User
                 </Button>
@@ -236,64 +229,3 @@ const handleSubmit1 = async e => {
   );
 }
 
-
-// // 	"phone" : "1223456780",
-// // 	"gender" : "Female",
-// // 	"date_of_birth" :"10-10-2002" ,
-
-
-// ** create-user.component.js ** //
-// import React, { Component } from 'react';
-// import axios from 'axios';
-// export default class AddUser extends Component {
-//     constructor(props) {
-//         super(props)
-//         this.onChangeUserName = this.onChangeUserName.bind(this);
-//         this.onChangeUserEmail = this.onChangeUserEmail.bind(this);
-//         this.onSubmit = this.onSubmit.bind(this);
-//         this.state = {
-//             name: '',
-//             email: ''
-//         }
-//     }
-//     onChangeUserName(e) {
-//         this.setState({ name: e.target.value })
-//     }
-//     onChangeUserEmail(e) {
-//         this.setState({ email: e.target.value })
-//     }
-//     onSubmit(e) {
-//         e.preventDefault()
-//         const userObject = {
-//             name: this.state.name,
-//             email: this.state.email
-//         };
-//         axios.post('http://localhost:4000/users/create', userObject)
-//             .then((res) => {
-//                 console.log(res.data)
-//             }).catch((error) => {
-//                 console.log(error)
-//             });
-//         this.setState({ name: '', email: '' })
-//     }
-
-//     render() {
-//         return (
-//             <div className="wrapper">
-//                 <form onSubmit={this.onSubmit}>
-//                     <div className="form-group">
-//                         <label>Add User Name</label>
-//                         <input type="text" value={this.state.name} onChange={this.onChangeUserName} className="form-control" />
-//                     </div>
-//                     <div className="form-group">
-//                         <label>Add User Email</label>
-//                         <input type="text" value={this.state.email} onChange={this.onChangeUserEmail} className="form-control" />
-//                     </div>
-//                     <div className="form-group">
-//                         <input type="submit" value="Create User" className="btn btn-success btn-block" />
-//                     </div>
-//                 </form>
-//             </div>
-//         )
-//     }
-// }
