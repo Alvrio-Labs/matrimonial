@@ -61,9 +61,9 @@ export default function Login() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" >
         <CssBaseline />
-        <Grid
+        {/* <Grid
           item
           xs={false}
           sm={4}
@@ -78,8 +78,8 @@ export default function Login() {
           }}
         >
           <img src='../images/6343825.jpg' />
-        </Grid>
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        </Grid> */}
+        <Grid item xs={12} sm={12} md={12}  >
           <Box
             sx={{
               my: 8,
