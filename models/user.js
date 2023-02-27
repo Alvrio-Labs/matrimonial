@@ -132,6 +132,8 @@ module.exports = (sequelize) => {
     tableName: 'users',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    paranoid: true,
+
   });
   function encryptPasswordIfChanged(user, options) {
     if (user.changed('password')) {
