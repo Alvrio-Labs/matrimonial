@@ -183,7 +183,8 @@ import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import '../../styles.css'
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -192,20 +193,20 @@ const Contacts = () => {
   const handleClick = async (event, cellValues, id) => {
     console.log(cellValues.row);
     try {
-      // const deleteTodo = fetch(`http://localhost:5000/api/admin/users/${id}`, {
-      //   method: "DELETE",
-      //   mode: 'no-cors',
+      const deleteTodo = fetch(`http://localhost:5000/api/admin/users/${id}`, {
+        method: "DELETE",
+        mode: 'no-cors',
 
-      // });
-      fetch(`http://localhost:5000/api/admin/users/${id}`, {
-            mode: 'no-cors',
-            method: "delete",
-            headers: {
-                 "Content-Type": "application/json"
-            },
-            // body: JSON.stringify(ob)
- })
-      setUsers(users.filter(todo => todo.id !== id));
+      });
+      // fetch(`http://localhost:5000/api/admin/users/${id}`, {
+      //       mode: 'no-cors',
+      //       method: "delete",
+      //       headers: {
+      //            "Content-Type": "application/json"
+      //       },
+      // body: JSON.stringify(ob)
+      //  })
+      setUsers(users.filter(users => users.id !== id));
       console.log(cellValues.deleteTodo)
 
     } catch (error) {
@@ -220,17 +221,9 @@ const Contacts = () => {
   const handleRowClick = (param, event) => {
     event.stopPropagation();
   };
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0")
-  //     setUsers(reqData.data.users)
-  //     console.log(reqData)
-  //   }
-  //   fetchData();
-  // }, []);
-  const deleteTodo = async (id) => {
+  const deleteUser = async (id) => {
     try {
-      const deleteTodo = await fetch(`http://localhost:3000/api/admin/users/${id}`, {
+      const deleteUser = await fetch(`http://localhost:3000/api/admin/users/${id}`, {
         method: "DELETE"
       });
       setUsers(users.filter(todo => todo.id !== id));
@@ -240,7 +233,6 @@ const Contacts = () => {
   }
   const columns = [
 
-    // { field: "id", headerName: "id", flex: 3, },
     {
       field: "first_name",
       headerName: "First Name",
@@ -272,45 +264,53 @@ const Contacts = () => {
       headerName: "Date of birth",
     },
     {
-      field: "edit",
-      headerName: "Edit",
-      flex: 1,
-    },
-    {
-      field: "delete",
-      label: "Delete",
-      flex: 1,
-    },
-    // {
-    //   field: "Action",
-    //   renderCell: (cellvalues) => {
-    //     return (
-    //       < Button
-    //         color = "white"
-    //         onClick={(e) => {
-    //           handleclick(e, cellvalues)
-    //         }} 
-    //         >Delete</Button>
-
-    //     )
-    //   }
-    // }
-    {
-      field: "Print",
+      field: "Actions",
+      flex: 3,
       renderCell: (cellValues) => {
         return (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(event) => {
-              handleClick(event, cellValues);
-            }}
-          >
-            Print
-          </Button>
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(event) => {
+                handleClick(event, cellValues);
+              }}
+            >
+              <img src={DeleteRoundedIcon} alt="delete"/>
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+
+            >
+              Edit
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+            >
+              <a href="/views">
+              <img src={DeleteRoundedIcon} alt="delete"/>
+              </a>
+            </Button>
+          </>
         );
       }
     },
+    // {
+    //   field: "Edit",
+    //   renderCell: (cellValues) => {
+    //     return (
+    //       <Button
+    //         variant="contained"
+    //         color="primary"
+
+    //       >
+    //         Edit
+    //       </Button>
+    //     );
+    //   }
+    // },
   ];
 
   const handleclick = (e, cellvalue) => {
@@ -324,14 +324,6 @@ const Contacts = () => {
     }
     fetchData();
   }, []);
-  // const { data } = useEffect(() => {
-  //   async function fetchData() {
-  //     const reqData = await Axios.get("http://localhost:5000/api/admin/users?page=0")
-  //     setUsers(reqData.data.users)
-  //     console.log(reqData)
-  //   }
-  //   fetchData();
-  // }, []);
   return (
     <Box m="20px">
       <Header
@@ -345,7 +337,6 @@ const Contacts = () => {
         </button>
       </div>
       <Box
-        m="40px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -379,8 +370,7 @@ const Contacts = () => {
         <DataGrid
           rows={users}
           columns={columns}
-          pageSize={15}
-          // checkboxSelection
+          pageSize={10}
           onCellClick={handleCellClick}
           onRowClick={handleRowClick}
 
@@ -388,63 +378,14 @@ const Contacts = () => {
             Toolbar: () => {
               return <GridToolbarContainer>
                 <GridToolbarFilterButton />
+                <GridToolbarExport />
               </GridToolbarContainer>
-
-              // <GridToolbarContainer>
-              //   <GridToolbarExport />
-              // </GridToolbarContainer>
-
             }
           }}
-
-        // components={{ Toolbar: GridToolbar }}
-        // autoPageSize pagination {...data}
-        // rowsPerPageOptions={[5, 10, 20]}
-        // pagination
-        // {...data}
-        // pagination {...data}
-        // onCellClick={deleteTodo}
         />
       </Box>
-
-      {/* <DataGrid
-        {...datatbale}
-        initialState={{
-          pagination: {
-            pageSize: 5,
-          },
-        }}
-      /> */}
     </Box>
   );
 };
 
 export default Contacts;
-
-
-
-// import * as React from 'react';
-// import { DataGrid } from '@mui/x-data-grid';
-// import { useDemoData } from '@mui/x-data-grid-generator';
-
-// export default function PageSizeInitialState() {
-//   const { data } = useDemoData({
-//     dataSet: 'Commodity',
-//     rowLength: 500,
-//     maxColumns: 6,
-//   });
-
-//   return (
-//     <div style={{ height: 400, width: '100%' }}>
-//       <DataGrid
-//         {...data}
-//         initialState={{
-//           ...data.initialState,
-//           pagination: {
-//             pageSize: 5,
-//           },
-//         }}
-//       />
-//     </div>
-//   );
-// }

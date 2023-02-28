@@ -72,7 +72,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                  Matrimony
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -89,14 +89,14 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
+{/* 
             <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
               Data
-            </Typography>
+            </Typography> */}
             <Item
               title="Manage User"
               to="/team"
@@ -105,8 +105,8 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
+              title="User"
+              to="/users"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

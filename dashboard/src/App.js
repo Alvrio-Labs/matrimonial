@@ -10,6 +10,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Homepage from "./components/Homepage";
 import Login from "./components/Login";
+import Views from "./scenes/views";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -40,8 +41,9 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
-              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/users" element={<Contacts />} />
               <Route path="/form" element={<Form />} />
+              <Route path="/view" element={<Views />} />
 
             </Routes>
           </main>
