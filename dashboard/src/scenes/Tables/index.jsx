@@ -19,9 +19,7 @@ const Contacts = () => {
     console.log(cellValues.row);
     try {
       const deleteUser = await Axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
-        method: "DELETE",
-        // mode: 'no-cors',
-        // mode: "cors",
+        method: "DELETE"
       }
       );
       setUsers(users.filter(users => users.id !== id));
@@ -72,6 +70,11 @@ const Contacts = () => {
       flex: 1,
     },
     {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+    },
+    {
       field: "gender",
       headerName: "Gender",
       flex: 1,
@@ -94,14 +97,16 @@ const Contacts = () => {
                 handleClick(event, cellValues);
               }}
             >
-              <img src={DeleteRoundedIcon} alt="delete" />
+              Delete
             </Button>
             <Button
               variant="contained"
               color="primary"
 
             >
-              Edit
+              < Link to={`/edit/${users.id}`}>
+                Edit
+              </Link>
             </Button>
             <Button
               variant="contained"
@@ -171,9 +176,6 @@ const Contacts = () => {
           rows={users}
           columns={columns}
           pageSize={10}
-          // onCellClick={handleCellClick}
-          // onRowClick={handleRowClick}
-
           components={{
             Toolbar: () => {
               return <GridToolbarContainer>

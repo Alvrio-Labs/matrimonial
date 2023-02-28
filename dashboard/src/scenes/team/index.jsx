@@ -1,8 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import * as React from 'react';
 import PropTypes from 'prop-types';
-// import { useTheme } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,7 +17,6 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { Button } from '@mui/material';
-// import BasicModal from '../form/EditForm';
 import Modal from '@mui/material/Modal';
 import { Link } from "react-router-dom";
 

@@ -42,7 +42,8 @@ export default function EditForm({ user }) {
     first_name: "",
     last_name: "",
     phone: "",
-    date_of_birth: ""
+    date_of_birth: "",
+    verified: ""
   });
 
   const [open, setOpen] = React.useState(false);
@@ -50,11 +51,10 @@ export default function EditForm({ user }) {
   const handleClose = () => setOpen(false);
   const [firstName, setFirstName] = useState('');
   const [id, setUserID] = useState('');
-
+  const [verified, setVerified] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  // const [password, setPassword] = useState(user.password);
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [gender, setGender] = useState('');
   function onChangeFirstName(e) {
@@ -70,11 +70,7 @@ export default function EditForm({ user }) {
         body: JSON.stringify(body),
 
       });
-      // console.log(body)
-
       console.log(response)
-      // window.location = "/";
-
     } catch (error) {
       console.log(error.message)
     }
@@ -87,7 +83,7 @@ export default function EditForm({ user }) {
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
-        // data-bs-target={`#id${user.id}`}
+        // data-bs-target={`${user.id}`}
         aria-describedby="modal-modal-description"
       >
         <Container component="main" maxWidth="lg">
@@ -117,7 +113,7 @@ export default function EditForm({ user }) {
                   }}
                 >
                   <Typography component="h1" variant="h5">
-                    Add User Account
+                    Edit User Account
                   </Typography>
                   <Box
                     component="form"
@@ -172,9 +168,18 @@ export default function EditForm({ user }) {
                       margin="normal"
                       
                       fullWidth
+                      id="is_verified"
+                      label="Verified"
+                      name="verified"
+                      value={verified} onChange={(e) => setVerified(e.target.value)}
+
+                    />
+                    <TextField
+                      margin="normal"
+                      
+                      fullWidth
                       name="phone"
                       label="Phone"
-                      req={true}
                       type="number"
                       id="phone"
 
@@ -368,5 +373,3 @@ export default function EditForm({ user }) {
     </>
   );
 }
-
-
