@@ -62,7 +62,7 @@ export default function Form() {
       })
       .then(function (response) {
         console.log(response);
-        navigate('/contacts'); 
+        navigate('/users'); 
       })
       .catch(function (error) {
         console.log(error);

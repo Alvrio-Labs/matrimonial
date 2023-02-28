@@ -420,19 +420,6 @@ const handleSubmit1 = async e => {
                   value={email} onChange={ (e) => setEmail(e.target.value)}
 
                 />
-                {/* <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-
-                  value={password} onChange={ (e) => setPassword(e.target.value)}
-
-                /> */}
                 <TextField
                   margin="normal"
                   required
@@ -469,15 +456,6 @@ const handleSubmit1 = async e => {
                   value={gender} onChange={ (e) => setGender(e.target.value)}
 
                 />
-                {/* <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="Gender"
-                  label="gender"
-                  type="radio"
-                  id="gender"
-                /> */}
                 <Button
                   type="submit"
                   fullWidth
