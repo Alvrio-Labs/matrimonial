@@ -488,7 +488,6 @@ function Team() {
             title="Student Details"
             columns={columns}
             data={data}
-            // icons={tableIcons}
             options={{
               headerStyle: { size: '80px' }
             }}
