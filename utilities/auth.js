@@ -70,29 +70,6 @@ const requestlogin = async (req, res, next) => {
     }));
   }
 };
-// const requestlogin = async (req, res) => {
-//   const { email, password } = req.body;
-//   const user = await User.findOne({ where: { email } });
-//   if (user != null) {
-//     const decoded = await bcrypt.compare(password, user.password);
-//     if (user.email === email && decoded) {
-//       const jwtToken = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
-//         expiresIn: process.env.EXPIRY_IN,
-//       });
-//       res.json({
-//         message: 'Successful',
-//         token: jwtToken,
-//       });
-//     } else {
-//       res.status(401).send('email or password not vaild');
-//     }
-//   } else {
-//     return res.status(404).send({
-//       message: 'User not found',
-//     });
-//   }
-// };
-
 module.exports = {
   requestforgetPassword,
   requestlogin,
