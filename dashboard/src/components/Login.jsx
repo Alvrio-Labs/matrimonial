@@ -49,9 +49,13 @@ export default function Login() {
         password: formData.password,
       })
       .then(function (response) {
-        console.log(response);
-        console.log("Successfully Logged in ");
-        navigate('/dashboard'); 
+        if(response.data.validation){
+          console.log(response);
+          console.log("Successfully Logged in ");
+          navigate('/dashboard');   
+        }else{
+          alert('incorrect')
+        }
       })
       .catch(function (error) {
         console.log(error);

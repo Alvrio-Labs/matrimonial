@@ -87,7 +87,7 @@ export default function EditForm({ user }) {
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
-        data-bs-target={`#id${user.id}`}
+        // data-bs-target={`#id${user.id}`}
         aria-describedby="modal-modal-description"
       >
         <Container component="main" maxWidth="lg">
@@ -127,7 +127,7 @@ export default function EditForm({ user }) {
                   >
                     <TextField
                       margin="normal"
-                      required
+                      
                       fullWidth
                       id="userid"
                       label="Id"
@@ -137,7 +137,7 @@ export default function EditForm({ user }) {
                     />
                     <TextField
                       margin="normal"
-                      required
+                      
                       fullWidth
                       id="first_name"
                       label="First Name"
@@ -146,7 +146,7 @@ export default function EditForm({ user }) {
                     />
                     <TextField
                       margin="normal"
-                      required
+                      
                       fullWidth
                       id="last_name"
                       label="Last Name"
@@ -157,7 +157,7 @@ export default function EditForm({ user }) {
                     />
                     <TextField
                       margin="normal"
-                      required
+                      
                       fullWidth
                       id="email"
                       label="Email Address"
@@ -170,7 +170,7 @@ export default function EditForm({ user }) {
                     />
                     <TextField
                       margin="normal"
-                      required
+                      
                       fullWidth
                       name="phone"
                       label="Phone"
@@ -183,7 +183,7 @@ export default function EditForm({ user }) {
                     />
                     <TextField
                       margin="normal"
-                      required
+                      
                       fullWidth
                       name="Date of Birth"
                       type="date"
@@ -195,7 +195,7 @@ export default function EditForm({ user }) {
                     />
                     <TextField
                       margin="normal"
-                      required
+                      
                       name="Gender"
                       type="text"
                       label="gender"
@@ -265,7 +265,7 @@ export default function EditForm({ user }) {
                sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="first_name"
                   label="First Name"
@@ -277,7 +277,7 @@ export default function EditForm({ user }) {
                 />
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="last_name"
                   label="last_name"
@@ -289,7 +289,7 @@ export default function EditForm({ user }) {
                 />
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -303,7 +303,7 @@ export default function EditForm({ user }) {
                 />
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="password"
                   label="password"
@@ -315,7 +315,7 @@ export default function EditForm({ user }) {
                 />
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="date_of_birth"
                   label="date_of_birth"
@@ -327,7 +327,7 @@ export default function EditForm({ user }) {
                 />
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   id="gender"
                   label="gender"
@@ -340,7 +340,7 @@ export default function EditForm({ user }) {
                 />
                 <TextField
                   margin="normal"
-                  required
+                  
                   fullWidth
                   name="phone"
                   label="phone"

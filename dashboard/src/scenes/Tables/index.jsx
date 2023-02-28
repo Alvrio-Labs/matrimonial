@@ -18,11 +18,12 @@ const Contacts = () => {
   const handleClick = async (event, cellValues, id) => {
     console.log(cellValues.row);
     try {
-      const deleteUser = fetch(`http://localhost:5000/api/admin/users/${id}`, {
+      const deleteUser = await Axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
         method: "DELETE",
-        mode: 'no-cors',
+        // mode: 'no-cors',
         // mode: "cors",
-      });
+      }
+      );
       setUsers(users.filter(users => users.id !== id));
       console.log(cellValues.deleteTodo)
 
@@ -170,8 +171,8 @@ const Contacts = () => {
           rows={users}
           columns={columns}
           pageSize={10}
-          onCellClick={handleCellClick}
-          onRowClick={handleRowClick}
+          // onCellClick={handleCellClick}
+          // onRowClick={handleRowClick}
 
           components={{
             Toolbar: () => {
