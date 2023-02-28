@@ -10,6 +10,7 @@ const index = async (users) => {
       phone: u.phone,
       gender: u.gender,
       date_of_birth: u.date_of_birth,
+      status: u.status,
     };
     usersList.push(user);
   });
@@ -24,6 +25,7 @@ const show = async (user) => {
     phone: user.phone,
     gender: user.gender,
     date_of_birth: user.date_of_birth,
+    status: user.status,
   };
   return userData;
 };
