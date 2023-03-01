@@ -15,7 +15,7 @@ exports.show = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     const responseData = await serialize.show(user);
     res.status(200).send({
-      User: responseData,
+      User: user,
     });
   } catch (error) {
     res.status(404).send({

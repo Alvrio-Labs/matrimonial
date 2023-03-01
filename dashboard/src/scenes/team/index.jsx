@@ -93,18 +93,6 @@ TablePaginationActions.propTypes = {
 
 export default function Team() {
   const [users, setUsers] = useState([]);
-  const [searched, setSearched] = useState("");
-  const requestSearch = (string) => {
-    const filteredRows = users.filter((row) => {
-      return row.name.toLowerCase();
-    });
-    setUsers(filteredRows);
-  };
-
-  const cancelSearch = () => {
-    setSearched("");
-    requestSearch(searched);
-  };
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -144,7 +132,6 @@ export default function Team() {
     }
   }
   const columns = [
-    // { id: "name", label: "id", },
     {
       id: "firstName",
       label: "First Name",
@@ -174,6 +161,10 @@ export default function Team() {
       label: "status"
     },
     {
+      id: "view",
+      label: "View",
+    },
+    {
       id: "edit",
       label: "Edit",
     },
@@ -184,7 +175,6 @@ export default function Team() {
   ];
   return (
     <>
-
       <table>
         <TableContainer component={Paper}>
           <TableRow>
@@ -237,6 +227,12 @@ export default function Team() {
                       {/* <Button style={{ color: 'white' }} >Edit</Button> */}
 
                     </TableCell>
+                    <TableCell style={{ width: 160 }} align="center">
+                      <Button ><EditForm user={user} /></Button>
+                      {/* <Button style={{ color: 'white' }} >Edit</Button> */}
+
+                    </TableCell>
+
                     <TableCell style={{ width: 160 }} align="center" >
                       <Button style={{ color: 'white' }} onClick={() => deleteUser(user.id)}>Delete</Button>
                     </TableCell>

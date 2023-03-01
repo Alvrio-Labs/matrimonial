@@ -85,40 +85,40 @@ const Contacts = () => {
       flex: 1,
       headerName: "Date of birth",
     },
-    {
-      field: "Actions",
-      flex: 2,
-      renderCell: (cellValues) => {
-        return (
-          <>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(event) => {
-                handleClick(event, cellValues);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
+    // {
+    //   field: "Actions",
+    //   flex: 2,
+    //   renderCell: (cellValues) => {
+    //     return (
+    //       <>
+    //         <Button
+    //           variant="contained"
+    //           color="primary"
+    //           onClick={(event) => {
+    //             handleClick(event, cellValues);
+    //           }}
+    //         >
+    //           Delete
+    //         </Button>
+    //         <Button
+    //           variant="contained"
+    //           color="primary"
 
-            >
-              < Link to={`/edit/${users.id}`}>
-                Edit
-              </Link>
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-            >
-              <ViewForm user={users}>View</ViewForm>
-            </Button>
-          </>
-        );
-      }
-    },
+    //         >
+    //           < Link to={`/edit/${users.id}`}>
+    //             Edit
+    //           </Link>
+    //         </Button>
+    //         <Button
+    //           variant="contained"
+    //           color="primary"
+    //         >
+    //           <ViewForm user={users}>View</ViewForm>
+    //         </Button>
+    //       </>
+    //     );
+    //   }
+    // },
   ];
   useEffect(() => {
     async function fetchData() {

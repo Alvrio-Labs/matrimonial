@@ -46,7 +46,7 @@ export default function ViewForm({ user }) {
   }
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen} style={{color: 'white'}}>
         View
       </Button>
       <Dialog open={open} onClose={handleClose}>
