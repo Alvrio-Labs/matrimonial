@@ -8,7 +8,6 @@ import Tables from "./scenes/Tables";
 import Form from "./scenes/form";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
-import Homepage from "./components/Homepage";
 import Login from "./components/Login";
 import Views from "./scenes/views";
 import EditForm from "./scenes/form/EditForm";
@@ -18,7 +17,6 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const SidebarLayout = () => (
     <>
-      {/* <Sidebar isSidebar={isSidebar}/> */}
       <div className="app">
         <Sidebar isSidebar={isSidebar} />
         <main className="content">
@@ -46,23 +44,9 @@ function App() {
               <Route path="/form" element={<Form />} />
               <Route path='/views/:id' element={<Views />} />
               <Route path='/edit/:id' element={<EditForm />} />
-
             </Routes>
           </main>
         </div>
-
-        {/* <div className="app">
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route element={<SidebarLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/form" element={<Form />} />
-            </Route>
-
-          </Routes>
-        </div> */}
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
