@@ -1,4 +1,5 @@
 const userGender = ['Male', 'Female', 'Others'];
+const status = ['pending', 'approved ', 'decline'];
 const { DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -125,6 +126,12 @@ module.exports = (sequelize) => {
     is_admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    current_status: {
+      type: DataTypes.ENUM(status),
+      allowNull: true,
+      defaultValue: 'pending',
+
     },
   }, {
     sequelize,

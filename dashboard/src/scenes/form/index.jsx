@@ -1,5 +1,5 @@
 
-import  React, { useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -45,28 +45,44 @@ export default function Form() {
     phone: "",
     date_of_birth: ""
   });
- 
-  const handleSubmit =  (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
- 
-    axios
-      .post("http://localhost:5000/api/admin/users", {
-        email: formData.email,
-        password: formData.password,
-        first_name:formData.first_name ,
-        last_name:formData.last_name ,
-        gender:formData.gender ,
-        phone:formData.phone ,
-        date_of_birth:formData.date_of_birth ,
-      })
-      .then(function (response) {
-        console.log(response);
-        navigate('/users'); 
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const body = {
+      email: formData.email,
+      password: formData.password,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      gender: formData.gender,
+      phone: formData.phone,
+      date_of_birth: formData.date_of_birth,
+    };
+    const response = await fetch('http://localhost:5000/api/admin/users', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+
+    });
+    console.log(response)
+    navigate('/users')
+    // axios
+    //   .post("http://localhost:5000/api/admin/users", {
+    //     email: formData.email,
+    // password: formData.password,
+    // first_name:formData.first_name ,
+    // last_name:formData.last_name ,
+    // gender:formData.gender ,
+    // phone:formData.phone ,
+    // date_of_birth:formData.date_of_birth ,
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //     navigate('/users'); 
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }
   return (
     <ThemeProvider theme={theme}>
@@ -112,7 +128,7 @@ export default function Form() {
               Add user
             </Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -122,7 +138,7 @@ export default function Form() {
                 type="text"
                 value={formData.first_name}
                 onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-       
+
               />
               <TextField
                 margin="normal"
@@ -134,7 +150,7 @@ export default function Form() {
                 type="text"
                 value={formData.last_name}
                 onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-       
+
               />
               <TextField
                 margin="normal"
@@ -145,10 +161,10 @@ export default function Form() {
                 name="email"
                 type="email"
 
-                
+
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-       
+
               />
               <TextField
                 margin="normal"
@@ -160,7 +176,7 @@ export default function Form() {
                 type="password"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-       
+
               />
               <TextField
                 margin="normal"
@@ -172,7 +188,7 @@ export default function Form() {
                 type="date"
                 value={formData.date_of_birth}
                 onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
-       
+
               />
               <TextField
                 margin="normal"
@@ -181,11 +197,11 @@ export default function Form() {
                 id="gender"
                 label="gender"
                 name="gender"
-                
-                
+
+
                 value={formData.gender}
                 onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-       
+
               />
               <TextField
                 margin="normal"
@@ -197,7 +213,7 @@ export default function Form() {
                 id="phone"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-       
+
               />
               <Button
                 type="submit"

@@ -93,12 +93,7 @@ export default App;
 //   const SidebarLayout = () => (
 //     <>
 //       {/* <Sidebar isSidebar={isSidebar} /> */}
-//       <div className="app">
-//         <Sidebar isSidebar={isSidebar} />
-//         <main className="content-1">
-//           <Topbar setIsSidebar={setIsSidebar} />
-//         </main>
-//       </div>
+//       <Login />
 //       <Outlet />
 //     </>
 //   );
@@ -114,10 +109,11 @@ export default App;
 //             <Topbar setIsSidebar={setIsSidebar} />
 //             <Routes>
 //               <Route element={<SidebarLayout />}>
+//               </Route>
 //               <Route path="/dashboard" element={<Dashboard />} />
 //               <Route path="/team" element={<Team />} />
 //               <Route path="/users" element={<Tables />} />
-//               </Route>
+              
 //               <Route path="/" element={<Login />} />
 //               <Route path="/form" element={<Form />} />
 //               <Route path='/views/:id' element={<Views />} />

@@ -1,174 +1,130 @@
-
-import React, { useEffect, useState } from 'react';
-import Avatar from '@mui/material/Avatar';
+import * as React from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-import { tokens } from "../../theme";
-import { Container, useTheme } from "@mui/material";
-import Header from "../../components/Header";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useParams } from 'react-router'
+import Axios from "axios";
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        Alvrio
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+export default function ViewForm({ user }) {
+  const { id } = useParams()
 
-const theme = createTheme();
+  const [open, setOpen] = React.useState(false);
+  const [first_Name, set_first_Name] = React.useState(user.first_name);
+  const [last_Name, set_last_Name] = React.useState(user.last_Name);
+  const [email, set_email] = React.useState(user.email);
+  const [phone, set_phone] = React.useState(user.phone);
+  const [gender, set_gender] = React.useState(user.gender);
+  const [date_of_birth, set_date_of_birth] = React.useState(user.date_of_birth);
+  const [current_status, set_current_status] = React.useState(user.current_status);
 
-export default function Form({ User }) {
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-  const [user, setUser] = useState();
-  const data = useEffect(() => {
-    async function fetchData() {
-      // const reqData = await axios
-      //   .get(`http://localhost:5000/api/admin/users/${User.id}`)
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleSubmit = async e => {
+    e.preventDefault()
+    try {
+      const data = {
+        first_Name: first_Name,
+        last_Name: last_Name,
+        email: email,
+        phone: phone,
+        gender: gender,
+        date_of_birth: date_of_birth,
+        Status: current_status
+      }
+      await Axios.get(`http://localhost:5000/api/admin/users/${id}`, data)
 
-      const reqData = await axios
-        .get(`http://localhost:5000/api/admin/users/9034edba-9b4c-4526-8b1e-b32ba3cc1498`)
-      setUser(reqData.data.user)
-      console.log(user.first_name)
+    } catch (error) {
+      console.log(error.message)
     }
-    fetchData();
-  }, []);
-
-  const theme = useTheme();
-
-  const colors = tokens(theme.palette.mode);
+  }
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" >
-        <CssBaseline />
-        <Grid item xs={12} sm={12} md={12}  >
-          <Box
-            mx="10px"
-            height="75vh"
-            sx={{
-              "& .MuiDataGrid-root": {
-                border: "none",
-              },
-              "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-              },
-              "& .name-column--cell": {
-                color: colors.greenAccent[300],
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: colors.blueAccent[700],
-                borderBottom: "none",
-              },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: colors.primary[400],
-              },
-              "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: colors.blueAccent[700],
-              },
-              "& .MuiCheckbox-root": {
-                color: `${colors.greenAccent[200]} !important`,
-              },
-              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                color: `${colors.grey[100]} !important`,
-              },
-            }}
-          >
-            <Header
-              title="User"
-            />
+    <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        View
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>View</DialogTitle>
+        
+        <form onSubmit={handleSubmit}>
+          <TextField
+            margin="normal"
 
-            <Box component="form" sx={{ mt: 1 }}>
-              {user &&
+            fullWidth
+            name="name"
+            label="First Name"
 
-                <div>
-                  <TextField
-                    margin="normal"
+            value={first_Name}
+          />
 
-                    fullWidth
-                    id="first_name"
-                    label="First Name"
-                    name="first_name"
-                    type="text"
-                    value={user.first_name}
-                  />
-                  <TextField
-                    margin="normal"
+          <TextField
+            margin="normal"
 
-                    fullWidth
-                    id="last_name"
-                    label="Last Name"
-                    name="last_name"
-                    type="text"
-                    value={user.last_name}
-                  />
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    type="email"
-                    value={user.email}
-                  />
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="date_of_birth"
-                    name="date_of_birth"
-                    label="Date of Birth"
-                    type="text"
-                    value={user.date_of_birth}
-                  />
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="gender"
-                    label="Gender"
-                    name="gender"
-                    value={user.gender}
-                  />
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    name="phone"
-                    label="Phone"
-                    type="number"
-                    id="phone"
-                    value={user.phone}
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    <a href='/users'>Back</a>
-                  </Button>
+            fullWidth
+            name="name"
+            label="Last Name"
 
-                </div>
+            value={last_Name}
+          />
 
-              }
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
+          <TextField
+            margin="normal"
 
-          </Box>
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+            fullWidth
+            name="email"
+            label="Email"
 
+            value={email}
+          />
+
+          <TextField
+            margin="normal"
+
+            fullWidth
+            name="date of birth"
+            label="Date of Birth"
+
+            value={date_of_birth}
+          />
+
+          <TextField
+            margin="normal"
+
+            fullWidth
+            name="Phone"
+            label="Phone"
+
+            value={phone}
+          />
+
+          <TextField
+            margin="normal"
+
+            fullWidth
+            name="gender"
+            label="Gender"
+
+            value={gender}
+          />
+
+          <TextField
+            margin="normal"
+            fullWidth
+            name="current status"
+            label="Status"
+            value={current_status}
+          />
+        </form>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }

@@ -10,24 +10,25 @@ import { Link } from "react-router-dom";
 import '../../styles.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import ViewForm from "../views";
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [users, setUsers] = useState([]);
 
-  const handleClick = async (event, cellValues, id) => {
-    console.log(cellValues.row);
+  const handleClick = async (id) => {
+    // console.log(cellValues.row);
     try {
-      const deleteUser = await Axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
-        method: "DELETE"
-      }
-      );
-      setUsers(users.filter(users => users.id !== id));
-      console.log(cellValues.deleteTodo)
+      await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+        method: "DELETE",
+      });
+      // console.log(users.id)
+      setUsers(users.filter(user => user.id !== id));
 
     } catch (error) {
       console.log(error.message)
     }
+
   };
 
   const handleCellClick = (param, event) => {
@@ -112,9 +113,7 @@ const Contacts = () => {
               variant="contained"
               color="primary"
             >
-              < Link to={`/views/${users.id}`}>
-                View
-              </Link>
+              <ViewForm user={users}>View</ViewForm>
             </Button>
           </>
         );
@@ -134,7 +133,7 @@ const Contacts = () => {
       <Header
         title="Users"
       />
-      <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative',  top: '28px' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '28px' }}>
         <button>
           <a href="/form">
             Add User

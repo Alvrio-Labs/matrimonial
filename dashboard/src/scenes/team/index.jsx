@@ -21,11 +21,13 @@ import Modal from '@mui/material/Modal';
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
+import EditForm from "../form/EditForm";
+import View from "../views";
+import ViewForm from "../views";
 
 function TablePaginationActions(props) {
   const navigate = useNavigate();
   const BasicModal = {
-
 
   }
   const theme = useTheme();
@@ -131,8 +133,10 @@ export default function Team() {
 
   const deleteUser = async (id) => {
     try {
-      await fetch(`http://localhost:3000/api/admin/users/${id}`, {
-        method: "DELETE"
+      await Axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+        method: "DELETE",
+        mode: "no-cors",
+
       });
       setUsers(users.filter(todo => todo.id !== id));
     } catch (error) {
@@ -140,7 +144,7 @@ export default function Team() {
     }
   }
   const columns = [
-    { id: "name", label: "id", },
+    // { id: "name", label: "id", },
     {
       id: "firstName",
       label: "First Name",
@@ -164,6 +168,10 @@ export default function Team() {
     {
       id: "date_of_birth",
       label: "Date of birth",
+    },
+    {
+      id: "current_status",
+      label: "status"
     },
     {
       id: "edit",
@@ -198,10 +206,10 @@ export default function Team() {
                   : users
                 ).map((user) => (
                   // <td>{user.id}</td>
-                  <TableRow key={user.createData}>
-                    <TableCell component="th" scope="user">
+                  <TableRow key={user.id}>
+                    {/* <TableCell component="th" scope="user">
                       {user.id}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell style={{ width: 160 }} align="center">
                       {user.first_name}
                     </TableCell>
@@ -221,8 +229,12 @@ export default function Team() {
                       {user.date_of_birth}
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="center">
-                      {/* <Button ><BasicModal todo={user} /></Button> */}
-                      <Button style={{ color: 'white' }} >Edit</Button>
+                      {user.current_status}
+                    </TableCell>
+
+                    <TableCell style={{ width: 160 }} align="center">
+                      <Button ><ViewForm user={user} /></Button>
+                      {/* <Button style={{ color: 'white' }} >Edit</Button> */}
 
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="center" >

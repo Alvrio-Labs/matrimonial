@@ -1,5 +1,5 @@
 
-import  React, { useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -38,11 +38,11 @@ export default function Login() {
     email: "",
     password: "",
   });
- 
+
   const handleSubmit =  (e) => {
     e.preventDefault();
     console.log(formData);
- 
+
     axios
       .post("http://localhost:5000/api/login", {
         email: formData.email,
@@ -61,6 +61,46 @@ export default function Login() {
         console.log(error);
       });
   }
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  //   const body = {
+  //     email: formData.email,
+  //     password: formData.password,
+  //   };
+  //   const response = await fetch('http://localhost:5000/api/login', {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(body),
+
+  //   });
+  //   if (response.data) {
+  //     console.log(response);
+  //     console.log("Successfully Logged in ");
+  //     navigate('/dashboard');
+  //   } 
+
+  //   // console.log(response)
+  //   // navigate('/users')
+
+  //   // axios
+  //   //   .post("http://localhost:5000/api/login", {
+  //   //     email: formData.email,
+  //   //     password: formData.password,
+  //   //   })
+  //   //   .then(function (response) {
+  //   //     if (response.data.validation) {
+  //   //       console.log(response);
+  //   //       console.log("Successfully Logged in ");
+  //   //       navigate('/dashboard');
+  //   //     } else {
+  //   //       alert('incorrect')
+  //   //     }
+  //   //   })
+  //   //   .catch(function (error) {
+  //   //     console.log(error);
+  //   //   });
+  // }
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" >
@@ -93,7 +133,7 @@ export default function Login() {
                 autoFocus
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-       
+
               />
               <TextField
                 margin="normal"
@@ -105,7 +145,7 @@ export default function Login() {
                 id="password"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-       
+
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
