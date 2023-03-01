@@ -60,7 +60,7 @@ const requestlogin = async (req, res, next) => {
         user: responseData,
       });
     } else {
-      return res.status(401).send({
+      res.status(401).send({
         message: 'Invalid email or password!',
       });
     }
@@ -68,10 +68,8 @@ const requestlogin = async (req, res, next) => {
     res.send(({
       message: errorHandler.errorHandler.internalServerError().error,
     }));
-    next();
   }
 };
-
 module.exports = {
   requestforgetPassword,
   requestlogin,

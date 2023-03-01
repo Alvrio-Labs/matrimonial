@@ -1,44 +1,62 @@
 const userGender = ['Male', 'Female', 'Others'];
+const status = ['pending', 'approved ', 'decline'];
 const { DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 
 module.exports = (sequelize) => {
   class User extends Model {
     static associate(models) {
-      // define association here
-      this.hasOne((models.lifeStyle), {
-        as: 'lifeStyle',
-        foreignKey: 'user_id',
-        constraints: true,
-        onDelete: 'CASCADE',
-      });
-      this.hasOne((models.PersonalInfo), {
-        as: 'PersonalInfo',
-        foreignKey: 'user_id',
-        constraints: true,
-        onDelete: 'CASCADE',
-      });
       this.hasOne((models.EducationInfo), {
-        as: 'educationInfo',
+        as: 'education_info',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
-      this.hasOne((models.FamilyDetail), {
-        as: 'familyInfo',
+      this.hasOne((models.FamilyInfo), {
+        as: 'family_info',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
       this.hasMany((models.connectionRequest), {
-        as: 'connectionRequest',
+        as: 'connection_request',
         foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
       this.hasMany((models.userConnection), {
-        as: 'userConnection',
+        as: 'user_connection',
         foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.PersonalInfo), {
+        as: 'personal_info',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.lifeStyle), {
+        as: 'life_style',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasOne((models.UserPreference), {
+        as: 'user_preference',
+        foreignKey: 'user_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasMany((models.chatRoom), {
+        as: 'chat_room',
+        foreignKey: 'chat_id',
+        constraints: true,
+        onDelete: 'CASCADE',
+      });
+      this.hasMany((models.Message), {
+        as: 'message',
+        foreignKey: 'chat_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
@@ -74,7 +92,6 @@ module.exports = (sequelize) => {
         args: true,
         msg: 'Email address already in use!',
       },
-
     },
     phone: {
       type: DataTypes.STRING(15),
@@ -110,12 +127,20 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    current_status: {
+      type: DataTypes.ENUM(status),
+      allowNull: true,
+      defaultValue: 'pending',
+
+    },
   }, {
     sequelize,
     modelName: 'User',
     tableName: 'users',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    paranoid: true,
+
   });
   function encryptPasswordIfChanged(user, options) {
     if (user.changed('password')) {
@@ -132,6 +157,5 @@ module.exports = (sequelize) => {
     }
   });
   User.beforeUpdate(encryptPasswordIfChanged);
-
   return User;
 };

@@ -3,23 +3,18 @@ const horoscope = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class personalInfo extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+  class PersonalInfo extends Model {
     static associate(models) {
       // define association here
       this.belongsTo((models.User), {
         as: 'user',
-        foreignKey: 'id',
+        foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
     }
   }
-  personalInfo.init({
+  PersonalInfo.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -27,8 +22,10 @@ module.exports = (sequelize) => {
     },
     user_id: {
       type: DataTypes.UUID,
-      unique: true,
-      allowNull: false,
+      unique: {
+        args: true,
+        msg: 'user personal detail with this id already added',
+      },
     },
     job: {
       type: DataTypes.STRING,
@@ -73,5 +70,5 @@ module.exports = (sequelize) => {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return personalInfo;
+  return PersonalInfo;
 };

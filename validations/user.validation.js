@@ -27,8 +27,8 @@ const create = async (req, res, next) => {
   const value = await createSchema.validate(req.body);
   if (value.error) {
     res.json({
-      success: 0,
-      message: value.error.details[0].message,
+      success: 422,
+      message: value.error,
     });
   } else {
     next();
@@ -45,7 +45,7 @@ const get = async (req, res, next) => {
   const value = getSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
-      message: value.error.details[0].message,
+      message: value.error,
     });
   } else {
     next();
@@ -61,7 +61,7 @@ const deleteValidation = async (req, res, next) => {
   const value = deleteSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
-      message: value.error.details[0].message,
+      message: value.error,
     });
   } else {
     next();
@@ -84,7 +84,7 @@ const update = async (req, res, next) => {
   const value = updateSchema.validate(req.body);
   if (value.error) {
     res.status(400).json({
-      message: value.error.details[0].message,
+      message: value.error,
     });
   } else {
     next();

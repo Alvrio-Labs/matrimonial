@@ -1,23 +1,18 @@
 const { DataTypes, Model } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class EducationDetail extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+  class EducationInfo extends Model {
     static associate(models) {
       // define association here
       this.belongsTo((models.User), {
-        as: 'user',
-        foreignKey: 'id',
+        as: 'User',
+        foreignKey: 'user_id',
         constraints: true,
         onDelete: 'CASCADE',
       });
     }
   }
-  EducationDetail.init({
+  EducationInfo.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -56,10 +51,10 @@ module.exports = (sequelize) => {
     },
   }, {
     sequelize,
-    modelName: 'EducationDetail',
+    modelName: 'EducationInfo',
     tableName: 'education_info',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   });
-  return EducationDetail;
+  return EducationInfo;
 };

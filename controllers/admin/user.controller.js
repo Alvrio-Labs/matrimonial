@@ -1,26 +1,25 @@
 /* eslint-disable prefer-destructuring */
-const YAML = require('js-yaml');
-const fs = require('fs');
+
 const db = require('../../models/index');
 
-const validation = fs.readFileSync('yaml/validation.yaml');
-const data = YAML.load(validation);
 const User = db.User;
 const serialize = require('../../serializers/user.serializer');
 
 exports.index = async (req, res) => {
-  const users = await User.findAll({ where: { is_admin: false } });
-  const userList = await serialize.index(users);
   try {
+    const user = await User.findAll({});
+    const keys = Object.values(user);
+    const responseData = await serialize.index(keys);
     res.status(200).send({
-      users: userList,
+      users: responseData,
     });
   } catch (error) {
     res.status(404).send({
-      message: data.api_messages.response.notFound.message,
+      message: error.message,
     });
   }
 };
+
 
 exports.show = async (req, res) => {
   try {
