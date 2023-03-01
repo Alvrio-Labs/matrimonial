@@ -1,73 +1,17 @@
 /* eslint-disable prefer-destructuring */
-const { Op } = require('sequelize');
 
-const YAML = require('js-yaml');
-const fs = require('fs');
 const db = require('../../models/index');
 
-const validation = fs.readFileSync('yaml/validation.yaml');
-const yamlMessage = YAML.load(validation);
 const User = db.User;
 const serialize = require('../../serializers/user.serializer');
 
-const getPagination = (page, size) => {
-  const limit = size ? +size : 5;
-  const offset = page ? page * limit : 0;
-
-  return { limit, offset };
-};
-
-const getPagingData = (data, page, limit) => {
-  const { count: totalItems, rows: tutorials } = data;
-  const currentPage = page ? +page : 0;
-  const totalPages = Math.ceil(totalItems / limit);
-
-  return {
-    totalItems, tutorials, totalPages, currentPage,
-  };
-};
-// working code
-// exports.index = async (req, res) => {
-//   const { page, size, id } = req.query;
-//   const condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
-
-//   const { limit, offset } = getPagination(page, size);
-//   try {
-//     const users = await User.findAndCountAll(
-//       {
-//         attributes: ['id', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone', 'gender'],
-//         where: condition,
-//         limit,
-//         offset,
-//       },
-//     );
-//     res.status(200).send({
-//       user: users,
-//     });
-//   } catch (error) {
-//     res.status(401).send({
-//       message:
-//         yamlMessage.api_messages.response.notFound.message,
-//     });
-//   }
-// };
-
 exports.index = async (req, res) => {
-  const { page, size, id } = req.query;
-  const condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
-
-  const { limit, offset } = getPagination(page, size);
-
   try {
-    const user = await User.findAll({
-      where: condition,
-      limit,
-      offset,
-    });
+    const user = await User.findAll({});
     const keys = Object.values(user);
     const responseData = await serialize.index(keys);
     res.status(200).send({
-      user_preference: responseData,
+      users: responseData,
     });
   } catch (error) {
     res.status(404).send({
@@ -75,6 +19,7 @@ exports.index = async (req, res) => {
     });
   }
 };
+
 
 exports.show = async (req, res) => {
   try {

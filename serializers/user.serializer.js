@@ -3,15 +3,14 @@ const index = async (users) => {
 
   users.forEach((u) => {
     const user = {
-      user: {
-        id: u.id,
-        first_name: u.first_name,
-        last_name: u.last_name,
-        email: u.email,
-        phone: u.phone,
-        gender: u.gender,
-        date_of_birth: u.date_of_birth,
-      },
+      id: u.id,
+      first_name: u.first_name,
+      last_name: u.last_name,
+      email: u.email,
+      phone: u.phone,
+      gender: u.gender,
+      date_of_birth: u.date_of_birth,
+      status: u.current_status,
     };
     usersList.push(user);
   });
@@ -26,6 +25,7 @@ const show = async (user) => {
     phone: user.phone,
     gender: user.gender,
     date_of_birth: user.date_of_birth,
+    status: user.current_status,
   };
   return userData;
 };
@@ -34,15 +34,13 @@ const filter = async (users) => {
   const usersList = [];
   users.forEach((u) => {
     const user = {
-      user: {
-        id: u.id,
-        first_name: u.first_name,
-        last_name: u.last_name,
-        email: u.email,
-        phone: u.phone,
-        gender: u.gender,
-        date_of_birth: u.date_of_birth,
-      },
+      id: u.id,
+      first_name: u.first_name,
+      last_name: u.last_name,
+      email: u.email,
+      phone: u.phone,
+      gender: u.gender,
+      date_of_birth: u.date_of_birth,
       personal_info: {
         manglik: u.personal_info.manglik,
         job: u.personal_info.job,

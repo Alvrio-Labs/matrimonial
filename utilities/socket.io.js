@@ -17,18 +17,6 @@ function getConnectedUsers() {
   });
   return activeUsers;
 }
-// function getConnectedUsers() {
-//   const users = []
-//   for (let [id, socket] of io.of('/').sockets) {
-//     users.push({
-//       user_id: socket.userId,
-//       socket_id: id,
-//       is_active: true,
-//     })
-//   }
-//   return users
-// }
-
 
 function getAllSocketUsers() {
   const users = getConnectedUsers();

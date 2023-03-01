@@ -1,4 +1,5 @@
 const userGender = ['Male', 'Female', 'Others'];
+const status = ['pending', 'approved ', 'decline'];
 const { DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -126,12 +127,20 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    current_status: {
+      type: DataTypes.ENUM(status),
+      allowNull: true,
+      defaultValue: 'pending',
+
+    },
   }, {
     sequelize,
     modelName: 'User',
     tableName: 'users',
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    paranoid: true,
+
   });
   function encryptPasswordIfChanged(user, options) {
     if (user.changed('password')) {
