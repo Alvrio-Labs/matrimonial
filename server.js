@@ -9,19 +9,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-// app.use((req, res, next) => {
-//   // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'PUT, POST, GET, DELETE, PATCH, OPTIONS');
-
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-//   // res.header({ 'Access-Control-Allow-Origin': '*' });
-
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept',
-//   );
-//   next();
-// });
 const corsOptions = {
   origin: 'http://localhost:3000',
 };
