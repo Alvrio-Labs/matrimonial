@@ -39,23 +39,38 @@ export default function Login() {
     password: "",
   });
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
 
+    //   axios
+    //     .post("http://localhost:5000/api/login", {
+    //       email: formData.email,
+    //       password: formData.password,
+    //     })
+    //     .then(response => {
+    //       if(response.data.validation){
+    //         console.log(response);
+    //         navigate('/users');   
+    //         console.log("Successfully Logged in ");
+    //       }else{
+    //         alert('incorrect')
+    //       }
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // }
     axios
       .post("http://localhost:5000/api/login", {
         email: formData.email,
         password: formData.password,
       })
-      .then(function (response) {
-        if(response.data.validation){
-          console.log(response);
-          console.log("Successfully Logged in ");
-          navigate('/dashboard');   
-        }else{
-          alert('incorrect')
-        }
+      .then(response => {
+        console.log(response);
+        navigate('/users');
+        console.log("Successfully Logged in ");
+
       })
       .catch(function (error) {
         console.log(error);
@@ -64,42 +79,23 @@ export default function Login() {
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   console.log(formData);
-  //   const body = {
-  //     email: formData.email,
-  //     password: formData.password,
-  //   };
-  //   const response = await fetch('http://localhost:5000/api/login', {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(body),
 
-  //   });
-  //   if (response.data) {
-  //     console.log(response);
-  //     console.log("Successfully Logged in ");
-  //     navigate('/dashboard');
-  //   } 
-
-  //   // console.log(response)
-  //   // navigate('/users')
-
-  //   // axios
-  //   //   .post("http://localhost:5000/api/login", {
-  //   //     email: formData.email,
-  //   //     password: formData.password,
-  //   //   })
-  //   //   .then(function (response) {
-  //   //     if (response.data.validation) {
-  //   //       console.log(response);
-  //   //       console.log("Successfully Logged in ");
-  //   //       navigate('/dashboard');
-  //   //     } else {
-  //   //       alert('incorrect')
-  //   //     }
-  //   //   })
-  //   //   .catch(function (error) {
-  //   //     console.log(error);
-  //   //   });
+  //   axios
+  //     .post("http://localhost:5000/api/login", {
+  //       email: formData.email,
+  //       password: formData.password,
+  //     })
+  //     .then(res => {
+  //       if (res.data.validation) {
+  //         console.log(res);
+  //         navigate('/dashboard');
+  //       } else {
+  //         alert('incorrect')
+  //       }
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
   // }
   return (
     <ThemeProvider theme={theme}>

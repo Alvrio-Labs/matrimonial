@@ -219,7 +219,7 @@ export default function Team() {
                       {user.date_of_birth}
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="center">
-                      {user.current_status}
+                      {user.status}
                     </TableCell>
 
                     <TableCell style={{ width: 160 }} align="center">

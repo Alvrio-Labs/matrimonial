@@ -17,7 +17,7 @@ export default function ViewForm({ user }) {
   const [phone, set_phone] = React.useState(user.phone);
   const [gender, set_gender] = React.useState(user.gender);
   const [date_of_birth, set_date_of_birth] = React.useState(user.date_of_birth);
-  const [current_status, set_current_status] = React.useState(user.current_status);
+  const [status, set_current_status] = React.useState(user.status);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,7 +36,7 @@ export default function ViewForm({ user }) {
         phone: phone,
         gender: gender,
         date_of_birth: date_of_birth,
-        Status: current_status
+        Status: status
       }
       await Axios.get(`http://localhost:5000/api/admin/users/${id}`, data)
 
@@ -118,7 +118,7 @@ export default function ViewForm({ user }) {
             fullWidth
             name="current status"
             label="Status"
-            value={current_status}
+            value={status}
           />
         </form>
         <DialogActions>
