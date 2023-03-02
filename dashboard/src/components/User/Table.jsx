@@ -8,7 +8,11 @@ import User from "../authUserLink";
 import AuthService from "../authService";
 import { useNavigate } from "react-router-dom";
 import ViewForm from "./viewUser";
-
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import authHeader from "../authHeaders";
 const Contacts = () => {
   const logOut = () => {
     AuthService.logout();
@@ -19,38 +23,43 @@ const Contacts = () => {
   const colors = tokens(theme.palette.mode);
   const [users, setUsers] = useState([]);
 
-  // const handleClick = async (id) => {
-  //   // console.log(cellValues.row);
-  //   try {
-  //     await fetch(`http://localhost:5000/api/admin/users/${id}`, {
-  //       method: "DELETE",
-  //     });
-  //     // console.log(users.id)
-  //     setUsers(users.filter(user => user.id !== id));
+  const handleDelete = async (id) => {
+    // console.log(cellValues.row);
+    try {
+      await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+        headers: authHeader,
+        method: "DELETE",
+      });
+      // console.log(users.id)
+      setUsers(users.filter(user => user.id !== id));
 
-  //   } catch (error) {
-  //     console.log(error.message)
-  //   }
+    } catch (error) {
+      console.log(error.message)
+    }
 
-  // };
+  };
 
-  // const handleCellClick = (param, event) => {
-  //   event.stopPropagation();
-  // };
+  const handleCellClick = (param, event) => {
+    event.stopPropagation();
+  };
 
-  // const handleRowClick = (param, event) => {
-  //   event.stopPropagation();
-  // };
-  // const deleteUser = async (id) => {
-  //   try {
-  //     const deleteUser = await fetch(`http://localhost:3000/api/admin/users/${id}`, {
-  //       method: "DELETE"
-  //     });
-  //     setUsers(users.filter(user => user.id !== id));
-  //   } catch (error) {
-  //     console.log(error.message)
-  //   }
-  // }
+  const handleRowClick = (param, event) => {
+    event.stopPropagation();
+  };
+  const deleteUser = async (id) => {
+    try {
+      const deleteUser = await fetch(`http://localhost:3000/api/admin/users/${id}`, {
+        method: "DELETE"
+      });
+      setUsers(users.filter(user => user.id !== id));
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const view = () => {
+    <ViewForm user={users}>View</ViewForm>
+  }
   const columns = [
 
     {
@@ -112,12 +121,18 @@ const Contacts = () => {
                 Edit
               </link>
             </Button> */}
-            <Button
-              variant="contained"
-              color="primary"
-            >
-              <ViewForm user={users}>View</ViewForm>
+            <Button>
+              <RemoveRedEye onclick={view}>View</RemoveRedEye>
+
             </Button>
+            <Button>
+              <EditIcon></EditIcon>
+
+            </Button>
+            <Button>
+              <DeleteIcon onclick={handleDelete}></DeleteIcon>
+            </Button>
+
           </>
         );
       }
