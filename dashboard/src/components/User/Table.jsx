@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../Header";
@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import User from "../authUserLink";
 import AuthService from "../authService";
 import { useNavigate } from "react-router-dom";
+import ViewForm from "./viewUser";
 
 const Contacts = () => {
   const logOut = () => {
@@ -87,40 +88,40 @@ const Contacts = () => {
       flex: 1,
       headerName: "Date of birth",
     },
-    // {
-    //   field: "Actions",
-    //   flex: 2,
-    //   renderCell: (cellValues) => {
-    //     return (
-    //       <>
-    //         <Button
-    //           variant="contained"
-    //           color="primary"
-    //           onClick={(event) => {
-    //             handleClick(event, cellValues);
-    //           }}
-    //         >
-    //           Delete
-    //         </Button>
-    //         <Button
-    //           variant="contained"
-    //           color="primary"
+    {
+      field: "Actions",
+      flex: 2,
+      renderCell: (cellValues) => {
+        return (
+          <>
+            {/* <Button
+              variant="contained"
+              color="primary"
+              onClick={(event) => {
+                handleClick(event, cellValues);
+              }}
+            >
+              Delete
+            </Button> */}
+            {/* <Button
+              variant="contained"
+              color="primary"
 
-    //         >
-    //           < Link to={`/edit/${users.id}`}>
-    //             Edit
-    //           </Link>
-    //         </Button>
-    //         <Button
-    //           variant="contained"
-    //           color="primary"
-    //         >
-    //           <ViewForm user={users}>View</ViewForm>
-    //         </Button>
-    //       </>
-    //     );
-    //   }
-    // },
+            >
+              < link to={`/edit/${users.id}`}>
+                Edit
+              </link>
+            </Button> */}
+            <Button
+              variant="contained"
+              color="primary"
+            >
+              <ViewForm user={users}>View</ViewForm>
+            </Button>
+          </>
+        );
+      }
+    },
   ];
 
   useEffect(() => {
@@ -144,8 +145,10 @@ const Contacts = () => {
         title="Users"
       />
       <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '28px' }}>
-        <button onClick={logOut}>
+        <button>
+          <a href="/form">
             Add User
+          </a>
         </button>
       </div>
       <Box
