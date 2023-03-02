@@ -1,38 +1,109 @@
-import logo from './logo.svg';
-import './App.css';
 import { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
+import Topbar from "./components/global/Topbar";
+import Sidebar from "./components/global/Sidebar";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ColorModeContext, useMode } from "./theme";
+
 import Home from './components/Home';
 import Login from './components/login';
 import authService from './components/authService';
+import Table from './components/User/Table';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [theme, colorMode] = useMode();
+  const [isSidebar, setIsSidebar] = useState(true);
+  const [currentUser, setCurrentUser] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => localStorage.getItem('auth') || false
+  );
+
 
   useEffect(() => {
-    const user = authService.getCurrentUser();
+    localStorage.setItem("auth", isAuthenticated);
+  }, [isAuthenticated]);
 
-    if (user) {
-      setCurrentUser(user);
-    }
-  }, []);
-
-  const logOut = () => {
-    authService.logout();
-  };
-
+  const SidebarLayout = () => (
+    <>
+      <div className="app">
+        <Sidebar isSidebar={isSidebar} />
+        <main className="content">
+          <Topbar setIsSidebar={setIsSidebar} />
+        </main>
+      </div>
+      <Outlet />
+    </>
+  );
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-        </Routes>
-      </header>
-    </div>
+        <div className="app">
+          <Sidebar isSidebar={isSidebar} />
+          <main className="content">
+            <Topbar setIsSidebar={setIsSidebar} />
+            <Routes>
+            <Route path="/" element={<Login />} />
+          {/* <Route path="/login"
+            element={isAuthenticated ? <Table /> : <Login />} /> */}
+          <Route path="/table" element={<Table />} />
+          <Route path="/home" element={<Home />} />
+            </Routes>
+          </main>
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 
 export default App;
+
+
+// import logo from './logo.svg';
+// import './App.css';
+// import { useState, useEffect } from "react";
+// import { Routes, Route, Link } from "react-router-dom";
+// import Home from './components/Home';
+// import Login from './components/login';
+// import authService from './components/authService';
+// import Table from './components/User/Table';
+
+// function App() {
+//   const [currentUser, setCurrentUser] = useState();
+
+//   // useEffect(() => {
+//   //   const user = authService.getCurrentUser();
+//   //   console.log(user)
+//   //   if (user) {
+//   //     setCurrentUser(user);
+//   //     // localStorage.setItem('itemName', value)
+//   //     // localStorage.getItem(user)
+//   //   }
+//   // }, []);
+//   const [isAuthenticated, setIsAuthenticated] = useState(
+//     () => localStorage.getItem('auth') || false
+//   );
+
+
+//   useEffect(() => {
+//     localStorage.setItem("auth", isAuthenticated);
+//   }, [isAuthenticated]);
+
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <Routes>
+//           <Route path="/" element={<Login />} />
+//           {/* <Route path="/login"
+//             element={isAuthenticated ? <Table /> : <Login />} /> */}
+//           <Route path="/table" element={<Table />} />
+//           <Route path="/home" element={<Home />} />
+//         </Routes>
+//       </header>
+//     </div>
+//   );
+// }
+
+// export default App;
