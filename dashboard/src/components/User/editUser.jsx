@@ -13,7 +13,7 @@ export default function Form({ user }) {
   // const [email] = React.useState(user.email);
   const [phone, set_phone] = React.useState(user.phone);
   const [gender, set_gender] = React.useState(user.gender);
-  const [date_of_birth, set_date_of_birth] = React.useState(user.date_of_birth);
+  // const [date_of_birth, set_date_of_birth] = React.useState(user.date_of_birth);
   const [status, set_status] = React.useState(user.status);
 
   const handleClickOpen = () => {
@@ -23,33 +23,6 @@ export default function Form({ user }) {
   const handleClose = () => {
     setOpen(false);
   };
-  // const handleSubmit = async e => {
-  //   e.preventDefault()
-  //   try {
-  //     const data = {
-  //       first_Name: first_Name,
-  //       last_Name: last_Name,
-  //       phone: phone,
-  //       date_of_birth: date_of_birth,
-  //       status: status
-  //     }
-  //     const response = await fetch(
-  //       `http://localhost:5000/api/admin/users/${user.id}`,
-  //       {
-  //         method: "PUT",
-
-  //         headers: authHeader(),
-  //         "Content-Type": "application/json",
-
-  //         body: JSON.stringify(data)
-  //       }
-  //     );
-  //     window.location = "/table";
-  //   } catch (error) {
-  //     console.log(error.message)
-  //   }
-
-  // }
   const UpdateUser = async e => {
     e.preventDefault();
     try {
@@ -57,7 +30,8 @@ export default function Form({ user }) {
         first_Name: first_Name,
         last_Name: last_Name,
         phone: phone,
-        date_of_birth: date_of_birth,
+        gender:gender,
+        // date_of_birth: date_of_birth,
         status: status
       }
       const body = { data };
@@ -81,22 +55,6 @@ export default function Form({ user }) {
       console.error(err.message);
     }
   };
-  // const UpdateUser = async () => {
-  //   return await Axios
-  //     .put(`http://localhost:5000/api/admin/users/${user.id}`, {
-  //       first_Name: first_Name,
-  //       last_Name: last_Name,
-  //       phone: phone,
-  //       date_of_birth: date_of_birth,
-  //       status: status
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data.token)
-  //       localStorage.getItem("authtoken", response.data.token);
-  //       const newData = JSON.stringify(UpdateUser)
-  //       return newData.data;
-  //     });
-  // };
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen} style={{ color: 'white' }} data-bs-target={`#id${user.id}`}>
@@ -147,6 +105,16 @@ export default function Form({ user }) {
             id="phone"
             onChange={(e) => set_phone(e.target.value)}
             value={phone}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            name="Gender"
+            label="Gender"
+            type="text"
+            id="gender"
+            onChange={(e) => set_gender(e.target.value)}
+            value={gender}
           />
           <TextField
             margin="normal"

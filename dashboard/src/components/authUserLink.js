@@ -2,7 +2,6 @@ import axios from "axios";
 import authHeader from "./authHeaders";
 
 const getAllUser = () => {
-  console.log(authHeader())
   return axios.get("http://localhost:5000/api/admin/users", { headers: authHeader() });
 };
 const getSingleUser = ({ user }) => {
@@ -14,7 +13,7 @@ const addUser = () => {
   return axios.post('http://localhost:5000/api/admin/users', {
     headers: {
       "Content-Type": "application/json",
-      headers: authHeader(),
+      "Authorization": authHeader(),
     },
   });
 }
