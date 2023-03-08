@@ -40,7 +40,7 @@ const Contacts = () => {
     // <a href="/edit"></a>
     // <Link to='/form'></Link>
   }
-  
+
   const handleView = async (id) => {
     <ViewForm user={users}>View</ViewForm>
 
@@ -51,7 +51,7 @@ const Contacts = () => {
       field: "first_name",
       headerName: "First Name",
       flex: 1,
-      editable: true 
+      editable: true
     },
     {
       field: "last_name",
@@ -90,25 +90,16 @@ const Contacts = () => {
         return (
           <>
             <Button>
-              {/* <RemoveRedEye style={{ color: 'white' }}
-
-                onClick={() => handleView(user.id)}>
-
-                <ViewForm user={users}>View</ViewForm>
-              </RemoveRedEye> */}
-              {/* <ViewForm user={users}>View</ViewForm> */}
-              <Button ><ViewForm user={user} /></Button>
-
-
+              <ViewForm user={user} />
             </Button>
             <Button>
-              {/* <EditIcon onClick={() => handleEdit()}></EditIcon> */}
-              <Button ><Form user={user} /></Button>
-
+              <Form user={user} />
             </Button>
             <Button>
               <DeleteIcon style={{ color: 'white' }} onClick={() => handleDelete(user.id)}
-              ></DeleteIcon>
+              >
+
+              </DeleteIcon>
             </Button>
 
           </>
@@ -136,11 +127,14 @@ const Contacts = () => {
         title="Users"
       />
       <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '28px' }}>
-        <button>
-          <Link to="/form">
+        <Button>
+          <a href="/form">
             Add User
-          </Link>
-        </button>
+
+          </a>
+          {/* <Link to="/form">
+          </Link> */}
+        </Button>
       </div>
       <Box
         height="82vh"

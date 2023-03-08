@@ -25,8 +25,35 @@ export default function Form({ user }) {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleSubmit = async e => {
-    e.preventDefault()
+  // const handleSubmit = async e => {
+  //   e.preventDefault()
+  //   try {
+  //     const data = {
+  //       first_Name: first_Name,
+  //       last_Name: last_Name,
+  //       phone: phone,
+  //       date_of_birth: date_of_birth,
+  //       status: status
+  //     }
+  //     const response = await fetch(
+  //       `http://localhost:5000/api/admin/users/${user.id}`,
+  //       {
+  //         method: "PUT",
+
+  //         headers: authHeader(),
+  //         "Content-Type": "application/json",
+
+  //         body: JSON.stringify(data)
+  //       }
+  //     );
+  //     window.location = "/table";
+  //   } catch (error) {
+  //     console.log(error.message)
+  //   }
+
+  // }
+  const UpdateUser = async e => {
+    e.preventDefault();
     try {
       const data = {
         first_Name: first_Name,
@@ -35,40 +62,39 @@ export default function Form({ user }) {
         date_of_birth: date_of_birth,
         status: status
       }
+      const body = { data };
       const response = await fetch(
-        `http://localhost:5000/api/admin/users/${user.id}`,
+        `http://localhost:5000/users/${user.id}`,
         {
           method: "PUT",
-
           headers: authHeader(),
           // "Content-Type": "application/json"
-
-          body: JSON.stringify(data)
+          
+          body: JSON.stringify(body)
         }
       );
+
       window.location = "/table";
-    } catch (error) {
-      console.log(error.message)
+    } catch (err) {
+      console.error(err.message);
     }
-
-  }
-
-  const UpdateUser = async () => {
-    return await Axios
-      .put(`http://localhost:5000/api/admin/users/${user.id}`, {
-        first_Name: first_Name,
-        last_Name: last_Name,
-        phone: phone,
-        date_of_birth: date_of_birth,
-        status: status
-      })
-      .then((response) => {
-        console.log(response.data.token)
-        localStorage.getItem("authtoken", response.data.token);
-        const newData = JSON.stringify(UpdateUser)
-        return newData.data;
-      });
   };
+  // const UpdateUser = async () => {
+  //   return await Axios
+  //     .put(`http://localhost:5000/api/admin/users/${user.id}`, {
+  //       first_Name: first_Name,
+  //       last_Name: last_Name,
+  //       phone: phone,
+  //       date_of_birth: date_of_birth,
+  //       status: status
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data.token)
+  //       localStorage.getItem("authtoken", response.data.token);
+  //       const newData = JSON.stringify(UpdateUser)
+  //       return newData.data;
+  //     });
+  // };
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen} style={{ color: 'white' }} data-bs-target={`#id${user.id}`}>
@@ -76,7 +102,7 @@ export default function Form({ user }) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit</DialogTitle>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={UpdateUser}>
 
           <TextField
             margin="normal"

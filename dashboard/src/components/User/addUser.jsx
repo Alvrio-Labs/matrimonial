@@ -18,21 +18,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import authHeader from '../authHeaders';
 import axios from "axios";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        Alvrio
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-
 export default function Form() {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -63,10 +48,10 @@ export default function Form() {
     };
     const config = {
       header: authHeader(),
-      "Content-Type": "application/json"
+      // "Content-Type": "application/json"
     }
     const response = await axios.post('http://localhost:5000/api/admin/users', {
-      config, 
+      config,
       body: JSON.stringify(body),
 
     });
@@ -85,25 +70,7 @@ export default function Form() {
         }
       );
     }, []);
-    // console.log(response)
     navigate('/table')
-    // axios
-    //   .post("http://localhost:5000/api/admin/users", {
-    //     email: formData.email,
-    // password: formData.password,
-    // first_name:formData.first_name ,
-    // last_name:formData.last_name ,
-    // gender:formData.gender ,
-    // phone:formData.phone ,
-    // date_of_birth:formData.date_of_birth ,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //     navigate('/users'); 
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   }
   return (
     <ThemeProvider theme={theme}>
@@ -244,8 +211,6 @@ export default function Form() {
               >
                 Add User
               </Button>
-
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
