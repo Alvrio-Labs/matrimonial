@@ -14,7 +14,7 @@ export default function Form({ user }) {
   const [first_Name, set_first_Name] = useState('');
   const [last_Name, set_last_Name] = useState('');
   const [phone, set_phone] = useState('');
-  const [date_of_birth, set_date_of_birth] = useState();
+  const [date_of_birth, set_date_of_birth] = useState('');
   const [status, set_status] = useState(user.current_status);
   const [users, setUsers] = useState([]);
 
@@ -46,18 +46,6 @@ export default function Form({ user }) {
           body: JSON.stringify(data)
         }
       );
-      // fetch(``, {
-      //   method: 'put',
-      //   headers: new Headers({
-      //     'Authorization': authHeader(),
-      //     'Content-Type': 'application/json'
-      //   }),
-      //   body: 'A=1&B=2'
-      // });
-      // await Axios.put(`http://localhost:5000/api/admin/users/${user.id}`, { data }, {
-      //   headers: authHeader(),
-      //   "Content-Type": "application/json",
-      // })
       window.location = "/table";
     } catch (error) {
       console.log(error.message)
@@ -65,19 +53,18 @@ export default function Form({ user }) {
 
   }
 
-  const userdata = {
-    first_Name: first_Name,
-    last_Name: last_Name,
-    phone: phone,
-    date_of_birth: date_of_birth,
-    status: status
-  }
-  const UpdateUser = async (userdata) => {
+  const UpdateUser = async () => {
     return await Axios
-      .put(`http://localhost:5000/api/admin/users/${user.id}`, { userdata })
+      .put(`http://localhost:5000/api/admin/users/${user.id}`, {
+        first_Name: first_Name,
+        last_Name: last_Name,
+        phone: phone,
+        date_of_birth: date_of_birth,
+        status: status
+      })
       .then((response) => {
         console.log(response.data.token)
-        localStorage.setItem("authtoken", response.data.token);
+        localStorage.getItem("authtoken", response.data.token);
         const newData = JSON.stringify(UpdateUser)
         return newData.data;
       });
@@ -89,7 +76,6 @@ export default function Form({ user }) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit</DialogTitle>
-        {/* <form onSubmit={handleSubmit}> */}
         <form onSubmit={handleSubmit}>
 
           <TextField

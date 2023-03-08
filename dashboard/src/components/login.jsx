@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "./authService";
-import FormControlLabel from '@mui/material/FormControlLabel';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import { Box, Button, Grid, Typography } from "@mui/material";
@@ -31,22 +30,6 @@ const Login = () => {
 
 return (
   <div>
-    {/* <form onSubmit={handleLogin}>
-      <h3>Login</h3>
-      <input
-        type="text"
-        placeholder="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Log in</button>
-    </form> */}
     <Grid container component="main" >
       <CssBaseline />
       <Grid item xs={12} sm={12} md={12}  >
