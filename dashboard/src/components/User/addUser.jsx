@@ -9,13 +9,15 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import User from "../authUserLink";
 import AuthService from "../authService";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
+import authHeader from '../authHeaders';
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -59,12 +61,15 @@ export default function Form() {
       phone: formData.phone,
       date_of_birth: formData.date_of_birth,
     };
-    // const response = await fetch('http://localhost:5000/api/admin/users', {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(body),
+    const config = {
+      header: authHeader(),
+      "Content-Type": "application/json"
+    }
+    const response = await axios.post('http://localhost:5000/api/admin/users', {
+      config, 
+      body: JSON.stringify(body),
 
-    // });
+    });
 
     useEffect(() => {
       User.addUser().then(

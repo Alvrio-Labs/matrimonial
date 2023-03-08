@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Login from './components/login';
 import authService from './components/authService';
 import Table from './components/User/Table';
+import Form from "./components/User/addUser";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -45,11 +46,12 @@ function App() {
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
-            <Route path="/" element={<Login />} />
-          {/* <Route path="/login"
+              <Route path="/" element={<Login />} />
+              {/* <Route path="/login"
             element={isAuthenticated ? <Table /> : <Login />} /> */}
-          <Route path="/table" element={<Table />} />
-          <Route path="/home" element={<Home />} />
+              <Route path="/table" element={<Table />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/form" element={<Form />} />
             </Routes>
           </main>
         </div>
