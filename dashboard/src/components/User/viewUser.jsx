@@ -1,21 +1,150 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+// import Button from '@mui/material/Button';
+// import TextField from '@mui/material/TextField';
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import { useParams } from 'react-router'
+// import Axios from "axios";
+// import authHeader from '../authHeaders';
+
+// export default function ViewForm(props) {
+//   const { user } = props;
+//   const { id } = useParams()
+//   const [open, setOpen] = useState(false);
+//   const [first_Name] = useState(props.first_name);
+//   const [last_Name] = useState(user.last_Name);
+//   const [email] = useState(user.email);
+//   const [phone] = useState(user.phone);
+//   const [gender] = useState(user.gender);
+//   const [date_of_birth] = useState(user.date_of_birth);
+//   const [current_status] = useState(user.current_status);
+
+//   const handleClickOpen = () => {
+//     setOpen(true);
+//   };
+
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
+//   const handleSubmit = async e => {
+//     console.log(first_Name)
+//     e.preventDefault()
+//     try {
+//       await Axios.get(`http://localhost:5000/api/admin/users/${id}`,
+//         { headers: authHeader() }
+//       )
+//     } catch (error) {
+//       console.log(error.message)
+//     }
+//   }
+//   // {console.log(handleSubmit)}
+//   return (
+//     <div>
+//       <Button variant="outlined" onClick={handleClickOpen} style={{ color: 'white' }}>
+//         View
+//       </Button>
+//       <Dialog open={open} onClose={handleClose}>
+//         <DialogTitle>View</DialogTitle>
+//         <div>
+//           First Name : {user?.first_Name}
+//           First Name : {handleSubmit?.first_Name}
+
+//         </div>
+
+//         <DialogActions>
+//           <Button onClick={handleClose}>Close</Button>
+//         </DialogActions>
+//       </Dialog>
+//     </div>
+//   );
+// }
+
+
+// import React, { useState } from 'react';
+// import Button from '@mui/material/Button';
+// import TextField from '@mui/material/TextField';
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import { useParams } from 'react-router'
+// import Axios from "axios";
+// import authHeader from '../authHeaders';
+
+// export default function ViewForm(props) {
+//   const { user } = props;
+//   const { id } = useParams()
+//   const [open, setOpen] = useState(false);
+//   const [first_Name] = useState(props.first_name);
+//   const [last_Name] = useState(user.last_Name);
+//   const [email] = useState(user.email);
+//   const [phone] = useState(user.phone);
+//   const [gender] = useState(user.gender);
+//   const [date_of_birth] = useState(user.date_of_birth);
+//   const [current_status] = useState(user.current_status);
+
+//   const handleClickOpen = () => {
+//     setOpen(true);
+//   };
+
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
+//   const handleSubmit = async e => {
+//     console.log(first_Name)
+//     e.preventDefault()
+//     try {
+//       await Axios.get(`http://localhost:5000/api/admin/users/${id}`,
+//         { headers: authHeader() }
+//       )
+//     } catch (error) {
+//       console.log(error.message)
+//     }
+//   }
+//   // {console.log(handleSubmit)}
+//   return (
+//     <div>
+//       <Button variant="outlined" onClick={handleClickOpen} style={{ color: 'white' }}>
+//         View
+//       </Button>
+//       <Dialog open={open} onClose={handleClose}>
+//         <DialogTitle>View</DialogTitle>
+//         <div>
+//           First Name : {user?.first_Name}
+//           First Name : {handleSubmit?.first_Name}
+
+//         </div>
+
+//         <DialogActions>
+//           <Button onClick={handleClose}>Close</Button>
+//         </DialogActions>
+//       </Dialog>
+//     </div>
+//   );
+// }
+
+
+import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useParams } from 'react-router'
 import Axios from "axios";
 import authHeader from '../authHeaders';
 
 export default function ViewForm({ user }) {
-  const [open, setOpen] = useState(false);
-  const [first_Name] = useState(user.first_name);
-  const [last_Name] = useState(user.last_Name);
-  const [email] = useState(user.email);
-  const [phone] = useState(user.phone);
-  const [gender] = useState(user.gender);
-  const [date_of_birth] = useState(user.date_of_birth);
-  const [status] = useState(user.status);
+  const { id } = useParams()
+
+  const [open, setOpen] = React.useState(false);
+  const [first_Name] = React.useState(user.first_name);
+  const [last_Name] = React.useState(user.last_name);
+  const [email] = React.useState(user.email);
+  const [phone] = React.useState(user.phone);
+  const [gender] = React.useState(user.gender);
+  const [date_of_birth] = React.useState(user.date_of_birth);
+  const [current_status] = React.useState(user.status);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,25 +156,13 @@ export default function ViewForm({ user }) {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      const data = {
-        first_Name: first_Name,
-        last_Name: last_Name,
-        email: email,
-        phone: phone,
-        gender: gender,
-        date_of_birth: date_of_birth,
-        Status: status
-      }
-      await Axios.get(`http://localhost:5000/api/admin/users/${user.id}`, data
-        , {
-          header: authHeader()
-        }
+      await Axios.get(`http://localhost:5000/api/admin/users/${id}`,
+        { headers: authHeader() }
       )
 
     } catch (error) {
       console.log(error.message)
     }
-
   }
   return (
     <div>
@@ -68,6 +185,7 @@ export default function ViewForm({ user }) {
 
           <TextField
             margin="normal"
+
             fullWidth
             name="name"
             label="Last Name"
@@ -120,7 +238,7 @@ export default function ViewForm({ user }) {
             fullWidth
             name="current status"
             label="Status"
-            value={status}
+            value={current_status}
           />
         </form>
         <DialogActions>
