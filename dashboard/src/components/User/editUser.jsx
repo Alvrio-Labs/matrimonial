@@ -10,10 +10,8 @@ export default function Form({ user }) {
   const [open, setOpen] = React.useState(false);
   const [first_Name, set_first_Name] = React.useState(user.first_name);
   const [last_Name, set_last_Name] = React.useState(user.last_name);
-  // const [email] = React.useState(user.email);
   const [phone, set_phone] = React.useState(user.phone);
   const [gender, set_gender] = React.useState(user.gender);
-  // const [date_of_birth, set_date_of_birth] = React.useState(user.date_of_birth);
   const [status, set_status] = React.useState(user.status);
 
   const handleClickOpen = () => {
@@ -30,13 +28,12 @@ export default function Form({ user }) {
         first_Name: first_Name,
         last_Name: last_Name,
         phone: phone,
-        gender:gender,
-        // date_of_birth: date_of_birth,
-        status: status
+        gender: gender,
+        current_status: status
       }
       const body = { data };
       const response = await fetch(
-        `http://localhost:5000/users/${user.id}`,
+        `http://localhost:5000/api/admin/users/${user.id}`,
         {
           method: "PUT",
           // headers: authHeader(),
@@ -45,8 +42,7 @@ export default function Form({ user }) {
             "Content-Type": "application/json",
             "Authorization": authHeader()
           },
-          // "Content-Type": "application/json",
-          body: JSON.stringify(body)
+          body: JSON.stringify({ user: body.data })
         }
       );
 
@@ -128,8 +124,8 @@ export default function Form({ user }) {
           />
         </form>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={e => UpdateUser(e)} >Save</Button>
+          <Button onClick={handleClose} style={{ color: 'white' }}>Cancel</Button>
+          <Button onClick={e => UpdateUser(e)} style={{ color: 'white' }}>Save</Button>
         </DialogActions>
       </Dialog>
     </div >
