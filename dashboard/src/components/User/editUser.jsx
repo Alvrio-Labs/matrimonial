@@ -65,12 +65,12 @@ export default function Form({ user }) {
         `http://localhost:5000/users/${user.id}`,
         {
           method: "PUT",
-          headers: authHeader(),
+          // headers: authHeader(),
           // "Content-Type": "application/json",
-          // headers: {
-          //   "Content-Type": "application/json",
-          //   "Authorization": authHeader()
-          // },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": authHeader()
+          },
           // "Content-Type": "application/json",
           body: JSON.stringify(body)
         }
