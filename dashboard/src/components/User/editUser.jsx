@@ -76,7 +76,6 @@ export default function Form({ user }) {
     })
       .then(function (response) {
         console.log(response);
-        setOpen(false);
 
         window.location = "/table";
       })
