@@ -50,6 +50,8 @@ export default function Form({ user }) {
       console.error(err.message);
     }
   };
+
+  
   // const UpdateUser = async e => {
   //   e.preventDefault();
   //   try {

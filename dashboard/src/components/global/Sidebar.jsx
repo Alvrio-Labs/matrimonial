@@ -30,7 +30,8 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 const Sidebar = () => {
   const logOut = () => {
-    AuthService.logout();
+    localStorage.clear();
+    localStorage.removeItem("authtoken");
   };
 
   const theme = useTheme();
