@@ -25,7 +25,7 @@ import authHeader from "./authHeaders";
 //   });
 // }
 const getAllUser = () => {
-  return axios.get("/", {
+  return axios.get("users", {
     headers: {
       "Authorization": authHeader()
     }
@@ -38,7 +38,7 @@ const getSingleUser = ({ user }) => {
   )
 }
 const addUser = () => {
-  return axios.post('http://localhost:5000/api/admin/users', {
+  return axios.post('users', {
     headers: {
       "Content-Type": "application/json",
       "Authorization": authHeader(),

@@ -56,7 +56,7 @@ export default function Form() {
       //   },
       // );
       await axios.post(
-        `/`, body,
+        `users/`, body,
         {
           headers: {
             "Authorization": authHeader(),

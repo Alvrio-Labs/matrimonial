@@ -33,7 +33,7 @@ export default function ViewForm({ user }) {
       // await Axios.get(`http://localhost:5000/api/admin/users/${id}`,
       //   { headers: authHeader() }
       // )
-      await Axios.get(`/${id}`,
+      await Axios.get(`users/${id}`,
         { headers: authHeader() }
       )
 

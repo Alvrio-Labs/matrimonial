@@ -27,7 +27,7 @@ const Contacts = () => {
       //   headers:
       //     { "Authorization": authHeader() }
       // })
-      await axios.delete(`/${id}`, {
+      await axios.delete(`users/${id}`, {
         headers:
           { "Authorization": authHeader() }
       })
