@@ -296,18 +296,18 @@ export default function Form() {
 
     // });
     const response = await axios.post(
-      `http://localhost:5000/api/admin/users`,
+      `http://localhost:5000/api/admin/users`, body, 
       {
         headers: {
           "Authorization": authHeader(),
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ body })
+        // body: JSON.stringify({ body })
       },
     );
     console.log(response)
     console.log(response)
-    navigate('/users')
+    navigate('/table')
     // axios
     //   .post("http://localhost:5000/api/admin/users", {
     //     email: formData.email,

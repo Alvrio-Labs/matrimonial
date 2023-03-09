@@ -1,9 +1,6 @@
 import axios from "axios";
 import authHeader from "./authHeaders";
 
-// const getAllUser = () => {
-//   return axios.get("http://localhost:5000/api/admin/users", { headers: authHeader() });
-// };
 const getAllUser = () => {
   return axios.get("http://localhost:5000/api/admin/users", {
     headers: {

@@ -32,19 +32,19 @@ export default function Form({ user }) {
         gender: gender,
         current_status: status
       }
-      const body = { data };
-      
+      // const body = { data };
+      const body = { first_Name, last_Name, phone, gender, status };
+
       const response = await axios.put(
-        `http://localhost:5000/api/admin/users/${user.id}`,
+        `http://localhost:5000/api/admin/users/${user.id}`, body.data, 
         {
           headers: {
-            "Authorization": authHeader(),
-            'Content-Type': 'application/json',
+            'Authorization': authHeader(),
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ user: body.data })
-        },
+        }
       );
-      console.log(response)
+      console.log(response.data.user)
       // window.location = "/table";
     } catch (err) {
       console.error(err.message);
@@ -82,7 +82,8 @@ export default function Form({ user }) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit</DialogTitle>
-        <form onSubmit={UpdateUser}>
+        {/* <form onSubmit={UpdateUser}> */}
+        <form>
 
           <TextField
             margin="normal"
@@ -105,17 +106,7 @@ export default function Form({ user }) {
             value={last_Name}
             onChange={(e) => set_last_Name(e.target.value)}
           />
-
-          {/* <TextField
-            margin="normal"
-            id="date"
-            onChange={(e) => set_date_of_birth(e.target.value)}
-            fullWidth
-            name="date of birth"
-            type="date"
-            value={date_of_birth}
-          /> */}
-
+          
           <TextField
             margin="normal"
             fullWidth
