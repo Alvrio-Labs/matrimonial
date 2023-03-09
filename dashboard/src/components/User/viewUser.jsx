@@ -30,9 +30,6 @@ export default function ViewForm({ user }) {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      // await Axios.get(`http://localhost:5000/api/admin/users/${id}`,
-      //   { headers: authHeader() }
-      // )
       await Axios.get(`users/${id}`,
         { headers: authHeader() }
       )
