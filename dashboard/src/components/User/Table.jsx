@@ -22,7 +22,10 @@ const Contacts = () => {
 
   const handleDelete = async (id) => {
     try {
-      // await axios.delete(`http://localhost:5000/api/admin/users/${id}`, { headers: authHeader() })
+      // await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+      //   headers:
+      //     { "Authorization": authHeader() }
+      // })
       await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
         headers:
           { "Authorization": authHeader() }

@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import axios from 'axios';
-import axios from "../baseUrl";
+import axios from "../api/baseUrl";
 
 import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";

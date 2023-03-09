@@ -1,5 +1,5 @@
 // import axios from "axios";
-import axios from "./baseUrl";
+import axios from "./api/baseUrl";
 
 import authHeader from "./authHeaders";
 
