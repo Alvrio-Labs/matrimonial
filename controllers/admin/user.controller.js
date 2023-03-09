@@ -46,7 +46,6 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    console.log(req);
     const user = await User.findByPk(req.params.id);
     user.update(req.body, { where: { is_admin: false } });
     const responseData = await serialize.show(user);

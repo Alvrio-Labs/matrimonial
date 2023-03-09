@@ -116,14 +116,12 @@ const Contacts = () => {
         title="Users"
       />
       <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '28px' }}>
-        <Button>
+        <button>
           <a href="/form">
             Add User
-
           </a>
-          {/* <Link to="/form">
-          </Link> */}
-        </Button>
+        </button>
+
       </div>
       <Box
         height="82vh"

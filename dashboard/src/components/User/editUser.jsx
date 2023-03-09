@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
 import authHeader from '../authHeaders';
-import Axios from "axios";
+import axios from 'axios';
 
 export default function Form({ user }) {
   const [open, setOpen] = React.useState(false);
@@ -33,18 +33,16 @@ export default function Form({ user }) {
         current_status: status
       }
       const body = { data };
-      const response = await fetch(
+      
+      const response = await axios.put(
         `http://localhost:5000/api/admin/users/${user.id}`,
         {
-          method: "PUT",
-          // headers: authHeader(),
-          // "Content-Type": "application/json",
           headers: {
-            "Content-Type": "application/json",
-            "Authorization": authHeader()
+            "Authorization": authHeader(),
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ user: body.data })
-        }
+        },
       );
       console.log(response)
       // window.location = "/table";
