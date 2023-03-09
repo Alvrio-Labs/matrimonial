@@ -52,10 +52,6 @@ export default function Form({ user }) {
   //     console.error(err.message);
   //   }
   // };
-
-
-
-
   const UpdateUser = async e => {
     e.preventDefault();
     const data = {
@@ -84,32 +80,6 @@ export default function Form({ user }) {
       });
   };
 
-
-  // const UpdateUser = async e => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = {
-  //       first_Name: first_Name,
-  //       last_Name: last_Name,
-  //       phone: phone,
-  //       gender: gender,
-  //       current_status: status
-  //     }
-  //     await Axios.put(`http://localhost:5000/api/admin/users/${user.id}`,
-  //       {
-  //         headers: {
-  //           "Authorization": authHeader(),
-  //           "Content-Type": "application/json",
-  //         }
-  //       },
-  //     )
-  //   // window.location = "/table";
-
-  //   } catch (error) {
-  //     console.log(error.message)
-  //   }
-  // }
-
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen} style={{ color: 'white' }} data-bs-target={`#id${user.id}`}>
@@ -117,7 +87,6 @@ export default function Form({ user }) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit</DialogTitle>
-        {/* <form onSubmit={UpdateUser}> */}
         <form>
 
           <TextField
