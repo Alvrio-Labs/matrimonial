@@ -78,7 +78,7 @@ export default function Form({ user }) {
         console.log(response);
         setOpen(false);
 
-        // window.location = "/table";
+        window.location = "/table";
       })
       .catch(function (response) {
         console.log(response);
@@ -86,6 +86,30 @@ export default function Form({ user }) {
   };
 
 
+  // const UpdateUser = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = {
+  //       first_Name: first_Name,
+  //       last_Name: last_Name,
+  //       phone: phone,
+  //       gender: gender,
+  //       current_status: status
+  //     }
+  //     await Axios.put(`http://localhost:5000/api/admin/users/${user.id}`,
+  //       {
+  //         headers: {
+  //           "Authorization": authHeader(),
+  //           "Content-Type": "application/json",
+  //         }
+  //       },
+  //     )
+  //   // window.location = "/table";
+
+  //   } catch (error) {
+  //     console.log(error.message)
+  //   }
+  // }
 
   return (
     <div>
