@@ -9,7 +9,6 @@ import AuthService from "../authService";
 import { useNavigate } from "react-router-dom";
 import ViewForm from "./viewUser";
 import DeleteIcon from '@mui/icons-material/Delete';
-// import axios from "axios";
 import axios from "../api/baseUrl";
 
 import authHeader from "../authHeaders";
