@@ -1,8 +1,16 @@
 import axios from "axios";
 import authHeader from "./authHeaders";
 
+// const getAllUser = () => {
+//   return axios.get("http://localhost:5000/api/admin/users", { headers: authHeader() });
+// };
 const getAllUser = () => {
-  return axios.get("http://localhost:5000/api/admin/users", { headers: authHeader() });
+  return axios.get("http://localhost:5000/api/admin/users", {
+    headers: {
+      "Authorization": authHeader()
+    }
+  }
+  );
 };
 const getSingleUser = ({ user }) => {
   return axios.get(`http://localhost:5000/api/admin/users/${user.id}`,

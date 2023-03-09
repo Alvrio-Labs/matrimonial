@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
 import authHeader from '../authHeaders';
+import Axios from "axios";
 
 export default function Form({ user }) {
   const [open, setOpen] = React.useState(false);
@@ -45,12 +46,37 @@ export default function Form({ user }) {
           body: JSON.stringify({ user: body.data })
         }
       );
-
+      console.log(response)
       // window.location = "/table";
     } catch (err) {
       console.error(err.message);
     }
   };
+  // const UpdateUser = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = {
+  //       first_Name: first_Name,
+  //       last_Name: last_Name,
+  //       phone: phone,
+  //       gender: gender,
+  //       current_status: status
+  //     }
+  //     await Axios.put(`http://localhost:5000/api/admin/users/${user.id}`,
+  //       {
+  //         headers: {
+  //           "Authorization": authHeader(),
+  //           "Content-Type": "application/json",
+  //         }
+  //       },
+  //     )
+  //   // window.location = "/table";
+
+  //   } catch (error) {
+  //     console.log(error.message)
+  //   }
+  // }
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen} style={{ color: 'white' }} data-bs-target={`#id${user.id}`}>
