@@ -103,7 +103,7 @@ const Contacts = () => {
         setUsers(response.data.users);
       },
       (error) => {
-        if (error.response && error.response.status === 403) {
+        if (error.response && error.response.status === 401) {
           AuthService.logout();
           navigate("/");
         }
@@ -115,14 +115,25 @@ const Contacts = () => {
       <Header
         title="Users"
       />
-      <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '28px' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '28px' }}>
         <button>
           <a href="/form">
             Add User
           </a>
         </button>
 
-      </div>
+      </div> */}
+      {/* <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '28px' }}>
+        <button>
+          <a href="/">
+            Add User
+          </a>
+        </button>
+        <a href="/">hi</a>
+        <Link to="/" >
+          here
+        </Link>
+      </div> */}
       <Box
         height="82vh"
         sx={{

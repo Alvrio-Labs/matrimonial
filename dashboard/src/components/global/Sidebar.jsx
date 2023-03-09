@@ -101,6 +101,14 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
+              title="Add User"
+              to="/form"
+              onClick={FormData}
+              icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
               title="Logout"
               to="/"
               onClick={logOut}
