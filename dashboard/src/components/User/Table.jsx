@@ -84,10 +84,8 @@ const Contacts = () => {
             <Button>
               <DeleteIcon style={{ color: 'white' }} onClick={() => handleDelete(user.id)}
               >
-
               </DeleteIcon>
             </Button>
-
           </>
         );
       }
@@ -100,8 +98,8 @@ const Contacts = () => {
         setUsers(response.data.users);
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          AuthService.logout();
+        if (error.response && error.response.status === 403) {
+          // AuthService.logout();
           navigate("/");
         }
       }
