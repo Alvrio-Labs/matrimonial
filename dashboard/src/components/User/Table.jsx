@@ -6,11 +6,9 @@ import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import User from "../authUserLink";
 import AuthService from "../authService";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ViewForm from "./viewUser";
-import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
 
 import authHeader from "../authHeaders";
