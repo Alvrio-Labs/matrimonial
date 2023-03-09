@@ -11,6 +11,8 @@ import ViewForm from "./viewUser";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "../api/baseUrl";
 
+import { Link } from 'react-router-dom';
+
 import authHeader from "../authHeaders";
 import Form from "./editUser";
 const Contacts = () => {
@@ -110,6 +112,16 @@ const Contacts = () => {
       <Header
         title="Users"
       />
+      <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '7px' }}>
+        <button>
+          <a href="/form">
+            Add User
+          </a>
+        </button>
+      </div>
+      {/* <Button component={Link} to="/form" variant="contained" color="primary" style={{display: 'flex', justifyContent: 'flex-end' , position: 'relative', top: '28px'}}>
+        Add User
+      </Button> */}
       <Box
         height="82vh"
         sx={{
