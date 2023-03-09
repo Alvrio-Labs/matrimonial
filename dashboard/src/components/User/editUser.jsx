@@ -22,36 +22,97 @@ export default function Form({ user }) {
   const handleClose = () => {
     setOpen(false);
   };
+  //working
+
+  // const UpdateUser = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = {
+  //       first_Name: first_Name,
+  //       last_Name: last_Name,
+  //       phone: phone,
+  //       gender: gender,
+  //       current_status: status
+  //     }
+  //     // const body = { data };
+  //     const body = { first_Name, last_Name, phone, gender, status };
+
+  //     const response = await axios.put(
+  //       `http://localhost:5000/api/admin/users/${user.id}`, body.data, 
+  //       {
+  //         headers: {
+  //           'Authorization': authHeader(),
+  //           'Content-Type': 'application/json'
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data.user)
+  //     // window.location = "/table";
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // };
+
+
+
+
   const UpdateUser = async e => {
     e.preventDefault();
-    try {
-      const data = {
-        first_Name: first_Name,
-        last_Name: last_Name,
-        phone: phone,
-        gender: gender,
-        current_status: status
-      }
-      // const body = { data };
-      const body = { first_Name, last_Name, phone, gender, status };
+    // try {
+    //   const data = {
+    //     first_Name: first_Name,
+    //     last_Name: last_Name,
+    //     phone: phone,
+    //     gender: gender,
+    //     current_status: status
+    //   }
+    //   // const body = { data };
+    //   const body = { first_Name, last_Name, phone, gender, status };
 
-      const response = await axios.put(
-        `http://localhost:5000/api/admin/users/${user.id}`, body.data, 
-        {
-          headers: {
-            'Authorization': authHeader(),
-            'Content-Type': 'application/json'
-          },
-        }
-      );
-      console.log(response.data.user)
-      // window.location = "/table";
-    } catch (err) {
-      console.error(err.message);
+    //   const response = await axios.put(
+    //     `http://localhost:5000/api/admin/users/${user.id}`, body.data, 
+    //     {
+    //       headers: {
+    //         'Authorization': authHeader(),
+    //         'Content-Type': 'application/json'
+    //       },
+    //     }
+    //   );
+    //   console.log(response.data.user)
+    //   // window.location = "/table";
+    // } catch (err) {
+    //   console.error(err.message);
+    // }
+    const data = {
+      first_Name: first_Name,
+      last_Name: last_Name,
+      phone: phone,
+      gender: gender,
+      current_status: status
     }
+    axios({
+      method: "put",
+      url: `http://localhost:5000/api/admin/users/${user.id}`,
+      data: data,
+      headers: {
+        'Authorization': authHeader(),
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(function (response) {
+        //handle success
+        console.log(response);
+        setOpen(false);
+
+        // window.location = "/table";
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
   };
 
-  
+
   // const UpdateUser = async e => {
   //   e.preventDefault();
   //   try {
@@ -108,7 +169,7 @@ export default function Form({ user }) {
             value={last_Name}
             onChange={(e) => set_last_Name(e.target.value)}
           />
-          
+
           <TextField
             margin="normal"
             fullWidth

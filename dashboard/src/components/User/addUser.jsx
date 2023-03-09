@@ -9,7 +9,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from "../baseUrl";
+
 import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
@@ -43,22 +45,25 @@ export default function Form() {
       phone: formData.phone,
       date_of_birth: formData.date_of_birth,
     };
-    // const response = await fetch('http://localhost:5000/api/admin/users', {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(body),
-
-    // });
-    const response = await axios.post(
-      `http://localhost:5000/api/admin/users`, body,
-      {
-        headers: {
-          "Authorization": authHeader(),
-          'Content-Type': 'application/json',
+    const response =
+      // await axios.post(
+      //   `http://localhost:5000/api/admin/users`, body,
+      //   {
+      //     headers: {
+      //       "Authorization": authHeader(),
+      //       'Content-Type': 'application/json',
+      //     },
+      //   },
+      // );
+      await axios.post(
+        `/`, body,
+        {
+          headers: {
+            "Authorization": authHeader(),
+            'Content-Type': 'application/json',
+          },
         },
-        // body: JSON.stringify({ body })
-      },
-    );
+      );
     console.log(response)
     console.log(response)
     navigate('/table')
