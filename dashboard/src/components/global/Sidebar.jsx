@@ -30,9 +30,10 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 const Sidebar = () => {
   const logOut = () => {
-    localStorage.clear();
     localStorage.removeItem("authtoken");
+
   };
+
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -104,6 +105,7 @@ const Sidebar = () => {
             <Item
               title="Logout"
               to="/"
+              // onClick={logOut}
               onClick={logOut}
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
