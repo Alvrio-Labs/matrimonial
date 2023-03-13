@@ -22,36 +22,6 @@ export default function Form({ user }) {
   const handleClose = () => {
     setOpen(false);
   };
-  //working
-
-  // const UpdateUser = async e => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = {
-  //       first_Name: first_Name,
-  //       last_Name: last_Name,
-  //       phone: phone,
-  //       gender: gender,
-  //       current_status: status
-  //     }
-  //     // const body = { data };
-  //     const body = { first_Name, last_Name, phone, gender, status };
-
-  //     const response = await axios.put(
-  //       `http://localhost:5000/api/admin/users/${user.id}`, body.data, 
-  //       {
-  //         headers: {
-  //           'Authorization': authHeader(),
-  //           'Content-Type': 'application/json'
-  //         },
-  //       }
-  //     );
-  //     console.log(response.data.user)
-  //     // window.location = "/table";
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // };
   const UpdateUser = async e => {
     e.preventDefault();
     const data = {

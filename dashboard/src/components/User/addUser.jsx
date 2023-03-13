@@ -44,15 +44,6 @@ export default function Form() {
       date_of_birth: formData.date_of_birth,
     };
     const response =
-      // await axios.post(
-      //   `http://localhost:5000/api/admin/users`, body,
-      //   {
-      //     headers: {
-      //       "Authorization": authHeader(),
-      //       'Content-Type': 'application/json',
-      //     },
-      //   },
-      // );
       await axios.post(
         `users/`, body,
         {

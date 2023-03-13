@@ -5,13 +5,11 @@ import Header from "../Header";
 import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import User from "../authUserLink";
-import AuthService from "../authService";
 import { useNavigate } from "react-router-dom";
 import ViewForm from "./viewUser";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "../api/baseUrl";
 
-import { Link } from 'react-router-dom';
 
 import authHeader from "../authHeaders";
 import Form from "./editUser";
@@ -101,7 +99,6 @@ const Contacts = () => {
       },
       (error) => {
         if (error.response && error.response.status === 403) {
-          // AuthService.logout();
           navigate("/");
         }
       }
