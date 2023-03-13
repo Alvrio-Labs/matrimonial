@@ -7,9 +7,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import {  ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import axios from "../api/baseUrl";
-
 import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
@@ -18,9 +17,7 @@ import authHeader from '../authHeaders';
 export default function Form() {
   const navigate = useNavigate();
   const theme = useTheme();
-
   const colors = tokens(theme.palette.mode);
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,7 +27,6 @@ export default function Form() {
     phone: "",
     date_of_birth: ""
   });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -111,7 +107,6 @@ export default function Form() {
                 type="text"
                 value={formData.first_name}
                 onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -123,7 +118,6 @@ export default function Form() {
                 type="text"
                 value={formData.last_name}
                 onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -133,11 +127,8 @@ export default function Form() {
                 label="Email Address"
                 name="email"
                 type="email"
-
-
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -149,19 +140,16 @@ export default function Form() {
                 type="password"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 id="date_of_birth"
-                label="date_of_birth"
                 name="date_of_birth"
                 type="date"
                 value={formData.date_of_birth}
                 onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -174,7 +162,6 @@ export default function Form() {
 
                 value={formData.gender}
                 onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -186,7 +173,6 @@ export default function Form() {
                 id="phone"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-
               />
               <Button
                 type="submit"
@@ -196,7 +182,6 @@ export default function Form() {
               >
                 Add User
               </Button>
-
             </Box>
           </Box>
         </Grid>
