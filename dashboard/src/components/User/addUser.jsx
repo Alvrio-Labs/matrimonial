@@ -1,41 +1,23 @@
-
 import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
+import { ThemeProvider } from '@mui/material/styles';
+import axios from "../api/baseUrl";
 import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        Alvrio
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
+import authHeader from '../authHeaders';
 
 export default function Form() {
   const navigate = useNavigate();
   const theme = useTheme();
-
   const colors = tokens(theme.palette.mode);
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -45,7 +27,6 @@ export default function Form() {
     phone: "",
     date_of_birth: ""
   });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -58,31 +39,19 @@ export default function Form() {
       phone: formData.phone,
       date_of_birth: formData.date_of_birth,
     };
-    const response = await fetch('http://localhost:5000/api/admin/users', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-
-    });
+    const response =
+      await axios.post(
+        `users/`, body,
+        {
+          headers: {
+            "Authorization": authHeader(),
+            'Content-Type': 'application/json',
+          },
+        },
+      );
     console.log(response)
-    navigate('/users')
-    // axios
-    //   .post("http://localhost:5000/api/admin/users", {
-    //     email: formData.email,
-    // password: formData.password,
-    // first_name:formData.first_name ,
-    // last_name:formData.last_name ,
-    // gender:formData.gender ,
-    // phone:formData.phone ,
-    // date_of_birth:formData.date_of_birth ,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //     navigate('/users'); 
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    console.log(response)
+    navigate('/table')
   }
   return (
     <ThemeProvider theme={theme}>
@@ -138,7 +107,6 @@ export default function Form() {
                 type="text"
                 value={formData.first_name}
                 onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -150,7 +118,6 @@ export default function Form() {
                 type="text"
                 value={formData.last_name}
                 onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -160,11 +127,8 @@ export default function Form() {
                 label="Email Address"
                 name="email"
                 type="email"
-
-
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -176,19 +140,16 @@ export default function Form() {
                 type="password"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 id="date_of_birth"
-                label="date_of_birth"
                 name="date_of_birth"
                 type="date"
                 value={formData.date_of_birth}
                 onChange={(e) => setFormData({ ...formData, date_of_birth: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -201,7 +162,6 @@ export default function Form() {
 
                 value={formData.gender}
                 onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-
               />
               <TextField
                 margin="normal"
@@ -213,7 +173,6 @@ export default function Form() {
                 id="phone"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-
               />
               <Button
                 type="submit"
@@ -223,8 +182,6 @@ export default function Form() {
               >
                 Add User
               </Button>
-
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

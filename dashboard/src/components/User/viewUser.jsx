@@ -6,18 +6,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useParams } from 'react-router'
 import Axios from "axios";
+import authHeader from '../authHeaders';
 
 export default function ViewForm({ user }) {
   const { id } = useParams()
 
   const [open, setOpen] = React.useState(false);
-  const [first_Name, set_first_Name] = React.useState(user.first_name);
-  const [last_Name, set_last_Name] = React.useState(user.last_Name);
-  const [email, set_email] = React.useState(user.email);
-  const [phone, set_phone] = React.useState(user.phone);
-  const [gender, set_gender] = React.useState(user.gender);
-  const [date_of_birth, set_date_of_birth] = React.useState(user.date_of_birth);
-  const [status, set_current_status] = React.useState(user.status);
+  const [first_Name] = React.useState(user.first_name);
+  const [last_Name] = React.useState(user.last_name);
+  const [email] = React.useState(user.email);
+  const [phone] = React.useState(user.phone);
+  const [gender] = React.useState(user.gender);
+  const [date_of_birth] = React.useState(user.date_of_birth);
+  const [current_status] = React.useState(user.status);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,16 +30,9 @@ export default function ViewForm({ user }) {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      const data = {
-        first_Name: first_Name,
-        last_Name: last_Name,
-        email: email,
-        phone: phone,
-        gender: gender,
-        date_of_birth: date_of_birth,
-        Status: status
-      }
-      await Axios.get(`http://localhost:5000/api/admin/users/${id}`, data)
+      await Axios.get(`users/${id}`,
+        { headers: authHeader() }
+      )
 
     } catch (error) {
       console.log(error.message)
@@ -46,12 +40,12 @@ export default function ViewForm({ user }) {
   }
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen} style={{color: 'white'}}>
+      <Button variant="outlined" onClick={handleClickOpen} style={{ color: 'white' }}>
         View
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>View</DialogTitle>
-        
+
         <form onSubmit={handleSubmit}>
           <TextField
             margin="normal"
@@ -118,7 +112,7 @@ export default function ViewForm({ user }) {
             fullWidth
             name="current status"
             label="Status"
-            value={status}
+            value={current_status}
           />
         </form>
         <DialogActions>
