@@ -99,7 +99,6 @@ const Sidebar = () => {
             <Item
               title="Logout"
               to="/"
-              // onClick={logOut}
               onClick={logOut}
               icon={<ReceiptOutlinedIcon />}
               selected={selected}

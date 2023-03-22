@@ -4,8 +4,6 @@ import Topbar from "./components/global/Topbar";
 import Sidebar from "./components/global/Sidebar";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
-
-import Home from './components/Home';
 import Login from './components/login';
 import authService from './components/authService';
 import Table from './components/User/Table';
@@ -48,7 +46,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/table" element={<Table />} />
-              <Route path="/home" element={<Home />} />
               <Route path="/form" element={<Form />} />
             </Routes>
           </main>
