@@ -1,5 +1,3 @@
-const status = ['pending', 'approved ', 'decline'];
-
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.addColumn(
     'users',

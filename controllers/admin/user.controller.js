@@ -1,8 +1,6 @@
-/* eslint-disable prefer-destructuring */
-
 const db = require('../../models/index');
 
-const User = db.User;
+const { User } = db;
 const serialize = require('../../serializers/user.serializer');
 
 exports.index = async (req, res) => {
@@ -19,7 +17,6 @@ exports.index = async (req, res) => {
     });
   }
 };
-
 
 exports.show = async (req, res) => {
   try {
