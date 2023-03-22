@@ -47,8 +47,6 @@ function App() {
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
               <Route path="/" element={<Login />} />
-              {/* <Route path="/login"
-            element={isAuthenticated ? <Table /> : <Login />} /> */}
               <Route path="/table" element={<Table />} />
               <Route path="/home" element={<Home />} />
               <Route path="/form" element={<Form />} />
